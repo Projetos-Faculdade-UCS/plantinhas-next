@@ -1,5 +1,5 @@
-import { signIn } from '@/auth';
 import googleImg from '@/public/assets/google.svg';
+import { signIn } from '@/shared/lib/auth';
 import Image from 'next/image';
 
 export default function SignIn() {
@@ -7,7 +7,7 @@ export default function SignIn() {
         <form
             action={async () => {
                 'use server';
-                await signIn('google');
+                await signIn('google', { redirectTo: '/feed' });
             }}
         >
             <button
