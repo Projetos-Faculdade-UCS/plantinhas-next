@@ -18,7 +18,9 @@ export default async function FeedPage() {
                         height={100}
                         className="mx-auto mb-4 rounded-full"
                     />
-                    <p className="text-primary text-lg">{session.user?.name}</p>
+                    <p className="text-primary text-lg">
+                        {session.user?.first_name} {session.user?.last_name}☝️
+                    </p>
                     <Button
                         variant={'destructive'}
                         className="mt-4 flex w-full items-center justify-center gap-2 text-base"
