@@ -1,7 +1,4 @@
-import {
-    ExpandableTabs,
-    ExpandableTabsProps,
-} from '@/shared/ui/expandable-tabs';
+import { ExpandableTabsProps, FloatingDock } from '@/shared/ui/floating-dock';
 import type { Metadata } from 'next';
 import '../globals.css';
 
@@ -43,7 +40,7 @@ export default function LoggedInLayout({
             {children}
 
             <div className="absolute bottom-10 z-10 flex w-full justify-center">
-                <ExpandableTabs
+                <FloatingDock
                     tabs={tabs}
                     activeColor="text-primary"
                     className="border-border"

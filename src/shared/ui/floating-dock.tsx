@@ -2,13 +2,12 @@
 
 import { cn } from '@/shared/lib/utils';
 import { AnimatePresence, motion } from 'framer-motion';
-import { useRouter } from 'next/navigation';
-import * as React from 'react';
-import { useOnClickOutside } from 'usehooks-ts';
+import { usePathname, useRouter } from 'next/navigation';
+import { ReactNode } from 'react';
 
 interface Tab {
     title: string;
-    icon: React.ReactNode;
+    icon: ReactNode;
     type?: string;
     path: string;
 }
@@ -16,7 +15,7 @@ interface Tab {
 interface Separator {
     type: 'separator';
     title?: string;
-    icon?: React.ReactNode;
+    icon?: ReactNode;
     path?: string;
 }
 
@@ -36,7 +35,7 @@ const buttonVariants = {
         paddingRight: '.5rem',
     },
     animate: (isSelected: boolean) => ({
-        gap: '.5rem',
+        gap: isSelected ? '.5rem' : 0,
         paddingLeft: isSelected ? '1rem' : '.5rem',
         paddingRight: isSelected ? '1rem' : '.5rem',
     }),
@@ -48,27 +47,15 @@ const spanVariants = {
     exit: { width: 0, opacity: 0 },
 };
 
-const transition = { delay: 0.1, type: 'spring', bounce: 0, duration: 0.6 };
+const transition = { delay: 0, type: 'spring', bounce: 0, duration: 0.4 };
 
-export function ExpandableTabs({
+export function FloatingDock({
     tabs,
     className,
     activeColor = 'text-primary',
-    onChange,
 }: ExpandableTabsProps) {
     const router = useRouter();
-    const [selected, setSelected] = React.useState<number | null>(null);
-    const outsideClickRef = React.useRef<HTMLDivElement>(null);
-
-    useOnClickOutside<HTMLDivElement>(outsideClickRef, () => {
-        setSelected(null);
-        onChange?.(null);
-    });
-
-    const handleSelect = (index: number) => {
-        setSelected(index);
-        onChange?.(index);
-    };
+    const pathName = usePathname();
 
     const Separator = () => (
         <div className="bg-border mx-1 h-[24px] w-[1.2px]" aria-hidden="true" />
@@ -76,7 +63,6 @@ export function ExpandableTabs({
 
     return (
         <div
-            ref={outsideClickRef}
             className={cn(
                 'bg-card flex flex-wrap items-center gap-2 rounded-2xl border p-1 shadow-sm',
                 className,
@@ -86,6 +72,7 @@ export function ExpandableTabs({
                 if (tab.type === 'separator') {
                     return <Separator key={`separator-${index}`} />;
                 }
+                const isActive = pathName === tab.path;
 
                 return (
                     <motion.button
@@ -93,15 +80,14 @@ export function ExpandableTabs({
                         variants={buttonVariants}
                         initial={false}
                         animate="animate"
-                        custom={selected === index}
+                        custom={isActive}
                         onClick={() => {
-                            handleSelect(index);
                             router.push(tab.path!);
                         }}
                         transition={transition}
                         className={cn(
                             'relative flex items-center rounded-xl px-4 py-2 text-sm font-medium transition-colors duration-300',
-                            selected === index
+                            isActive
                                 ? cn(
                                       'bg-primary-foreground font-semibold',
                                       activeColor,
@@ -111,16 +97,18 @@ export function ExpandableTabs({
                     >
                         {tab.icon}
                         <AnimatePresence initial={false}>
-                            <motion.span
-                                variants={spanVariants}
-                                initial="initial"
-                                animate="animate"
-                                exit="exit"
-                                transition={transition}
-                                className="hidden w-full overflow-hidden text-nowrap sm:block"
-                            >
-                                {tab.title}
-                            </motion.span>
+                            {isActive && (
+                                <motion.span
+                                    variants={spanVariants}
+                                    initial="initial"
+                                    animate="animate"
+                                    exit="exit"
+                                    transition={transition}
+                                    className="w-full overflow-hidden text-nowrap"
+                                >
+                                    {tab.title}
+                                </motion.span>
+                            )}
                         </AnimatePresence>
                     </motion.button>
                 );
