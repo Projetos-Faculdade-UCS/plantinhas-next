@@ -5,7 +5,7 @@ export default async function PerfilPage() {
     const user = await Services.profile.getUser();
 
     return (
-        <div className="bg-background flex h-full w-full items-center justify-center">
+        <div className="flex h-full w-full items-center justify-center">
             <div className="flex flex-col">
                 <h1 className="text-foreground text-4xl">Perfil</h1>
                 <Image
