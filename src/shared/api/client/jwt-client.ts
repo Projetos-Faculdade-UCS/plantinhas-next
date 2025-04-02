@@ -1,4 +1,4 @@
-import { auth } from '../lib/auth';
+import { auth, signIn } from '../../lib/auth';
 import { HttpClient } from './http-client';
 
 export class JWTClient extends HttpClient {
@@ -9,6 +9,9 @@ export class JWTClient extends HttpClient {
     public async getHeaders(headers: HeadersInit = {}) {
         const superHeaders = super.getHeaders(headers);
         const session = await auth();
+        if (session?.error === 'RefreshTokenError') {
+            await signIn('google');
+        }
 
         return {
             ...superHeaders,

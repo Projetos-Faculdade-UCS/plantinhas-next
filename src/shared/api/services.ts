@@ -1,4 +1,4 @@
-import { HttpClient } from './http-client';
+import { HttpClient } from './client/http-client';
 import { AuthService } from './services/auth-service';
 import { ProfileService } from './services/profile-service';
 

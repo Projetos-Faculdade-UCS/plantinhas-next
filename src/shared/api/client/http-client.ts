@@ -1,6 +1,7 @@
 import { cookies } from 'next/headers';
-import { Client } from '../types/client';
-import { CustomFetchProps, CustomResponse } from '../types/http';
+import { Client } from '../../types/client';
+import { CustomFetchProps, CustomResponse } from '../../types/http';
+import { BadRequestError, NetWorkError } from './errors';
 
 export class HttpClient implements Client {
     private baseUrl: string;
@@ -12,6 +13,9 @@ export class HttpClient implements Client {
 
     constructor(baseUrl: string = '') {
         this.baseUrl = baseUrl;
+        if (!this.baseUrl) {
+            throw new Error('Base URL is required');
+        }
     }
 
     public async get<T>(url: string, init?: CustomFetchProps) {
@@ -100,16 +104,67 @@ export class HttpClient implements Client {
         const res = response as CustomResponse<T>;
 
         if (res.status === 200 || res.status === 201) {
+            // Handle successful responses
+
             const data = await res.json();
-            return { status: res.status, data: data };
+            return { status: res.status, data: data as T };
         }
-        if (res.status === 400 || res.status === 401) {
-            const data = await res.json();
-            return { status: res.status, data: data };
+        if (res.status === 204) {
+            return { status: res.status, data: null as T };
         }
 
-        throw new Error(
+        // Try to parse error response body
+        let errorData;
+        try {
+            errorData = await res.json();
+        } catch (error) {
+            console.error('Error parsing response body:', error);
+            errorData = { message: res.statusText || 'Unknown error' };
+        }
+
+        if (res.status === 400) {
+            throw new BadRequestError(
+                `Requisição retornou ${res.status} - ${res.statusText}`,
+                errorData,
+            );
+        }
+
+        if (res.status === 401) {
+            throw new NetWorkError(
+                `Não autorizado: ${res.statusText}`,
+                res.status,
+                errorData,
+            );
+        }
+
+        if (res.status === 403) {
+            throw new NetWorkError(
+                `Acesso proibido: ${res.statusText}`,
+                res.status,
+                errorData,
+            );
+        }
+
+        if (res.status === 404) {
+            throw new NetWorkError(
+                `Recurso não encontrado: ${res.statusText}`,
+                res.status,
+                errorData,
+            );
+        }
+
+        if (res.status >= 500) {
+            throw new NetWorkError(
+                `Erro do servidor: ${res.statusText}`,
+                res.status,
+                errorData,
+            );
+        }
+
+        throw new NetWorkError(
             `Requisição retornou ${res.status} - ${res.statusText}`,
+            res.status,
+            errorData,
         );
     }
 

@@ -3,6 +3,10 @@ import Google from 'next-auth/providers/google';
 import { Services } from '../api/services';
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
+    pages: {
+        error: '/signin',
+        signIn: '/signin',
+    },
     providers: [
         Google({
             clientId: process.env.AUTH_GOOGLE_ID || '',
@@ -12,36 +16,58 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     callbacks: {
         async jwt({ token, account }) {
             if (account?.id_token) {
-                const userSessionToken = await Services.auth.googleSignIn(
-                    account.id_token,
-                );
-                if (userSessionToken.status === 200) {
-                    const { access, refresh } = userSessionToken.data;
+                try {
+                    const {
+                        data: { access, refresh, exp },
+                    } = await Services.auth.googleSignIn(account.id_token);
                     token.accessToken = access;
                     token.refreshToken = refresh;
+                    token.exp = exp;
 
-                    const userData = await Services.auth.getUser(
-                        token.accessToken,
-                    );
-                    token.user = {
-                        ...token.user,
-                        ...userData,
-                    };
-                } else {
-                    console.error('Error on sign in', userSessionToken);
+                    try {
+                        const userData = await Services.auth.getUser(access);
+                        token.user = {
+                            ...token.user,
+                            ...userData,
+                        };
+                    } catch (error) {
+                        console.error('Error fetching user data:', error);
+                        throw error;
+                    }
+                } catch (error) {
+                    console.error('Error fetching user data:', error);
+                    throw error;
                 }
             }
 
             return token;
         },
         async session({ session, token }) {
+            if (token.exp && token.exp < Date.now() / 1000) {
+                try {
+                    const newSession = await Services.auth.refreshToken(
+                        token.refreshToken!,
+                    );
+                    const { access, refresh, exp } = newSession.data;
+                    token.accessToken = access;
+                    token.refreshToken = refresh;
+                    session.accessToken = access;
+                    session.refreshToken = refresh;
+                    token.exp = exp;
+                } catch (error) {
+                    console.error('Error refreshing token:', error);
+                    session.error = 'RefreshTokenError';
+                }
+            }
+
             session.refreshToken = token.refreshToken;
             session.accessToken = token.accessToken;
+            const { id, email, ...user } = token.user;
             session.user = {
-                ...token.user,
+                ...user,
                 emailVerified: null,
-                id: token.user.id!,
-                email: token.user.email!,
+                id: id!,
+                email: email!,
             };
             return session;
         },
@@ -63,6 +89,7 @@ declare module 'next-auth' {
     interface Session {
         accessToken: string;
         refreshToken?: string;
+        error?: 'RefreshTokenError';
     }
 }
 declare module '@auth/core/jwt' {

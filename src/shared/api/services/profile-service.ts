@@ -1,6 +1,6 @@
 import { UserPreview } from '@/shared/types/auth';
 import { Client } from '@/shared/types/client';
-import { JWTClient } from '../jwt-client';
+import { JWTClient } from '../client/jwt-client';
 
 export class ProfileService {
     private url: string = process.env.PROFILE_API_URL || '';

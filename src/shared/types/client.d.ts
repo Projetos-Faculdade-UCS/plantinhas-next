@@ -1,4 +1,4 @@
-import { BadRequest, CustomFetchProps } from './http';
+import { CustomFetchProps } from './http';
 
 /**
  * Interface for API client that manages requests to a specific endpoint.
@@ -21,13 +21,14 @@ export interface Client {
      * @param init Request configuration
      * @template T Type of the request response
      * @returns Promise with the request result
+     * @throws {NetWorkError} For other network-related errors
      */
     get<T>(
         url: string,
         init?: CustomFetchProps,
     ): Promise<{
         status: number;
-        data: T | BadRequest;
+        data: T;
     }>;
 
     /**
@@ -37,6 +38,7 @@ export interface Client {
      * @param init Request configuration
      * @template T Type of the request response
      * @returns Promise with the request result
+     * @throws {NetWorkError} For other network-related errors
      */
     post<T>(
         url: string,
@@ -44,7 +46,7 @@ export interface Client {
         init?: Omit<CustomFetchProps, 'body'>,
     ): Promise<{
         status: number;
-        data: T | BadRequest;
+        data: T;
     }>;
 
     /**
@@ -54,6 +56,7 @@ export interface Client {
      * @param init Request configuration
      * @template T Type of the request response
      * @returns Promise with the request result
+     * @throws {NetWorkError} For other network-related errors
      */
     patch<T>(
         url: string,
@@ -61,7 +64,7 @@ export interface Client {
         init?: Omit<CustomFetchProps, 'body'>,
     ): Promise<{
         status: number;
-        data: T | BadRequest;
+        data: T;
     }>;
 
     /**
@@ -69,6 +72,7 @@ export interface Client {
      * @param url API URL
      * @param config Request configuration
      * @returns Promise with the request result
+     * @throws {NetWorkError} For other network-related errors
      */
     delete(
         url: string,
@@ -87,6 +91,7 @@ export interface Client {
      * @param config Request configuration
      * @template T Type of the request response
      * @returns Promise with the request result
+     * @throws {NetWorkError} For other network-related errors
      */
     options<T>(
         url: string,

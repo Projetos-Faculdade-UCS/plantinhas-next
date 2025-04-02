@@ -29,6 +29,7 @@ export interface UserPreview {
 export interface SessionToken {
     refresh: string;
     access: string;
+    exp: int;
 }
 
 // export interface UserProfile {}
