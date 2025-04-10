@@ -1,3 +1,5 @@
+import { ValidationError } from '@/shared/types/http';
+
 export class NetWorkError extends Error {
     status: number;
     data: unknown;
@@ -11,7 +13,9 @@ export class NetWorkError extends Error {
 }
 
 export class BadRequestError extends NetWorkError {
-    constructor(message: string, data?: unknown) {
+    data!: ValidationError;
+
+    constructor(message: string, data?: ValidationError) {
         super(message, 400, data);
         this.name = 'BadRequestError';
     }
@@ -39,8 +43,8 @@ export class NotFoundError extends NetWorkError {
 }
 
 export class ServerError extends NetWorkError {
-    constructor(message: string, status: number = 500, data?: unknown) {
-        super(message, status, data);
+    constructor(message: string, data?: unknown) {
+        super(message, 500, data);
         this.name = 'ServerError';
     }
 }

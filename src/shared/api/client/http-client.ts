@@ -1,7 +1,19 @@
 import { cookies } from 'next/headers';
 import { Client } from '../../types/client';
-import { CustomFetchProps, CustomResponse } from '../../types/http';
-import { BadRequestError, NetWorkError } from './errors';
+import {
+    CustomFetchProps,
+    CustomResponse,
+    ResponseError,
+    ValidationError,
+} from '../../types/http';
+import {
+    BadRequestError,
+    ForbiddenError,
+    NetWorkError,
+    NotFoundError,
+    ServerError,
+    UnauthorizedError,
+} from './errors';
 
 export class HttpClient implements Client {
     private baseUrl: string;
@@ -103,69 +115,62 @@ export class HttpClient implements Client {
     private async responseHandler<T>(response: Response) {
         const res = response as CustomResponse<T>;
 
-        if (res.status === 200 || res.status === 201) {
-            // Handle successful responses
-
-            const data = await res.json();
+        if (res.status === 200 || res.status === 201 || res.status === 204) {
+            const data = await this.parseJson<T>(res);
             return { status: res.status, data: data as T };
-        }
-        if (res.status === 204) {
-            return { status: res.status, data: null as T };
-        }
-
-        // Try to parse error response body
-        let errorData;
-        try {
-            errorData = await res.json();
-        } catch (error) {
-            console.error('Error parsing response body:', error);
-            errorData = { message: res.statusText || 'Unknown error' };
         }
 
         if (res.status === 400) {
             throw new BadRequestError(
                 `Requisição retornou ${res.status} - ${res.statusText}`,
-                errorData,
+                (await this.parseJson(res)) as ValidationError,
             );
         }
 
         if (res.status === 401) {
-            throw new NetWorkError(
+            throw new UnauthorizedError(
                 `Não autorizado: ${res.statusText}`,
-                res.status,
-                errorData,
+                await this.parseJson(res),
             );
         }
 
         if (res.status === 403) {
-            throw new NetWorkError(
+            throw new ForbiddenError(
                 `Acesso proibido: ${res.statusText}`,
-                res.status,
-                errorData,
+                await this.parseJson(res),
             );
         }
 
         if (res.status === 404) {
-            throw new NetWorkError(
+            throw new NotFoundError(
                 `Recurso não encontrado: ${res.statusText}`,
-                res.status,
-                errorData,
+                await this.parseJson(res),
             );
         }
 
         if (res.status >= 500) {
-            throw new NetWorkError(
+            throw new ServerError(
                 `Erro do servidor: ${res.statusText}`,
-                res.status,
-                errorData,
+                await this.parseJson(res),
             );
         }
 
         throw new NetWorkError(
             `Requisição retornou ${res.status} - ${res.statusText}`,
             res.status,
-            errorData,
+            await this.parseJson(res),
         );
+    }
+
+    private async parseJson<T>(response: CustomResponse<T>) {
+        try {
+            return await response.json();
+        } catch (e) {
+            console.error('Error parsing JSON response:', e);
+            return {
+                message: response.statusText || 'Erro ao processar a resposta',
+            } as ResponseError;
+        }
     }
 
     public async getHeaders(headers: HeadersInit = {}) {
