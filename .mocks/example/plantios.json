@@ -1,0 +1,157 @@
+{
+    "GET": {
+        "/gerenciamento/plantios/123": {
+            "id": 123,
+            "planta": {
+                "id": 22,
+                "nome": "Uva",
+                "foto": "https://example.com/imagens/uva.jpg",
+                "estacaoIdeal": "Verão",
+                "temperaturaIdeal": {
+                    "minima": 15,
+                    "maxima": 30
+                },
+                "nomeCientifico": "Vitis vinifera",
+                "categoria": "Frutífera"
+            },
+            "situacao": "Florescendo",
+            "saude": {
+                "label": "Saudável",
+                "valor": 0.2
+            },
+            "sede": {
+                "label": "Nenhuma",
+                "valor": 0.0
+            },
+            "dataPlantio": "2023-10-01",
+            "dataColheita": "2024-10-01",
+            "informacoes_adicionais": "Gostaria de uma pequena parreira na varanda, para comer uvas frescas."
+        },
+        "/gerenciamento/plantios/filtros": {
+            "ambiente": {
+                "local": ["varanda", "quintal", "jardim", "estufa"],
+                "condicao": ["interno", "externo"]
+            },
+            "sistemaCultivo": [
+                "parreiral",
+                "horta",
+                "vaso",
+                "canteiroElevado",
+                "sacoDeCultivo",
+                "hidroponia"
+            ]
+        },
+        "/gerenciamento/plantios/123/tarefas": [
+            {
+                "id": 1,
+                "descricao": "Regar a planta",
+                "ultimaAlteracao": "2023-10-02",
+                "frequencia": "Diária",
+                "quantidadeTotal": 1,
+                "quantidadeCompletada": 0,
+                "status": "Pendente"
+            },
+            {
+                "id": 2,
+                "descricao": "Adicionar fertilizante",
+                "ultimaAlteracao": "2023-10-05",
+                "frequencia": "Semanal",
+                "quantidadeTotal": 2,
+                "quantidadeCompletada": 1,
+                "status": "Concluído"
+            },
+            {
+                "id": 3,
+                "descricao": "Verificar pragas",
+                "ultimaAlteracao": "2023-10-06",
+                "frequencia": "Mensal",
+                "quantidadeTotal": 1,
+                "quantidadeCompletada": 0,
+                "status": "Pendente"
+            }
+        ],
+        "/gerenciamento/plantios/123/tutorial": {
+            "materiais": [
+                {
+                    "nome": "Vaso de planta",
+                    "quantidade": 1,
+                    "descricao": "Um vaso grande para acomodar a planta.",
+                    "foto": "https://example.com/imagens/vaso.jpg"
+                },
+                {
+                    "nome": "Terra para plantio",
+                    "quantidade": 5,
+                    "descricao": "Mistura de terra e adubo.",
+                    "foto": "https://example.com/imagens/terra.jpg"
+                },
+                {
+                    "nome": "Fertilizante",
+                    "quantidade": 1,
+                    "descricao": "Fertilizante orgânico para plantas frutíferas.",
+                    "foto": "https://example.com/imagens/fertilizante.jpg"
+                }
+            ],
+            "etapas": [
+                {
+                    "ordem": 1,
+                    "descricao": "Preparar o vaso com terra",
+                    "detalhamento": "Coloque a terra no vaso, deixando espaço para a planta.",
+                    "obrigatorio": true
+                },
+                {
+                    "ordem": 2,
+                    "descricao": "Adicionar a planta ao vaso",
+                    "detalhamento": "Coloque a planta cuidadosamente no vaso, cobrindo as raízes com terra.",
+                    "obrigatorio": true
+                },
+                {
+                    "ordem": 3,
+                    "descricao": "Regar a planta",
+                    "detalhamento": "Adicione água até que a terra esteja úmida, mas não encharcada.",
+                    "obrigatorio": true
+                },
+                {
+                    "ordem": 4,
+                    "descricao": "Adicionar fertilizante",
+                    "detalhamento": "Misture o fertilizante na terra ao redor da planta.",
+                    "obrigatorio": false
+                },
+                {
+                    "ordem": 5,
+                    "descricao": "Colher os frutos quando maduros",
+                    "detalhamento": "Verifique a maturação dos frutos e colha quando estiverem prontos.",
+                    "obrigatorio": false
+                }
+            ]
+        },
+        "/gerenciamento/plantios/123/historico": [
+            {
+                "data": "2023-10-01",
+                "acao": "Plantou a planta",
+                "novaSituacao": "germinando"
+            },
+            {
+                "data": "2023-10-02",
+                "acao": "Regou a planta",
+                "novaSituacao": "crescendo"
+            },
+            {
+                "data": "2023-10-05",
+                "acao": "Adicionou fertilizante",
+                "novaSituacao": "florescendo"
+            },
+            {
+                "data": "2023-10-06",
+                "acao": "Verificou pragas",
+                "novaSituacao": "florescendo"
+            }
+        ]
+    },
+    "POST": {
+        "/gerenciamento/plantios": {
+            "planta": 22,
+            "quantidade": 4,
+            "informacoes_adicionais": "Gostaria de uma pequena parreira na varanda, para comer uvas frescas."
+        }
+    }
+}

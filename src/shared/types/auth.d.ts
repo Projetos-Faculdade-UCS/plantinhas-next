@@ -14,7 +14,7 @@ export interface GoogleUser {
     exp: int;
 }
 
-export interface UserPreview {
+export interface ProfilePreview {
     id: int;
     profile_picture: string;
     user: {
@@ -32,4 +32,4 @@ export interface SessionToken {
     exp: int;
 }
 
-// export interface UserProfile {}
+//export interface Profile extends ProfilePreview {}

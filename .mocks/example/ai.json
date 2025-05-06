@@ -1,0 +1,91 @@
+{
+    "GET": {
+        "/ia/gerar_plantio": {
+            "data_inicio_plantio": "2025-04-23",
+
+            "planta": {
+                "nome_cientifico": "Manjericão",
+                "solo_ideal": "Solo bem drenado e fértil",
+                "ventiacao": "ar livre",
+                "escavao_plantio": "primavera",
+                "temperatura_ideal": "20°C a 30°C",
+                "dias_maturidade": "60"
+            },
+            "quantidade": "10",
+            "ambiente": {
+                "local": "varanda",
+                "condicao": "interno"
+            },
+            "sistemaCultivo": "parreiral",
+            "informacoes_adicionais": "iformações adicionais que a pessoa pode comentar em um comentario para descrever melhor seu ambiente",
+            "habildiades_existentes": [
+                "Habilidade em jardinagem",
+                "Conhecimento sobre plantas aromáticas"
+            ]
+        },
+        "/weather": {
+            "latitude": -23.5505,
+            "longitude": -46.6333,
+            "horario": "2025-04-23T10:00:00Z"
+        }
+    },
+    "RETURN": {
+        "/ia/gerar_plantio": {
+            "data_fim_plantio": "2025-06-22",
+            "descritivo de como plantar": "Para plantar o manjericão, escolha um local ensolarado no seu jardim ou em um vaso. Prepare o solo, garantindo que ele esteja bem drenado e fértil. Plante as sementes a uma profundidade de 1 cm e mantenha o solo úmido, mas não encharcado. Após cerca de 60 dias, você poderá colher as folhas frescas.",
+            "informacoes adicionais": "O manjericão é uma planta aromática que se adapta bem a climas quentes. Certifique-se de regá-lo regularmente e evite deixá-lo exposto a temperaturas muito baixas. Pode ser cultivado em vasos ou diretamente no solo do jardim.",
+            "tarefas": [
+                {
+                    "nome": "Regar o manjericão",
+                    "tipo": "cuidados",
+                    "quantidade_total": 60,
+                    "cron": "0 7 * * *",
+                    "habilidade": {
+                        "nome": "nome da habilidade",
+                        "multiplicador_xp": 1.1
+                    }
+                },
+                {
+                    "nome": "Regar o manjericão",
+                    "tipo": "cuidados",
+                    "quantidade_total": 60,
+                    "cron": "0 7 * * *",
+                    "habilidade": {
+                        "nome": "nome da habilidade",
+                        "multiplicador_xp": 1.1
+                    }
+                },
+                {
+                    "nome": "Regar o manjericão",
+                    "tipo": "cuidados",
+                    "quantidade_total": 60,
+                    "cron": "0 7 * * *",
+                    "habilidade": {
+                        "nome": "nome da habilidade",
+                        "multiplicador_xp": 1.1
+                    }
+                },
+                {
+                    "nome": "Regar o manjericão",
+                    "tipo": "cuidados",
+                    "quantidade_total": 60,
+                    "cron": "0 7 * * *",
+                    "habilidade": {
+                        "nome": "nome da habilidade",
+                        "multiplicador_xp": 1.1
+                    }
+                }
+            ]
+        },
+        "/weather": {
+            "temperatura": 25,
+            "umidade": 60,
+            "precipitacao": 0,
+            "vento": {
+                "velocidade": 10,
+                "direcao": "N"
+            },
+            "descricao": "Céu limpo com algumas nuvens"
+        }
+    }
+}

@@ -1,4 +1,4 @@
-import { UserPreview } from '@/shared/types/auth';
+import { ProfilePreview } from '@/shared/types/auth';
 import { Client } from '@/shared/types/client';
 import { JWTClient } from '../client/jwt-client';
 
@@ -13,7 +13,7 @@ export class ProfileService {
      * Retorna o informações básicas do usuário
      */
     public async getUser() {
-        const response = await this.client.get<UserPreview>('/profile/', {
+        const response = await this.client.get<ProfilePreview>('/profile/', {
             cache: 'force-cache',
             next: {
                 revalidate: 1000,

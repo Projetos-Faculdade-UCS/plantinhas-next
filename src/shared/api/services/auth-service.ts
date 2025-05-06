@@ -1,4 +1,4 @@
-import { SessionToken, UserPreview } from '@/shared/types/auth';
+import { ProfilePreview, SessionToken } from '@/shared/types/auth';
 import { HttpClient } from '../client/http-client';
 
 export class AuthService {
@@ -36,7 +36,7 @@ export class AuthService {
      * @param accessToken token da sessão do usuário
      */
     public async getUser(accessToken: string) {
-        const response = await this.client.get<UserPreview>('/profile/', {
+        const response = await this.client.get<ProfilePreview>('/profile/', {
             cache: 'force-cache',
             headers: {
                 Authorization: `Bearer ${accessToken}`,

@@ -1,0 +1,66 @@
+{
+    "uuid": "mockoon-env-uuid",
+    "name": "API Posts Mock",
+    "port": 3000,
+    "routes": [
+      {
+        "uuid": "route-1",
+        "method": "GET",
+        "endpoint": "/feed/posts",
+        "responses": [
+          {
+            "uuid": "resp-1",
+            "statusCode": 200,
+            "body": "{\n  \"total\": 200,\n  \"itensPorPagina\": 10,\n  \"paginaAtual\": 1,\n  \"ultimaPagina\": 20,\n  \"itens\": [\n    {\n      \"id\": 1,\n      \"conteudo\": \"exemplo conteudo\",\n      \"fotos\": [\n        \"http://example.com/photo1.jpg\",\n        \"http://example.com/photo2.jpg\"\n      ],\n      \"qtdeLikes\": 100,\n      \"qtdeCompartilhamentos\": 25,\n      \"dataCriacao\": \"2025-04-23T10:30:00Z\",\n      \"tags\": [\"natureza\", \"plantas\", \"sustentabilidade\"],\n      \"status\": \"ativo\",\n      \"autor\": {\n        \"id\": 1,\n        \"nome\": \"Pedro\",\n        \"fotoPerfil\": \"http://example.com/profile1.jpg\"\n      }\n    }\n  ]\n}",
+            "headers": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "route-2",
+        "method": "GET",
+        "endpoint": "/feed/post/comentarios",
+        "responses": [
+          {
+            "uuid": "resp-2",
+            "statusCode": 200,
+            "body": "{\n  \"total\": 50,\n  \"itensPorPagina\": 15,\n  \"paginaAtual\": 1,\n  \"ultimaPagina\": 10,\n  \"comentarios\": [\n    {\n      \"id\": 1,\n      \"conteudo\": \"exemplo conteudo\",\n      \"qtdeLikes\": 100,\n      \"autor\": {\n        \"id\": 1,\n        \"nome\": \"Pedro\",\n        \"fotoPerfil\": \"http://example.com/profile1.jpg\"\n      },\n      \"dataCriacao\": \"2025-04-23T11:00:00Z\"\n    }\n  ]\n}",
+            "headers": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "route-3",
+        "method": "GET",
+        "endpoint": "/feed/posts/likes",
+        "responses": [
+          {
+            "uuid": "resp-3",
+            "statusCode": 200,
+            "body": "{\n  \"total\": 50,\n  \"itensPorPagina\": 15,\n  \"paginaAtual\": 1,\n  \"ultimaPagina\": 10,\n  \"itens\": [\n    {\n      \"id\": 1,\n      \"autor\": {\n        \"id\": 1,\n        \"nome\": \"Pedro\",\n        \"fotoPerfil\": \"http://example.com/profile1.jpg\"\n      }\n    }\n  ]\n}",
+            "headers": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "proxyMode": false,
+    "tlsOptions": {
+      "enabled": false
+    }
+  }
+  

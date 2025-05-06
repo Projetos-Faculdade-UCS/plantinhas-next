@@ -1,0 +1,121 @@
+{
+    "GET": {
+        "/gerenciamento/categorias": {
+            "quantidade": 5,
+            "items": [
+                {
+                    "id": 1,
+                    "nome": "Frutiferas",
+                    "quantidadePlantas": 20,
+                    "plantas": [
+                        {
+                            "id": 1,
+                            "nome": "Bananeira",
+                            "quantidade": 5
+                        },
+                        {
+                            "id": 2,
+                            "nome": "Limoeiro",
+                            "quantidade": 3
+                        },
+                        {
+                            "id": 3,
+                            "nome": "Macieira",
+                            "quantidade": 2
+                        }
+                    ]
+                },
+                {
+                    "id": 2,
+                    "nome": "Hortalicas",
+                    "quantidadePlantas": 15,
+                    "plantas": [
+                        {
+                            "id": 4,
+                            "nome": "Alface",
+                            "quantidade": 10
+                        },
+                        {
+                            "id": 5,
+                            "nome": "Cenoura",
+                            "quantidade": 5
+                        }
+                    ]
+                },
+                {
+                    "id": 3,
+                    "nome": "Arvores",
+                    "quantidadePlantas": 8,
+                    "plantas": [
+                        {
+                            "id": 6,
+                            "nome": "Carvalho",
+                            "quantidade": 2
+                        },
+                        {
+                            "id": 7,
+                            "nome": "Pinho",
+                            "quantidade": 3
+                        },
+                        {
+                            "id": 8,
+                            "nome": "Oliveira",
+                            "quantidade": 1
+                        }
+                    ]
+                }
+            ]
+        },
+        "/gerenciamento/categorias/:id": {
+            "id": 1,
+            "nome": "Frutiferas",
+            "quantidadePlantas": 10
+        },
+        "/gerenciamento/categorias/:id/plantas": {
+            "total": 10,
+            "itensPorPagina": 3,
+            "paginaAtual": 1,
+            "ultimaPagina": 4,
+            "itens": [
+                {
+                    "id": 1,
+                    "nome": "Bananeira",
+                    "quantidade": 5
+                },
+                {
+                    "id": 2,
+                    "nome": "Limoeiro",
+                    "quantidade": 3
+                },
+                {
+                    "id": 3,
+                    "nome": "Macieira",
+                    "quantidade": 2
+                }
+            ]
+        },
+        "/perfil": {
+            "primeiroNome": "João",
+            "ultimoNome": "Silva",
+            "email": "joao_silva@example.com",
+            "telefone": "1234567890",
+            "dataNascimento": "1990-01-01",
+            "foto": "https://example.com/foto.jpg",
+            "localizacao": {
+                "latitude": -23.5505,
+                "longitude": -46.6333
+            }
+        }
+    },
+    "PATCH": {
+        "/perfil": {
+            "primeiroNome": "João",
+            "ultimoNome": "Silva",
+            "telefone": "1234567890",
+            "localizacao": {
+                "latitude": -23.5505,
+                "longitude": -46.6333
+            }
+        }
+    }
+}

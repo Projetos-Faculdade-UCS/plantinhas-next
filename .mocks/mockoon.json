@@ -1,0 +1,478 @@
+{
+  "uuid": "ad6dd877-856f-4339-8e29-3e281fdf3c08",
+  "lastMigration": 33,
+  "name": "Plantinhas",
+  "endpointPrefix": "",
+  "latency": 0,
+  "port": 3000,
+  "hostname": "",
+  "folders": [
+    {
+      "uuid": "8bf7b653-42e5-44d0-9cd7-d5a44e33c4ef",
+      "name": "forum",
+      "children": [
+        {
+          "type": "route",
+          "uuid": "17eee68e-26c6-4ef3-b11d-99c99ae3128f"
+        },
+        {
+          "type": "route",
+          "uuid": "6c78a0a1-e758-4a8c-b3cd-74c6af3bb128"
+        },
+        {
+          "type": "route",
+          "uuid": "7d9e5f4c-a6b2-4e83-8c1d-1f2e3a4b5c6d"
+        },
+        {
+          "type": "route",
+          "uuid": "7413a393-f390-4a37-9683-4a3ef709eb35"
+        },
+        {
+          "type": "route",
+          "uuid": "f94288b3-c586-4333-a882-0f4a37e8c881"
+        },
+        {
+          "type": "route",
+          "uuid": "1814c498-d665-4bc3-b4f5-e8814fc4f2fb"
+        },
+        {
+          "type": "route",
+          "uuid": "64c9b51d-50ea-444e-9e8a-35708bb2be74"
+        },
+        {
+          "type": "route",
+          "uuid": "86cc8c5a-6aea-42a4-9e76-a59103153148"
+        },
+        {
+          "type": "route",
+          "uuid": "cc7610ca-07aa-49ee-9a97-d0e4135ecd36"
+        },
+        {
+          "type": "route",
+          "uuid": "b8e8748e-4119-4d06-906d-865f1d7dbbac"
+        }
+      ]
+    }
+  ],
+  "routes": [
+    {
+      "uuid": "17eee68e-26c6-4ef3-b11d-99c99ae3128f",
+      "type": "http",
+      "documentation": "Forum posts endpoint",
+      "method": "get",
+      "endpoint": "forum/posts",
+      "responses": [
+        {
+          "uuid": "a576c2dc-75aa-4856-98d1-7736c2188f23",
+          "body": "{\n  \"total\": \"{{queryParam 'total' '200'}}\",\n  \"itensPorPagina\": 10,\n  \"paginaAtual\": 1,\n  \"ultimaPagina\": 1,\n  \"itens\": [\n    {{# repeat (queryParam 'total' '10') }}\n    {\n      \"id\": {{faker 'number.int' min=1 max=1000}},\n      \"titulo\": \"{{faker 'word.words' }}\",\n      \"foto\": \"{{faker 'image.urlPicsumPhotos' height='1000' width='1000' }}\",\n      \"conteudo\": \"{{faker 'lorem.paragraphs' max='1' }}\",\n      \"data\": \"{{faker 'date.recent' refDate='2020-01-01T00:00:00.000Z' }}\",\n      \"autor\": {\n          \"id\": {{faker 'number.int' min=1 max=100}},\n          \"nome\": \"{{ faker 'person.firstName' }} {{ faker 'person.lastName' }}\",\n          \"fotoPerfil\": \"{{ faker 'image.avatar'  }}\"\n      },\n      \"qtdeComentarios\": {{faker 'number.int' min=0 max=50}},\n      \"qtdeUpvotes\": {{faker 'number.int' min=0 max=100}},\n      \"qtdeDownvotes\": {{faker 'number.int' min=0 max=20}}\n    },\n    {{/ repeat }}\n  ]\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null,
+      "streamingMode": null,
+      "streamingInterval": 0
+    },
+    {
+      "uuid": "6c78a0a1-e758-4a8c-b3cd-74c6af3bb128",
+      "type": "http",
+      "documentation": "Get comments for a specific post",
+      "method": "get",
+      "endpoint": "forum/posts/:id/comentarios",
+      "responses": [
+        {
+          "uuid": "1b2a6ee2-76a4-4264-a24e-22a28c4c3e65",
+          "body": "{\n  \"itens\": [\n    {{# repeat 5 }}\n    {\n      \"id\": {{faker 'number.int' min=1 max=1000}},\n      \"data\": \"{{faker 'date.recent'}}\",\n      \"autor\": {\n        \"id\": {{faker 'number.int' min=1 max=100}},\n        \"nome\": \"{{ faker 'person.firstName' }} {{ faker 'person.lastName' }}\",\n        \"fotoPerfil\": \"{{ faker 'image.avatar' }}\"\n      },\n      \"conteudo\": \"{{faker 'lorem.paragraph'}}\",\n      \"qtdeComentarios\": {{faker 'number.int' min=0 max=10}},\n      \"qtdeUpvotes\": {{faker 'number.int' min=0 max=50}},\n      \"qtdeDownvotes\": {{faker 'number.int' min=0 max=10}}\n    },\n    {{/ repeat }}\n  ]\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null,
+      "streamingMode": null,
+      "streamingInterval": 0
+    },
+    {
+      "uuid": "7d9e5f4c-a6b2-4e83-8c1d-1f2e3a4b5c6d",
+      "type": "http",
+      "documentation": "Get comments for a specific comment",
+      "method": "get",
+      "endpoint": "forum/posts/:id/comentarios/:commentId/comentarios",
+      "responses": [
+        {
+          "uuid": "8e9d7c6b-5a4f-3e2d-1c0b-9a8b7c6d5e4f",
+          "body": "{\n  \"id\": {{faker 'number.int' min=1 max=1000}},\n  \"data\": \"{{faker 'date.recent'}}\",\n  \"autor\": {\n    \"id\": {{faker 'number.int' min=1 max=100}},\n    \"nome\": \"{{ faker 'person.firstName' }} {{ faker 'person.lastName' }}\",\n    \"fotoPerfil\": \"{{ faker 'image.avatar' }}\"\n  },\n  \"conteudo\": \"{{faker 'lorem.paragraph'}}\",\n  \"qtdeComentarios\": 0,\n  \"qtdeUpvotes\": {{faker 'number.int' min=0 max=50}},\n  \"qtdeDownvotes\": {{faker 'number.int' min=0 max=10}}\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null,
+      "streamingMode": null,
+      "streamingInterval": 0
+    },
+    {
+      "uuid": "cc7610ca-07aa-49ee-9a97-d0e4135ecd36",
+      "type": "http",
+      "documentation": "Create a new post",
+      "method": "post",
+      "endpoint": "forum/posts",
+      "responses": [
+        {
+          "uuid": "72cc3d25-92d3-4654-aace-adcc0c624d37",
+          "body": "{\n  \"id\": {{faker 'number.int' min=1 max=1000}},\n  \"titulo\": \"{{body 'titulo'}}\",\n  \"conteudo\": \"{{body 'conteudo'}}\",\n  \"foto\": \"{{body 'foto'}}\",\n  \"autor\": {{body 'autor'}},\n  \"data\": \"{{now 'ISO'}}\"\n}",
+          "latency": 0,
+          "statusCode": 201,
+          "label": "",
+          "headers": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null,
+      "streamingMode": null,
+      "streamingInterval": 0
+    },
+    {
+      "uuid": "b8e8748e-4119-4d06-906d-865f1d7dbbac",
+      "type": "http",
+      "documentation": "Create a comment on a post",
+      "method": "post",
+      "endpoint": "forum/posts/:id/comentarios",
+      "responses": [
+        {
+          "uuid": "5d1935b8-c148-432b-8761-217d214917c4",
+          "body": "{\n  \"id\": {{faker 'number.int' min=1 max=1000}},\n  \"conteudo\": \"{{body 'conteudo'}}\",\n  \"autor\": {{body 'autor'}},\n  \"data\": \"{{now 'ISO'}}\",\n  \"qtdeComentarios\": 0,\n  \"qtdeUpvotes\": 0,\n  \"qtdeDownvotes\": 0\n}",
+          "latency": 0,
+          "statusCode": 201,
+          "label": "",
+          "headers": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null,
+      "streamingMode": null,
+      "streamingInterval": 0
+    },
+    {
+      "uuid": "86cc8c5a-6aea-42a4-9e76-a59103153148",
+      "type": "http",
+      "documentation": "Create a reply to a comment",
+      "method": "post",
+      "endpoint": "forum/posts/:id/comentarios/:commentId/comentarios",
+      "responses": [
+        {
+          "uuid": "7aef398f-77f6-48a0-9970-85a32526ef71",
+          "body": "{\n  \"id\": {{faker 'number.int' min=1 max=1000}},\n  \"conteudo\": \"{{body 'conteudo'}}\",\n  \"autor\": {{body 'autor'}},\n  \"data\": \"{{now 'ISO'}}\",\n  \"qtdeComentarios\": 0,\n  \"qtdeUpvotes\": 0,\n  \"qtdeDownvotes\": 0\n}",
+          "latency": 0,
+          "statusCode": 201,
+          "label": "",
+          "headers": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null,
+      "streamingMode": null,
+      "streamingInterval": 0
+    },
+    {
+      "uuid": "64c9b51d-50ea-444e-9e8a-35708bb2be74",
+      "type": "http",
+      "documentation": "Upvote a post",
+      "method": "post",
+      "endpoint": "forum/posts/:id/upvote",
+      "responses": [
+        {
+          "uuid": "83ebac2b-9be1-46a2-9657-eb4f47bf4a06",
+          "body": "{\n  \"upvote\": true,\n  \"success\": true\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null,
+      "streamingMode": null,
+      "streamingInterval": 0
+    },
+    {
+      "uuid": "1814c498-d665-4bc3-b4f5-e8814fc4f2fb",
+      "type": "http",
+      "documentation": "Downvote a post",
+      "method": "post",
+      "endpoint": "forum/posts/:id/downvote",
+      "responses": [
+        {
+          "uuid": "2e34e520-6531-4b7a-b5d5-bf8be7c6ec9b",
+          "body": "{\n  \"downvote\": true,\n  \"success\": true\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null,
+      "streamingMode": null,
+      "streamingInterval": 0
+    },
+    {
+      "uuid": "f94288b3-c586-4333-a882-0f4a37e8c881",
+      "type": "http",
+      "documentation": "Upvote a comment",
+      "method": "post",
+      "endpoint": "forum/posts/:id/comentarios/:commentId/upvote",
+      "responses": [
+        {
+          "uuid": "8578a984-bc41-4f31-8c68-64e780256d3b",
+          "body": "{\n  \"upvote\": true,\n  \"success\": true\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null,
+      "streamingMode": null,
+      "streamingInterval": 0
+    },
+    {
+      "uuid": "7413a393-f390-4a37-9683-4a3ef709eb35",
+      "type": "http",
+      "documentation": "Downvote a comment",
+      "method": "post",
+      "endpoint": "forum/posts/:id/comentarios/:commentId/downvote",
+      "responses": [
+        {
+          "uuid": "06bfe45d-c913-4303-9c4a-52c5f66eeece",
+          "body": "{\n  \"downvote\": true,\n  \"success\": true\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null,
+      "streamingMode": null,
+      "streamingInterval": 0
+    }
+  ],
+  "rootChildren": [
+    {
+      "type": "folder",
+      "uuid": "8bf7b653-42e5-44d0-9cd7-d5a44e33c4ef"
+    }
+  ],
+  "proxyMode": false,
+  "proxyHost": "",
+  "proxyRemovePrefix": false,
+  "tlsOptions": {
+    "enabled": false,
+    "type": "CERT",
+    "pfxPath": "",
+    "certPath": "",
+    "keyPath": "",
+    "caPath": "",
+    "passphrase": ""
+  },
+  "cors": true,
+  "headers": [
+    {
+      "key": "Content-Type",
+      "value": "application/json"
+    },
+    {
+      "key": "Access-Control-Allow-Origin",
+      "value": "*"
+    },
+    {
+      "key": "Access-Control-Allow-Methods",
+      "value": "GET,POST,PUT,PATCH,DELETE,HEAD,OPTIONS"
+    },
+    {
+      "key": "Access-Control-Allow-Headers",
+      "value": "Content-Type, Origin, Accept, Authorization, Content-Length, X-Requested-With"
+    }
+  ],
+  "proxyReqHeaders": [
+    {
+      "key": "",
+      "value": ""
+    }
+  ],
+  "proxyResHeaders": [
+    {
+      "key": "",
+      "value": ""
+    }
+  ],
+  "data": [
+    {
+      "uuid": "a597680d-f55a-4224-89b0-c4aeafdf1aee",
+      "id": "7aox",
+      "name": "Users",
+      "documentation": "",
+      "value": "[\n  {{#repeat 50}}\n  {\n    \"id\": \"{{faker 'string.uuid'}}\",\n    \"username\": \"{{faker 'internet.userName'}}\"\n  }\n  {{/repeat}}\n]"
+    }
+  ],
+  "callbacks": []
+}
