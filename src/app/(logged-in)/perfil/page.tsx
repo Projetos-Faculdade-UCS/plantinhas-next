@@ -1,4 +1,4 @@
-import { Repositories } from '@/shared/api/services';
+import { Repositories } from '@/shared/api/repositories';
 import Image from 'next/image';
 
 export default async function PerfilPage() {

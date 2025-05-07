@@ -1,6 +1,6 @@
 import NextAuth, { User as UserAuth } from 'next-auth';
 import Google from 'next-auth/providers/google';
-import { Repositories } from '../api/services';
+import { Repositories } from '../api/repositories';
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
     pages: {

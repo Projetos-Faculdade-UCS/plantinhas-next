@@ -23,6 +23,10 @@
                 "label": "Nenhuma",
                 "valor": 0.0
             },
+            "dificuldade": {
+                "label": "Fácil",
+                "valor": 0.1
+            },
             "dataPlantio": "2023-10-01",
             "dataColheita": "2024-10-01",
             "informacoes_adicionais": "Gostaria de uma pequena parreira na varanda, para comer uvas frescas."
