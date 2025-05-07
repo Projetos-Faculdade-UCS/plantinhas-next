@@ -1,7 +1,7 @@
 import { ProfilePreview, SessionToken } from '@/shared/types/auth';
 import { HttpClient } from '../client/http-client';
 
-export class AuthService {
+export class AuthRepository {
     private url: string = process.env.AUTH_API_URL || '';
     private client: HttpClient;
 

@@ -1,8 +1,8 @@
-import { Services } from '@/shared/api/services';
+import { Repositories } from '@/shared/api/services';
 import Image from 'next/image';
 
 export default async function PerfilPage() {
-    const user = await Services.profile.getUser();
+    const user = await Repositories.profile.getUser();
 
     return (
         <div className="flex h-full w-full items-center justify-center">

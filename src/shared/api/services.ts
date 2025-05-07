@@ -1,52 +1,51 @@
 import { HttpClient } from './client/http-client';
-import { AuthService } from './services/auth-service';
-import { ProfileService } from './services/profile-service';
+import { AuthRepository } from './repositories/auth-repository';
+import { ProfileRepository } from './repositories/profile-repository';
 
 /**
- * Classe que provê acesso centralizado aos serviços externos que a aplicação
+ * Classe que provê acesso centralizado aos repositories que a aplicação
  * utiliza.
- * Serviços disponíveis:
- *  - `auth`: Serviço de autenticação
- *  - `profile`: Cliente HTTP para o serviço de perfis
- *
- *  - `main`: Cliente HTTP para o serviço principal
- *  - `aiGen`: Cliente HTTP para o serviço de geração conteúdo com IA
- *  - `openWeather`: Cliente HTTP para o serviço de clima e temperatura
- *  - `openPlants`: Cliente HTTP para o serviço de dados científicos de plantas
+ * Repositories disponíveis:
+ *  - `auth`: Repository de autenticação
+ *  - `profile`: Repository para o serviço de perfis
+ *  - `main`: Repository para o serviço principal
+ *  - `aiGen`: Repository para o serviço de geração conteúdo com IA
+ *  - `openWeather`: Repository para o serviço de clima e temperatura
+ *  - `openPlants`: Repository para o serviço de dados científicos de plantas
  *
  *
  * Exemplo: `Services.auth.googleSignIn(token)`
  */
-export class Services {
-    private static _auth: AuthService;
-    private static _profile: ProfileService;
+export class Repositories {
+    private static _auth: AuthRepository;
+    private static _profile: ProfileRepository;
 
     // Getter para o cliente de autenticação
-    public static get auth(): AuthService {
+    public static get auth(): AuthRepository {
         if (!this._auth) {
-            this._auth = new AuthService();
+            this._auth = new AuthRepository();
         }
         return this._auth;
     }
 
     // Getter para o cliente de perfil
-    public static get profile(): ProfileService {
+    public static get profile(): ProfileRepository {
         if (!this._profile) {
-            this._profile = new ProfileService();
+            this._profile = new ProfileRepository();
         }
         return this._profile;
     }
 
     /**
-     * Cria um cliente HTTP para servir como um serviço genérico qualquer
+     * Cria um cliente HTTP para servir como um repository genérico qualquer
      * @param serviceUrl
      * @returns HttpClient
      * @example
-     * const httpClient = Services.createHttpService('https://api.example.com');
+     * const httpClient = Repositories.createHttpRepository('https://api.example.com');
      * httpClient.get('/endpoint');
      *
      */
-    public static createHttpService(serviceUrl: string): HttpClient {
+    public static createHttpRepository(serviceUrl: string): HttpClient {
         return new HttpClient(serviceUrl);
     }
 }

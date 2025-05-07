@@ -1,6 +1,6 @@
 import NextAuth, { User as UserAuth } from 'next-auth';
 import Google from 'next-auth/providers/google';
-import { Services } from '../api/services';
+import { Repositories } from '../api/services';
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
     pages: {
@@ -19,13 +19,14 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                 try {
                     const {
                         data: { access, refresh, exp },
-                    } = await Services.auth.googleSignIn(account.id_token);
+                    } = await Repositories.auth.googleSignIn(account.id_token);
                     token.accessToken = access;
                     token.refreshToken = refresh;
                     token.exp = exp;
 
                     try {
-                        const userData = await Services.auth.getUser(access);
+                        const userData =
+                            await Repositories.auth.getUser(access);
                         token.user = {
                             ...token.user,
                             ...userData,
@@ -45,7 +46,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         async session({ session, token }) {
             if (token.exp && token.exp < Date.now() / 1000) {
                 try {
-                    const newSession = await Services.auth.refreshToken(
+                    const newSession = await Repositories.auth.refreshToken(
                         token.refreshToken!,
                     );
                     const { access, refresh, exp } = newSession.data;

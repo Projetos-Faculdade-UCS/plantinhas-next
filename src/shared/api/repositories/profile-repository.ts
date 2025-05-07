@@ -2,7 +2,7 @@ import { ProfilePreview } from '@/shared/types/auth';
 import { Client } from '@/shared/types/client';
 import { JWTClient } from '../client/jwt-client';
 
-export class ProfileService {
+export class ProfileRepository {
     private url: string = process.env.PROFILE_API_URL || '';
     private client: Client;
 
