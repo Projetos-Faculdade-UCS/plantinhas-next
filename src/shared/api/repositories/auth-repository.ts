@@ -1,9 +1,10 @@
 import { ProfilePreview, SessionToken } from '@/shared/types/auth';
+import { Client } from '@/shared/types/client';
 import { HttpClient } from '../client/http-client';
 
 export class AuthRepository {
     private url: string = process.env.AUTH_API_URL || '';
-    private client: HttpClient;
+    private client: Client;
 
     constructor() {
         this.client = new HttpClient(this.url);
