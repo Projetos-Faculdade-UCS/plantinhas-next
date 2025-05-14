@@ -2,7 +2,7 @@ import { ValueLabel } from './index';
 
 export interface Planta {
     id: number;
-    name: string;
+    nome: string;
     nomeCientifico: string;
     foto?: string;
     descricao: string;
@@ -18,7 +18,7 @@ export interface Planta {
 
 export type PlantaPreview = Pick<
     Planta,
-    'id' | 'name' | 'foto' | 'dificuldade'
+    'id' | 'nome' | 'foto' | 'dificuldade'
 >;
 
 export interface Categoria {
