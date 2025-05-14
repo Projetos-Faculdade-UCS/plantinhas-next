@@ -1,5 +1,3 @@
-import { ValueLabel } from './index';
-
 export interface Planta {
     id: number;
     nome: string;
@@ -7,13 +5,17 @@ export interface Planta {
     foto?: string;
     descricao: string;
     estacaoIdeal: 'Outono' | 'Verão' | 'Inverno' | 'Primavera' | 'Todo o ano';
-    teparaturaIdeal: {
+    temperatura: {
         minima: number;
         maxima: number;
+        ideal: number;
     };
     categoria: CategoriaPreview;
     subCategorias: string[];
-    dificuldade: ValueLabel;
+    dificuldade: {
+        label: string;
+        value: number;
+    };
 }
 
 export type PlantaPreview = Pick<

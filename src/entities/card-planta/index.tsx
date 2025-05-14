@@ -1,11 +1,15 @@
-export default function CardPlanta() {
+import { PlantaPreview } from '@/shared/types/planta';
+
+type CardPlantaProps = {
+    planta: PlantaPreview;
+};
+export default function CardPlanta({ planta }: CardPlantaProps) {
     return (
-        <div className="relative h-72 w-64 overflow-hidden">
+        <div className="relative h-52 w-52 shrink-0 overflow-hidden">
             {/* Card container */}
             <div className="absolute inset-0 overflow-hidden rounded-lg">
                 {/* Background color */}
                 <div className="bg-card absolute inset-0 rounded-lg border"></div>
-
                 {/* Wavy top with smooth curves using SVG - fill only */}
                 <svg
                     className="absolute top-0 left-0 w-full"
@@ -18,7 +22,6 @@ export default function CardPlanta() {
                         fill="none"
                     />
                 </svg>
-
                 {/* Border for ONLY the wavy part, not the top */}
                 <svg
                     className="absolute top-0 left-0 w-full"
@@ -34,20 +37,18 @@ export default function CardPlanta() {
                         strokeWidth="1"
                     />
                 </svg>
-
                 {/* Gray bar in the middle */}
                 <div className="absolute top-1/2 left-1/2 h-3 w-3/5 -translate-x-1/2 -translate-y-1/2 transform rounded-full bg-[#d3d3d3]" />
 
                 {/* Green footer */}
-                <div className="bg-primary absolute right-0 bottom-0 left-0 flex h-16 items-center justify-between rounded-b-lg px-4">
-                    {/* Left pill button */}
-                    <div className="h-8 w-24 rounded-full bg-[#7ab376]" />
+                <div className="bg-primary absolute right-0 bottom-0 left-0 flex h-10 items-center justify-between rounded-b-lg px-4">
+                    <span className="text-primary-foreground">
+                        {planta.dificuldade.label}
+                    </span>
 
-                    {/* Plant icon */}
-                    <i className="ph ph-potted-plant text-primary-foreground text-3xl" />
-
-                    {/* Right circular button */}
-                    <div className="h-8 w-10 rounded-full bg-[#7ab376]" />
+                    <span className="text-primary-foreground">
+                        {planta.dificuldade.value.toFixed(1).replace('.', ',')}
+                    </span>
                 </div>
             </div>
         </div>

@@ -1,6 +1,7 @@
 import { objectToSearchParams } from '@/shared/lib/utils';
 import { Client } from '@/shared/types/client';
 import {
+    Categoria,
     ListagemCategorias,
     ListagemPlantas,
     Planta,
@@ -34,6 +35,25 @@ export class PlantaRepository {
     }
 
     /**
+     * Retorna uma categoria específica
+     * @param idCategoria ID da categoria
+     * @returns Retorna uma categoria específica
+     *
+     * cache de 1 minuto
+     */
+    public async getCategoria(idCategoria: number) {
+        return this.client.get<Categoria>(
+            `/gerenciamento/categorias/${idCategoria}/`,
+            {
+                next: {
+                    tags: ['categoria', `${idCategoria}`],
+                    revalidate: 60,
+                },
+            },
+        );
+    }
+
+    /**
      * Retorna uma lista de plantas filtradas por categoria
      * @param idCategoria ID da categoria
      * @param pagina Página atual
@@ -50,7 +70,7 @@ export class PlantaRepository {
             `/gerenciamento/categorias/${idCategoria}/plantas?${params.toString()}`,
             {
                 next: {
-                    tags: ['categoria', `${params.toString()}`],
+                    tags: ['plantasPorCategoria', `${params.toString()}`],
                     revalidate: 60,
                 },
             },
@@ -65,7 +85,7 @@ export class PlantaRepository {
     public async getPlanta(id: number) {
         return this.client.get<Planta>(`/gerenciamento/plantas/${id}/`, {
             next: {
-                tags: ['categoria', `${id}`],
+                tags: ['planta', `${id}`],
                 revalidate: 60,
             },
         });
@@ -85,7 +105,7 @@ export class PlantaRepository {
             `/gerenciamento/plantas/?${params.toString()}`,
             {
                 next: {
-                    tags: ['search', `${params.toString()}`],
+                    tags: ['searchPlantas', `${params.toString()}`],
                     revalidate: 60,
                 },
             },

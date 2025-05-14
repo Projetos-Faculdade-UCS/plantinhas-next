@@ -1,0 +1,42 @@
+import CardPlanta from '@/entities/card-planta';
+import { PlantaRepository } from '@/shared/api/repositories/planta-repository';
+import Link from 'next/link';
+
+export default async function PlantasPorCategoriaPage({
+    params,
+}: {
+    params: { categoriaId: string };
+}) {
+    const plantaRepository = new PlantaRepository();
+    const categoria = await plantaRepository.getCategoria(
+        Number(params.categoriaId),
+    );
+    const plantas = await plantaRepository.getPlantasPorCategoria(
+        Number(params.categoriaId),
+        1,
+    );
+    console.log(plantas);
+    return (
+        <div className="flex h-full w-full flex-col gap-4 px-8 py-4">
+            <div className="flex items-center gap-2">
+                <Link
+                    href="/catalogo"
+                    className="text-primary flex items-center gap-2"
+                >
+                    <i className="ph ph-book-bookmark text-3xl" />
+                    <p className="text-2xl font-medium">Catálogo de Plantas</p>
+                </Link>
+                <div className="text-muted-foreground flex items-center gap-2">
+                    <i className="ph ph-caret-right text-xl" />
+                    <p className="text-xl font-medium">{categoria.data.nome}</p>
+                </div>
+            </div>
+            <p className="text-muted-foreground">{categoria.data.descricao}</p>
+            <div className="flex flex-wrap gap-8">
+                {plantas.data.itens.map((planta) => (
+                    <CardPlanta key={planta.id} planta={planta} />
+                ))}
+            </div>
+        </div>
+    );
+}
