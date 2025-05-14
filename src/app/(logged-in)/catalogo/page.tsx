@@ -1,10 +1,10 @@
 import CardPlanta from '@/entities/card-planta';
+import { PrateleiraPlantas } from '@/features/lista-plantas/prateleira-plantas';
 import { PlantaRepository } from '@/shared/api/repositories/planta-repository';
 import Link from 'next/link';
 
 export default async function CatalogoPlantasPage() {
     const catalogo = await new PlantaRepository().getCatalogo();
-    console.log(catalogo);
     return (
         <div className="flex h-full w-full flex-col px-8 py-4">
             <div className="text-primary flex items-center gap-2">
@@ -28,14 +28,14 @@ export default async function CatalogoPlantasPage() {
                             <i className="ph ph-caret-right text-xl" />
                         </Link>
 
-                        <div className="flex w-full flex-nowrap gap-8 overflow-x-scroll">
+                        <PrateleiraPlantas>
                             {categoria.plantas.map((planta) => (
                                 <CardPlanta
                                     key={`${categoria.id} ${planta.id}`}
                                     planta={planta}
                                 />
                             ))}
-                        </div>
+                        </PrateleiraPlantas>
                     </div>
                 ))}
             </div>
