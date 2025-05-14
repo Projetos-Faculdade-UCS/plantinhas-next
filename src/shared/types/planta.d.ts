@@ -1,15 +1,44 @@
-export interface PlantaPreview {
+import { ValueLabel } from './index';
+
+export interface Planta {
     id: number;
     name: string;
+    nomeCientifico: string;
     foto?: string;
+    descricao: string;
+    estacaoIdeal: 'Outono' | 'Verão' | 'Inverno' | 'Primavera' | 'Todo o ano';
+    teparaturaIdeal: {
+        minima: number;
+        maxima: number;
+    };
+    categoria: CategoriaPreview;
+    subCategorias: string[];
+    dificuldade: ValueLabel;
 }
 
-export interface Catalogo {
+export type PlantaPreview = Pick<
+    Planta,
+    'id' | 'name' | 'foto' | 'dificuldade'
+>;
+
+export interface Categoria {
+    id: number;
+    nome: string;
+    descricao: string;
+    quantidadePlantas: number;
+}
+
+export type CategoriaPreview = Pick<Categoria, 'id' | 'nome' | 'descricao'>;
+
+export interface ListagemCategorias {
     quantidade: number;
-    items: {
-        id: number;
-        nome: string;
-        quantidadePlantas: number;
-        plantas: PlantaPreview[];
-    }[];
+    items: (Categoria & { plantas: PlantaPreview[] })[];
+}
+
+export interface ListagemPlantas {
+    total: number;
+    itensPorPagina: number;
+    paginaAtual: number;
+    ultimaPagina: number;
+    itens: PlantaPreview[];
 }
