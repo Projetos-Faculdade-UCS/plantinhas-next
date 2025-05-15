@@ -1,3 +1,4 @@
+import Sidebar from '@/entities/sidebar';
 import { ExpandableTabsProps, FloatingDock } from '@/shared/ui/floating-dock';
 import type { Metadata } from 'next';
 import '../globals.css';
@@ -37,7 +38,10 @@ export default function LoggedInLayout({
     ];
     return (
         <main className="bg-background relative h-full w-full">
-            {children}
+            
+            <Sidebar />
+
+            <main className='ml-56'>{children}</main>
 
             <div className="absolute bottom-10 z-10 flex w-full justify-center">
                 <FloatingDock
