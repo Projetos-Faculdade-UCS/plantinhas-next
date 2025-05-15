@@ -1,7 +1,13 @@
 import { PlantaPreview } from '@/shared/types/planta';
+import { Itim } from 'next/font/google';
 import Image from 'next/image';
 import Link from 'next/link';
-import styles from './styles.module.scss';
+import { Ondulacao } from './ondulacao';
+
+const itim = Itim({
+    subsets: ['latin'],
+    weight: '400',
+});
 
 type CardPlantaProps = {
     planta: PlantaPreview;
@@ -10,16 +16,19 @@ export default function CardPlanta({ planta }: CardPlantaProps) {
     return (
         <Link
             href={`/catalogo/planta/${planta.id}`}
-            className="relative h-52 w-52 shrink-0"
+            className="relative h-52 w-52 shrink-0 transition-all duration-200 hover:scale-105"
         >
-            <div className={`${styles.waveCard} flex flex-col`}>
-                <div className="flex grow flex-col gap-2 bg-red-800">
-                    <div className="h-[120px] w-full"></div>
-                    <span className="w-full text-center text-xl">
+            <Ondulacao />
+            <div className={`flex h-[calc(100%-60px)] flex-col`}>
+                <div className="bg-card grow border-x"></div>
+                <div className="bg-card flex flex-col gap-2 border-x py-4">
+                    <span
+                        className={`w-full text-center text-xl ${itim.className}`}
+                    >
                         {planta.nome}
                     </span>
                 </div>
-                <div className="bg-primary flex h-10 shrink-0 items-center justify-between px-4">
+                <div className="bg-primary border-primary flex h-10 shrink-0 items-center justify-between rounded-b-md border-x border-b px-4">
                     <span className="text-primary-foreground">
                         {planta.dificuldade.label}
                     </span>
@@ -29,13 +38,13 @@ export default function CardPlanta({ planta }: CardPlantaProps) {
                     </span>
                 </div>
             </div>
-            <div className="absolute top-0 left-0 flex h-full w-full">
+            <div className="absolute top-0 left-0 flex w-full justify-center">
                 <Image
                     src={planta.foto || '/assets/plantas/girassol.png'}
                     alt={planta.nome || 'Sem imagem'}
                     width={1000}
                     height={1000}
-                    className="h-[120px] object-contain"
+                    className="h-[120px] w-full object-contain"
                 />
             </div>
         </Link>
