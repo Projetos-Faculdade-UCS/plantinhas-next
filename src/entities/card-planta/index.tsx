@@ -18,12 +18,12 @@ export default function CardPlanta({ planta }: CardPlantaProps) {
             href={`/catalogo/planta/${planta.id}`}
             className="relative h-52 w-52 shrink-0 transition-all duration-200 hover:scale-105"
         >
-            <Ondulacao />
-            <div className={`flex h-[calc(100%-60px)] flex-col`}>
+            <div className={`flex h-full flex-col`}>
+                <Ondulacao />
                 <div className="bg-card grow border-x"></div>
                 <div className="bg-card flex flex-col gap-2 border-x py-4">
                     <span
-                        className={`w-full text-center text-xl ${itim.className}`}
+                        className={`z-[1] w-full text-center text-xl ${itim.className}`}
                     >
                         {planta.nome}
                     </span>
@@ -38,7 +38,7 @@ export default function CardPlanta({ planta }: CardPlantaProps) {
                     </span>
                 </div>
             </div>
-            <div className="absolute top-0 left-0 flex w-full justify-center">
+            <div className="absolute top-0 left-0 z-[1] flex w-full justify-center">
                 <Image
                     src={planta.foto || '/assets/plantas/girassol.png'}
                     alt={planta.nome || 'Sem imagem'}
@@ -46,6 +46,9 @@ export default function CardPlanta({ planta }: CardPlantaProps) {
                     height={1000}
                     className="h-[120px] w-full object-contain"
                 />
+            </div>
+            <div className="absolute top-0 left-0 z-[0] mt-12 flex w-full justify-center">
+                <div className="bg-foreground h-20 w-20 rounded-full opacity-50 blur-lg"></div>
             </div>
         </Link>
     );
