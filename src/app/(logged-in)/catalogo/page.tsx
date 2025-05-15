@@ -18,7 +18,7 @@ export default async function CatalogoPlantasPage() {
                         className="my-4 flex w-full flex-col gap-2"
                     >
                         <Link
-                            href={`/catalogo/${categoria.id}`}
+                            href={`/catalogo/categoria/${categoria.id}`}
                             className="text-muted-foreground flex items-center gap-2"
                         >
                             <h2 className="text-xl font-medium">

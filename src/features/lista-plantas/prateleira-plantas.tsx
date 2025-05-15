@@ -19,7 +19,7 @@ export function PrateleiraPlantas({ children }: { children: React.ReactNode }) {
                 <div className="from-background absolute top-0 left-0 z-[1] h-full w-20 bg-gradient-to-r to-transparent">
                     <div className="flex h-full w-full items-center justify-center opacity-0 hover:opacity-100">
                         <button
-                            className="bg-card rounded-full border p-1 shadow-sm"
+                            className="bg-card cursor-pointer rounded-full border p-1 shadow-sm"
                             onClick={() => {
                                 scrollRight();
                             }}
@@ -45,7 +45,7 @@ export function PrateleiraPlantas({ children }: { children: React.ReactNode }) {
                 <div className="from-background absolute top-0 right-0 z-[1] h-full w-20 bg-gradient-to-l to-transparent">
                     <div className="flex h-full w-full items-center justify-center opacity-0 hover:opacity-100">
                         <button
-                            className="bg-card rounded-full border p-1 shadow-sm"
+                            className="bg-card cursor-pointer rounded-full border p-1 shadow-sm"
                             onClick={() => {
                                 scrollLeft();
                             }}

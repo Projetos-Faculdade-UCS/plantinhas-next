@@ -1,11 +1,15 @@
 import { PlantaPreview } from '@/shared/types/planta';
+import Link from 'next/link';
 
 type CardPlantaProps = {
     planta: PlantaPreview;
 };
 export default function CardPlanta({ planta }: CardPlantaProps) {
     return (
-        <div className="relative h-52 w-52 shrink-0 overflow-hidden">
+        <Link
+            href={`/catalogo/planta/${planta.id}`}
+            className="relative h-52 w-52 shrink-0 overflow-hidden"
+        >
             {/* Card container */}
             <div className="absolute inset-0 overflow-hidden rounded-lg">
                 {/* Background color */}
@@ -51,6 +55,6 @@ export default function CardPlanta({ planta }: CardPlantaProps) {
                     </span>
                 </div>
             </div>
-        </div>
+        </Link>
     );
 }

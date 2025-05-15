@@ -15,7 +15,7 @@ export default async function PlantasPorCategoriaPage({
         Number(params.categoriaId),
         1,
     );
-    console.log(plantas);
+
     return (
         <div className="flex h-full w-full flex-col gap-4 px-8 py-4">
             <div className="flex items-center gap-2">
