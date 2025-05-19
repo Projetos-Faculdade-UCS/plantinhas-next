@@ -1,4 +1,5 @@
 import CardPlanta from '@/entities/card-planta';
+import { FiltrosPlanta } from '@/entities/filtros-planta';
 import { PrateleiraPlantas } from '@/features/lista-plantas/prateleira-plantas';
 import { PlantaRepository } from '@/shared/api/repositories/planta-repository';
 import Link from 'next/link';
@@ -11,6 +12,7 @@ export default async function CatalogoPlantasPage() {
                 <i className="ph ph-book-bookmark text-3xl" />
                 <p className="text-2xl font-medium">Catálogo de Plantas</p>
             </div>
+            <FiltrosPlanta />
             <div className="flex flex-col gap-4">
                 {catalogo.data.items.map((categoria) => (
                     <div
