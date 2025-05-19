@@ -16,7 +16,7 @@ export function PrateleiraPlantas({ children }: { children: React.ReactNode }) {
     return (
         <div className="relative flex w-full items-center">
             {canScrollLeft && (
-                <div className="absolute top-0 left-0 z-[1] h-full w-14">
+                <div className="absolute top-0 left-0 z-[2] h-full w-14">
                     <div className="flex h-full w-full items-center justify-center opacity-0 hover:opacity-100">
                         <button
                             className="bg-card cursor-pointer rounded-full border p-1 shadow-sm"
@@ -42,7 +42,7 @@ export function PrateleiraPlantas({ children }: { children: React.ReactNode }) {
                 {children}
             </div>
             {canScrollRight && (
-                <div className="absolute top-0 right-0 z-[1] h-full w-14">
+                <div className="absolute top-0 right-0 z-[2] h-full w-14">
                     <div className="flex h-full w-full items-center justify-center opacity-0 hover:opacity-100">
                         <button
                             className="bg-card cursor-pointer rounded-full border p-1 shadow-sm"

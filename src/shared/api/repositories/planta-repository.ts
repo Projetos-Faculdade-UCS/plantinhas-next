@@ -96,7 +96,7 @@ export class PlantaRepository {
      * @param search Termo de pesquisa
      * @param pagina Página atual
      */
-    public async searchPlantas(search: string, pagina: number) {
+    public async searchPlantas(search?: string, pagina?: number) {
         const params = objectToSearchParams({
             search: search,
             page: pagina,

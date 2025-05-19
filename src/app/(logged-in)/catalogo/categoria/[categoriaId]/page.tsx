@@ -1,5 +1,5 @@
 import CardPlanta from '@/entities/card-planta';
-import { PlantaRepository } from '@/shared/api/repositories/planta-repository';
+import { Repositories } from '@/shared/api/repositories';
 import Link from 'next/link';
 
 export default async function PlantasPorCategoriaPage({
@@ -7,7 +7,7 @@ export default async function PlantasPorCategoriaPage({
 }: {
     params: { categoriaId: string };
 }) {
-    const plantaRepository = new PlantaRepository();
+    const plantaRepository = Repositories.plantas;
     const categoria = await plantaRepository.getCategoria(
         Number(params.categoriaId),
     );

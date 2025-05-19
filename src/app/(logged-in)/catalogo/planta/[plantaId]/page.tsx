@@ -1,4 +1,4 @@
-import { PlantaRepository } from '@/shared/api/repositories/planta-repository';
+import { Repositories } from '@/shared/api/repositories';
 
 export default async function PlantaPage({
     params,
@@ -6,7 +6,7 @@ export default async function PlantaPage({
     params: Promise<{ plantaId: string }>;
 }) {
     const { plantaId } = await params;
-    const planta = await new PlantaRepository().getPlanta(Number(plantaId));
+    const planta = await Repositories.plantas.getPlanta(Number(plantaId));
 
     return (
         <div className="flex h-full w-full flex-col px-8 py-4">

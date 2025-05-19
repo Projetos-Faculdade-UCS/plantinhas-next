@@ -1,4 +1,5 @@
 import { ExpandableTabsProps, FloatingDock } from '@/shared/ui/floating-dock';
+import { QueryProvider } from '@/shared/ui/query-provider';
 import type { Metadata } from 'next';
 import '../globals.css';
 
@@ -37,7 +38,7 @@ export default function LoggedInLayout({
     ];
     return (
         <main className="bg-background relative h-full w-full">
-            {children}
+            <QueryProvider>{children}</QueryProvider>
 
             <div className="fixed bottom-10 z-10 flex w-full justify-center">
                 <FloatingDock

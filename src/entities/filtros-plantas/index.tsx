@@ -2,23 +2,28 @@
 import { Button } from '@/shared/ui/button';
 import { Form, FormControl, FormField, FormItem } from '@/shared/ui/form';
 import { Input } from '@/shared/ui/input';
-import { useSearchParams } from 'next/navigation';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useForm } from 'react-hook-form';
-
-type FiltrosPlanta = {
-    search: string;
-};
+import { TFiltrosPlanta } from './types';
 
 export function FiltrosPlanta() {
+    const router = useRouter();
+    const path = usePathname();
     const params = useSearchParams();
-    const formData = useForm<FiltrosPlanta>({
+    const formData = useForm<TFiltrosPlanta>({
         defaultValues: {
             search: params.get('search') || '',
         },
     });
 
-    function handleSubmit(data: FiltrosPlanta) {
-        console.log(data);
+    function handleSubmit(data: TFiltrosPlanta) {
+        const params = new URLSearchParams();
+        Object.entries(data).forEach(([key, value]) => {
+            if (value) {
+                params.append(key, value);
+            }
+        });
+        router.replace(`${path}?${params.toString()}`);
     }
 
     return (
@@ -41,14 +46,14 @@ export function FiltrosPlanta() {
                                     }}
                                     type="text"
                                     placeholder="Buscar planta"
-                                    className="bg-card w-full max-w-[300px]"
+                                    className="bg-card w-full max-w-[300px] text-base"
                                 />
                             </FormControl>
                         </FormItem>
                     )}
                 />
-                <Button type="button" variant="default">
-                    <i className="ph ph-filter text-xl" />
+                <Button type="button" variant="default" className="px-2">
+                    <i className="ph ph-funnel text-xl" />
                 </Button>
             </form>
         </Form>
