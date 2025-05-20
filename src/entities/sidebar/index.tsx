@@ -1,10 +1,12 @@
 import plantinhas from '@/public/assets/plantinhas.png';
+import { Button } from '@/shared/ui/button';
 import Image from 'next/image';
+import Link from 'next/link';
 import SidebarButton from './SidebarButton';
 
 export default function Sidebar() {
     return (
-        <div className="fixed top-0 left-0 h-screen w-56 bg-background border-r border-r-[#D4D4D4] overflow-hidden ">
+        <div className="fixed top-0 left-0 h-screen w-64 bg-background border-r border-r-[#D4D4D4] overflow-hidden ">
             {/* Sidebar container */}
 
             <div className="flex items-center gap-2 px-3 py-6">
@@ -40,6 +42,19 @@ export default function Sidebar() {
                     title="Fórum"
                     path="/forum"
                 />
+
+                <Button
+                    asChild
+                    variant={'default'}
+                    className="mt-4 flex w-full items-center justify-center gap-2 text-base bg-primary"
+                >   
+                    < Link href="/plantar" >
+                        <span className="text-base">
+                            + Plantar
+                        </span>                    
+                    </Link>
+                </Button>
+
             </div>
         </div>
     )
