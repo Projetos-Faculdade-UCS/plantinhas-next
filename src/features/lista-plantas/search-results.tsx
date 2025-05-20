@@ -21,9 +21,13 @@ export function SearchResults({ search }: SearchResultsProps) {
     });
 
     return (
-        <div className="flex flex-col gap-4">
-            <span className="text-muted-foreground text-lg">
-                Você pesquisou por &apos;{search}&apos;
+        <div className="flex h-full flex-col gap-4">
+            <span className="text-muted-foreground text-base">
+                {query.isPlaceholderData || query.isLoading ? (
+                    <span className="animate-pulse">Carregando...</span>
+                ) : !!query.data?.total ? (
+                    <span>{query.data?.total} plantas encontradas</span>
+                ) : null}
             </span>
             {query.isLoading ? (
                 <div className="flex flex-wrap gap-4">
@@ -32,8 +36,11 @@ export function SearchResults({ search }: SearchResultsProps) {
                     ))}
                 </div>
             ) : query.isError ? (
-                <div className="flex h-full w-full items-center justify-center">
-                    <span>Erro ao carregar plantas</span>
+                <div className="flex h-full w-full flex-col items-center justify-center gap-2">
+                    <i className="ph ph-bug-beetle text-destructive text-3xl" />
+                    <span className="text-muted-foreground text-base">
+                        Ocorreu um erro ao buscar as plantas
+                    </span>
                 </div>
             ) : query.data?.itens.length ? (
                 <div className="flex flex-wrap gap-4">
@@ -46,8 +53,11 @@ export function SearchResults({ search }: SearchResultsProps) {
                     ))}
                 </div>
             ) : (
-                <div className="flex h-full w-full items-center justify-center">
-                    <span>Nenhum resultado encontrado</span>
+                <div className="flex h-full w-full flex-col items-center justify-center gap-2">
+                    <i className="ph ph-cactus text-primary text-3xl" />
+                    <span className="text-muted-foreground text-base">
+                        Nenhum resultado encontrado
+                    </span>
                 </div>
             )}
         </div>

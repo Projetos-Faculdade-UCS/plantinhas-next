@@ -5,14 +5,13 @@ import Link from 'next/link';
 export default async function PlantasPorCategoriaPage({
     params,
 }: {
-    params: { categoriaId: string };
+    params: Promise<{ categoriaId: string }>;
 }) {
+    const categoriaId = Number((await params).categoriaId);
     const plantaRepository = Repositories.plantas;
-    const categoria = await plantaRepository.getCategoria(
-        Number(params.categoriaId),
-    );
+    const categoria = await plantaRepository.getCategoria(categoriaId);
     const plantas = await plantaRepository.getPlantasPorCategoria(
-        Number(params.categoriaId),
+        categoriaId,
         1,
     );
 

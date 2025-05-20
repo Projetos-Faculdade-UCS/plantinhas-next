@@ -1,9 +1,9 @@
 'use client';
 import { Button } from '@/shared/ui/button';
-import { Form, FormControl, FormField, FormItem } from '@/shared/ui/form';
-import { Input } from '@/shared/ui/input';
+import { Form } from '@/shared/ui/form';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useForm } from 'react-hook-form';
+import { SearchInput } from './search-input';
 import { TFiltrosPlanta } from './types';
 
 export function FiltrosPlanta() {
@@ -32,25 +32,9 @@ export function FiltrosPlanta() {
                 onSubmit={formData.handleSubmit(handleSubmit)}
                 className="flex items-center gap-2"
             >
-                <FormField
+                <SearchInput
                     control={formData.control}
-                    name="search"
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormControl>
-                                <Input
-                                    {...field}
-                                    onChange={(e) => {
-                                        field.onChange(e);
-                                        handleSubmit(formData.getValues());
-                                    }}
-                                    type="text"
-                                    placeholder="Buscar planta"
-                                    className="bg-card w-full max-w-[300px] text-base"
-                                />
-                            </FormControl>
-                        </FormItem>
-                    )}
+                    onClear={() => formData.handleSubmit(handleSubmit)()}
                 />
                 <Button type="button" variant="default" className="px-2">
                     <i className="ph ph-funnel text-xl" />

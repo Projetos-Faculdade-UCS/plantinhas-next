@@ -17,7 +17,7 @@ export default function CardPlanta({ planta, deactivated }: CardPlantaProps) {
     return (
         <Link
             href={`/catalogo/planta/${planta.id}`}
-            className={`relative w-44 shrink-0 ${styles.jumpOnHover}`}
+            className={`relative w-[9.5rem] shrink-0 ${styles.jumpOnHover}`}
         >
             <div className={`flex h-full flex-col`}>
                 <div className="h-8"></div>
@@ -52,7 +52,7 @@ export default function CardPlanta({ planta, deactivated }: CardPlantaProps) {
                 />
             </div>
             <div className="absolute top-0 left-0 z-[0] mt-12 flex w-full justify-center">
-                <div className="bg-foreground h-20 w-20 rounded-full opacity-50 blur-lg"></div>
+                <div className="bg-foreground h-20 w-20 rounded-full opacity-40 blur-lg"></div>
             </div>
         </Link>
     );
