@@ -1,4 +1,5 @@
 import { ExpandableTabsProps, FloatingDock } from '@/shared/ui/floating-dock';
+import { QueryProvider } from '@/shared/ui/query-provider';
 import type { Metadata } from 'next';
 import '../globals.css';
 
@@ -26,7 +27,7 @@ export default function LoggedInLayout({
         {
             title: 'Catálogo de plantas',
             icon: <i className="ph ph-book-bookmark text-xl"></i>,
-            path: '/catalogo-plantas',
+            path: '/catalogo',
         },
         { type: 'separator' },
         {
@@ -37,9 +38,9 @@ export default function LoggedInLayout({
     ];
     return (
         <main className="bg-background relative h-full w-full">
-            {children}
+            <QueryProvider>{children}</QueryProvider>
 
-            <div className="absolute bottom-10 z-10 flex w-full justify-center">
+            <div className="fixed bottom-10 z-10 flex w-full justify-center">
                 <FloatingDock
                     tabs={tabs}
                     activeColor="text-primary"

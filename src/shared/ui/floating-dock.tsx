@@ -49,6 +49,10 @@ const spanVariants = {
 
 const transition = { delay: 0, type: 'spring', bounce: 0, duration: 0.4 };
 
+const Separator = () => (
+    <div className="bg-border mx-1 h-[24px] w-[1.2px]" aria-hidden="true" />
+);
+
 export function FloatingDock({
     tabs,
     className,
@@ -56,10 +60,6 @@ export function FloatingDock({
 }: ExpandableTabsProps) {
     const router = useRouter();
     const pathName = usePathname();
-
-    const Separator = () => (
-        <div className="bg-border mx-1 h-[24px] w-[1.2px]" aria-hidden="true" />
-    );
 
     return (
         <div
