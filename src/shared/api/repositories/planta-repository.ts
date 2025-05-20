@@ -25,12 +25,6 @@ export class PlantaRepository {
     public async getCatalogo() {
         return this.client.get<ListagemCategorias>(
             '/gerenciamento/categorias/',
-            {
-                next: {
-                    tags: ['catalogo'],
-                    revalidate: 60,
-                },
-            },
         );
     }
 
@@ -103,12 +97,6 @@ export class PlantaRepository {
         });
         return this.client.get<ListagemPlantas>(
             `/gerenciamento/plantas/?${params.toString()}`,
-            {
-                next: {
-                    tags: ['searchPlantas', `${params.toString()}`],
-                    revalidate: 60,
-                },
-            },
         );
     }
 

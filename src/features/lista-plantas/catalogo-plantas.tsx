@@ -13,7 +13,7 @@ export async function CatalogoPlantas() {
                         href={`/catalogo/categoria/${categoria.id}`}
                         className="text-muted-foreground flex items-center gap-2 px-2"
                     >
-                        <h2 className={`text-xl font-medium`}>
+                        <h2 className={`text-lg font-medium`}>
                             {categoria.nome}
                         </h2>
                         <span>({categoria.quantidadePlantas})</span>

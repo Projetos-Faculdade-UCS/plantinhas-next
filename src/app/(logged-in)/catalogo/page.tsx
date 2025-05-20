@@ -1,5 +1,6 @@
 import { FiltrosPlanta } from '@/entities/filtros-plantas';
 import { CatalogoPlantas } from '@/features/lista-plantas/catalogo-plantas';
+import { CatalogoSkeleton } from '@/features/lista-plantas/catalogo-skeleton';
 import { SearchResults } from '@/features/lista-plantas/search-results';
 import { Suspense } from 'react';
 
@@ -20,7 +21,7 @@ export default async function CatalogoPlantasPage({
             {search ? (
                 <SearchResults search={search as string} />
             ) : (
-                <Suspense fallback={<div>Loading...</div>}>
+                <Suspense fallback={<CatalogoSkeleton />}>
                     <CatalogoPlantas />
                 </Suspense>
             )}

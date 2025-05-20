@@ -1,0 +1,11 @@
+.jumpOnHover {
+    transition: all .2s ease-out;
+
+    &:hover {
+        transform: translateY(-10px);
+
+        .cardFooter {
+            box-shadow: 0 2px 4px rgba(0, 0, 0, .2);
+        }
+    }
+}

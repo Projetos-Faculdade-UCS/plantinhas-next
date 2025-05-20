@@ -1,9 +1,15 @@
 import { clsx, type ClassValue } from 'clsx';
+import { Itim } from 'next/font/google';
 import { twMerge } from 'tailwind-merge';
 
 export function cn(...inputs: ClassValue[]) {
     return twMerge(clsx(inputs));
 }
+
+export const itim = Itim({
+    subsets: ['latin'],
+    weight: '400',
+});
 
 export function objectToSearchParams(obj: Record<string, unknown>) {
     const searchParams = new URLSearchParams();
