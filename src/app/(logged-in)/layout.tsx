@@ -41,7 +41,7 @@ export default function LoggedInLayout({
             
             <Sidebar />
 
-            <main className='ml-56'>{children}</main>
+            <main className='ml-64'>{children}</main>
 
             <div className="absolute bottom-10 z-10 flex w-full justify-center">
                 <FloatingDock
