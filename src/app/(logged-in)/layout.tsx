@@ -21,12 +21,12 @@ export default function LoggedInLayout({
         },
         {
             title: 'Meu jardim',
-            icon: <i className="ph ph-potted-plant text-xl"></i>,
+            icon: <i className="ph ph-shovel text-xl"></i>,
             path: '/jardim',
         },
         {
             title: 'Catálogo de plantas',
-            icon: <i className="ph ph-book-bookmark text-xl"></i>,
+            icon: <i className="ph ph-plant text-xl"></i>,
             path: '/catalogo',
         },
         { type: 'separator' },
