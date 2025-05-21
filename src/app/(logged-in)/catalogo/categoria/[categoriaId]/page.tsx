@@ -16,26 +16,25 @@ export default async function PlantasPorCategoriaPage({
     );
 
     return (
-        <div className="flex h-full w-full flex-col gap-4 px-8 py-4">
-            <div className="flex items-center gap-2">
+        <>
+            <div className="flex flex-col gap-1">
                 <Link
                     href="/catalogo"
-                    className="text-primary flex items-center gap-2"
+                    className="text-muted-foreground flex items-center gap-2 text-sm"
                 >
-                    <i className="ph ph-book-bookmark text-3xl" />
-                    <p className="text-2xl font-medium">Catálogo de Plantas</p>
+                    <i className="ph ph-arrow-left" />
+                    <p className="text-base">Voltar</p>
                 </Link>
-                <div className="text-muted-foreground flex items-center gap-2">
-                    <i className="ph ph-caret-right text-xl" />
-                    <p className="text-xl font-medium">{categoria.data.nome}</p>
-                </div>
+                <h2 className="text-xl font-medium">{categoria.data.nome}</h2>
+                <p className="text-muted-foreground text-base">
+                    {categoria.data.descricao}
+                </p>
             </div>
-            <p className="text-muted-foreground">{categoria.data.descricao}</p>
             <div className="flex flex-wrap gap-8">
                 {plantas.data.itens.map((planta) => (
                     <CardPlanta key={planta.id} planta={planta} />
                 ))}
             </div>
-        </div>
+        </>
     );
 }

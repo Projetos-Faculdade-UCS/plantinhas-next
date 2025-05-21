@@ -20,9 +20,9 @@ export default function LoggedInLayout({
             path: '/feed',
         },
         {
-            title: 'Minhas plantas',
+            title: 'Meu jardim',
             icon: <i className="ph ph-potted-plant text-xl"></i>,
-            path: '/minhas-plantas',
+            path: '/jardim',
         },
         {
             title: 'Catálogo de plantas',
