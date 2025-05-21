@@ -1,21 +1,30 @@
 import { CardPlantio } from '@/entities/card-plantio';
-import { itim } from '@/shared/lib/utils';
+import { Repositories } from '@/shared/api/repositories';
 import { PlantioPreview } from '@/shared/types/plantio';
+import { Button } from '@/shared/ui/button';
+import { Suspense, use } from 'react';
 
 export default function JardimPage() {
+    const plantios = use(Repositories.plantios.getPlantios());
     return (
-        <div className="flex h-full w-full flex-col gap-4 px-2 py-2 lg:px-8 lg:py-4">
-            <div className="flex items-center justify-between gap-2 pr-8">
-                <div className="text-primary flex items-center gap-2 px-2">
-                    <i className="ph ph-shovel text-3xl" />
-                    <p className={`text-2xl font-medium ${itim.className}`}>
-                        Meu Jardim
-                    </p>
-                </div>
-            </div>
+        <>
             <div className="flex flex-wrap gap-x-8 gap-y-2">
-                <CardPlantio plantio={{} as PlantioPreview} />
+                <Suspense fallback={<p>Carregando...</p>}>
+                    {plantios.data.itens.map((plantio: PlantioPreview) => (
+                        <CardPlantio key={plantio.id} plantio={plantio} />
+                    ))}
+                    {plantios.data.itens.length === 0 && (
+                        <div className="flex flex-col">
+                            <Button>
+                                <i className="ph ph-plus-circle flex text-lg"></i>
+                            </Button>
+                            <p className="text-muted-foreground">
+                                Você ainda não tem nenhum plantio
+                            </p>
+                        </div>
+                    )}
+                </Suspense>
             </div>
-        </div>
+        </>
     );
 }

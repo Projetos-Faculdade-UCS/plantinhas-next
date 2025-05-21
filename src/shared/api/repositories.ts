@@ -1,6 +1,7 @@
 import { HttpClient } from './client/http-client';
 import { AuthRepository } from './repositories/auth-repository';
 import { PlantaRepository } from './repositories/planta-repository';
+import { PlantioRepository } from './repositories/plantio-repository';
 import { ProfileRepository } from './repositories/profile-repository';
 
 /**
@@ -21,6 +22,7 @@ export class Repositories {
     private static _auth: AuthRepository;
     private static _profile: ProfileRepository;
     private static _plantas: PlantaRepository;
+    private static _plantios: PlantioRepository;
 
     // Getter para o cliente de autenticação
     public static get auth(): AuthRepository {
@@ -43,6 +45,13 @@ export class Repositories {
             this._plantas = new PlantaRepository();
         }
         return this._plantas;
+    }
+
+    public static get plantios() {
+        if (!this._plantios) {
+            this._plantios = new PlantioRepository();
+        }
+        return this._plantios;
     }
 
     /**

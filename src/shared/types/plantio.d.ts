@@ -29,3 +29,11 @@ export type PlantioPreview = Pick<
     Plantio,
     'id' | 'planta' | 'situacao' | 'saude' | 'sede'
 >;
+
+export interface ListagemPlantios {
+    total: number;
+    itensPorPagina: number;
+    paginaAtual: number;
+    ultimaPagina: number;
+    itens: PlantioPreview[];
+}
