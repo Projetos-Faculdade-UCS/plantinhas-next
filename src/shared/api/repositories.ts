@@ -1,5 +1,6 @@
 import { HttpClient } from './client/http-client';
 import { AuthRepository } from './repositories/auth-repository';
+import { PlantaRepository } from './repositories/planta-repository';
 import { ProfileRepository } from './repositories/profile-repository';
 
 /**
@@ -19,6 +20,7 @@ import { ProfileRepository } from './repositories/profile-repository';
 export class Repositories {
     private static _auth: AuthRepository;
     private static _profile: ProfileRepository;
+    private static _plantas: PlantaRepository;
 
     // Getter para o cliente de autenticação
     public static get auth(): AuthRepository {
@@ -34,6 +36,13 @@ export class Repositories {
             this._profile = new ProfileRepository();
         }
         return this._profile;
+    }
+
+    public static get plantas() {
+        if (!this._plantas) {
+            this._plantas = new PlantaRepository();
+        }
+        return this._plantas;
     }
 
     /**

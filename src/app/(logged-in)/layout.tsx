@@ -1,6 +1,7 @@
 import { FloatingDock } from '@/entities/menus/floating-dock';
 import Sidebar from '@/entities/menus/sidebar';
 import { Tab } from '@/entities/menus/types';
+import { QueryProvider } from '@/shared/ui/query-provider';
 import type { Metadata } from 'next';
 import '../globals.css';
 
@@ -28,7 +29,7 @@ export default function LoggedInLayout({
         {
             title: 'Catálogo de plantas',
             icon: <i className="ph ph-book-bookmark text-xl"></i>,
-            path: '/catalogo-plantas',
+            path: '/catalogo',
         },
         {
             title: 'Fórum',
@@ -38,17 +39,17 @@ export default function LoggedInLayout({
     ];
     return (
         <main className="bg-background relative h-full w-full">
-            
-            <Sidebar tabs={tabs}/>
+            <Sidebar tabs={tabs} />
 
-            <main className='md:ml-64'>{children}</main>
+            <div className="md:ml-64">
+                <QueryProvider>{children}</QueryProvider>
+            </div>
 
             <FloatingDock
                 tabs={tabs}
                 activeColor="text-primary"
                 className="border-border"
             />
-
         </main>
     );
 }

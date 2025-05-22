@@ -1,55 +1,59 @@
-export default function CardPlanta() {
+import { PlantaPreview } from '@/shared/types/planta';
+import { Itim } from 'next/font/google';
+import Image from 'next/image';
+import Link from 'next/link';
+import styles from './animation.module.scss';
+import { Ondulacao } from './ondulacao';
+const itim = Itim({
+    subsets: ['latin'],
+    weight: '400',
+});
+
+type CardPlantaProps = {
+    planta: PlantaPreview;
+    deactivated?: boolean;
+};
+export default function CardPlanta({ planta, deactivated }: CardPlantaProps) {
     return (
-        <div className="relative h-72 w-64 overflow-hidden">
-            {/* Card container */}
-            <div className="absolute inset-0 overflow-hidden rounded-lg">
-                {/* Background color */}
-                <div className="bg-card absolute inset-0 rounded-lg border"></div>
-
-                {/* Wavy top with smooth curves using SVG - fill only */}
-                <svg
-                    className="absolute top-0 left-0 w-full"
-                    height="80"
-                    viewBox="0 0 256 80"
-                    preserveAspectRatio="none"
+        <Link
+            href={`/catalogo/planta/${planta.id}`}
+            className={`relative w-[9.5rem] shrink-0 ${styles.jumpOnHover}`}
+        >
+            <div className={`flex h-full flex-col`}>
+                <div className="h-8"></div>
+                <Ondulacao />
+                <div className="bg-card h-8 border-x"></div>
+                <div className="bg-card flex flex-col gap-2 border-x pb-2">
+                    <span
+                        className={`z-[1] w-full text-center text-xl ${itim.className}`}
+                    >
+                        {planta.nome}
+                    </span>
+                </div>
+                <div
+                    className={`flex h-9 shrink-0 items-center justify-between rounded-b-md border-x border-b px-4 transition duration-300 ${styles.cardFooter} ${deactivated ? 'bg-muted-foreground border' : 'bg-primary border-primary'}`}
                 >
-                    <path
-                        d="M0,0 H256 V30 C256,30 220,30 180,15 C140,0 100,40 50,25 C20,15 0,30 0,30 V0 Z"
-                        fill="none"
-                    />
-                </svg>
+                    <span className="text-primary-foreground">
+                        {planta.dificuldade.label}
+                    </span>
 
-                {/* Border for ONLY the wavy part, not the top */}
-                <svg
-                    className="absolute top-0 left-0 w-full"
-                    height="80"
-                    viewBox="0 0 256 80"
-                    preserveAspectRatio="none"
-                    style={{ pointerEvents: 'none' }}
-                >
-                    <path
-                        d="M0,30 C20,15 50,25 100,40 C150,55 200,0 256,30"
-                        fill="none"
-                        stroke="#e0e0e0"
-                        strokeWidth="1"
-                    />
-                </svg>
-
-                {/* Gray bar in the middle */}
-                <div className="absolute top-1/2 left-1/2 h-3 w-3/5 -translate-x-1/2 -translate-y-1/2 transform rounded-full bg-[#d3d3d3]" />
-
-                {/* Green footer */}
-                <div className="bg-primary absolute right-0 bottom-0 left-0 flex h-16 items-center justify-between rounded-b-lg px-4">
-                    {/* Left pill button */}
-                    <div className="h-8 w-24 rounded-full bg-[#7ab376]" />
-
-                    {/* Plant icon */}
-                    <i className="ph ph-potted-plant text-primary-foreground text-3xl" />
-
-                    {/* Right circular button */}
-                    <div className="h-8 w-10 rounded-full bg-[#7ab376]" />
+                    <span className="text-primary-foreground">
+                        {planta.dificuldade.value.toFixed(1).replace('.', ',')}
+                    </span>
                 </div>
             </div>
-        </div>
+            <div className="absolute top-0 left-0 z-[1] flex w-full justify-center">
+                <Image
+                    src={planta.foto || '/assets/plantas/girassol.png'}
+                    alt={planta.nome || 'Sem imagem'}
+                    width={1000}
+                    height={1000}
+                    className={`h-[120px] w-full object-contain transition duration-300 ${deactivated ? 'grayscale' : ''}`}
+                />
+            </div>
+            <div className="absolute top-0 left-0 z-[0] mt-12 flex w-full justify-center">
+                <div className="bg-foreground h-20 w-20 rounded-full opacity-40 blur-lg"></div>
+            </div>
+        </Link>
     );
 }
