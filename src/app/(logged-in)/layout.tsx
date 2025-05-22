@@ -1,4 +1,6 @@
-import { ExpandableTabsProps, FloatingDock } from '@/shared/ui/floating-dock';
+import { FloatingDock } from '@/entities/menus/floating-dock';
+import Sidebar from '@/entities/menus/sidebar';
+import { Tab } from '@/entities/menus/types';
 import { QueryProvider } from '@/shared/ui/query-provider';
 import type { Metadata } from 'next';
 import '../globals.css';
@@ -13,7 +15,7 @@ export default function LoggedInLayout({
 }: {
     children: React.ReactNode;
 }) {
-    const tabs: ExpandableTabsProps['tabs'] = [
+    const tabs: Tab[] = [
         {
             title: 'Início',
             icon: <i className="ph ph-house-line text-xl"></i>,
@@ -29,7 +31,6 @@ export default function LoggedInLayout({
             icon: <i className="ph ph-plant text-xl"></i>,
             path: '/catalogo',
         },
-        { type: 'separator' },
         {
             title: 'Fórum',
             icon: <i className="ph ph-users text-xl"></i>,
@@ -38,15 +39,17 @@ export default function LoggedInLayout({
     ];
     return (
         <main className="bg-background relative h-full w-full">
-            <QueryProvider>{children}</QueryProvider>
+            <Sidebar tabs={tabs} />
 
-            <div className="fixed bottom-10 z-10 flex w-full justify-center">
-                <FloatingDock
-                    tabs={tabs}
-                    activeColor="text-primary"
-                    className="border-border"
-                />
+            <div className="md:ml-64">
+                <QueryProvider>{children}</QueryProvider>
             </div>
+
+            <FloatingDock
+                tabs={tabs}
+                activeColor="text-primary"
+                className="border-border"
+            />
         </main>
     );
 }
