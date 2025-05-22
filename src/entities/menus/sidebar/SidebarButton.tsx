@@ -6,21 +6,33 @@ import { usePathname } from 'next/navigation';
 import React from 'react';
 
 interface SidebarButtonProps {
-  icon: React.ReactNode;
-  title: string;
-  path: string;
-  active?: boolean;
+    icon: React.ReactNode;
+    title: string;
+    path: string;
+    active?: boolean;
 }
 
-export default function SidebarButton({ icon, title, path }: SidebarButtonProps) {
-  const currentPath = usePathname();
+export default function SidebarButton({
+    icon,
+    title,
+    path,
+}: SidebarButtonProps) {
+    const currentPath = usePathname();
 
-  const isActive = currentPath === path;
-  
-  return (
-    <Link href={path} passHref className= {cn('flex items-center gap-3 py-2 rounded-md w-full text-left transition no-underline', isActive ? 'text-foreground font-medium' : 'text-muted-foreground')}>
-        {icon}
-        <span className="text-base">{title}</span>
-    </Link>
-  );
+    const isActive = currentPath === path;
+
+    return (
+        <Link
+            href={path}
+            className={cn(
+                'flex w-full items-center gap-3 rounded-md py-2 text-left no-underline transition',
+                isActive
+                    ? 'text-foreground font-medium'
+                    : 'text-muted-foreground',
+            )}
+        >
+            {icon}
+            <span className="text-base">{title}</span>
+        </Link>
+    );
 }

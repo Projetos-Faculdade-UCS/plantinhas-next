@@ -8,7 +8,7 @@ export default function JardimPage() {
     const plantios = use(Repositories.plantios.getPlantios());
     return (
         <>
-            <div className="flex flex-wrap gap-x-8 gap-y-2">
+            <div className="flex flex-wrap gap-x-8 gap-y-4">
                 <Suspense fallback={<p>Carregando...</p>}>
                     {plantios.data.itens.map((plantio: PlantioPreview) => (
                         <CardPlantio key={plantio.id} plantio={plantio} />
