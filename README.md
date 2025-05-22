@@ -1,5 +1,3 @@
-Perfeito! Vou analisar o branch `develop` do projeto `plantinhas-next` e montar um README.md didático para ajudar novos desenvolvedores a entenderem o propósito do projeto, como rodá-lo, a estrutura de pastas (com FSD), além de listar futuras melhorias como feed, fórum e IA para roteiros de plantio. Já volto com o conteúdo formatado para revisão. 🌱📘
-
 # Plantinhas 🌱 – Jardim Virtual com Rede Social
 
 Bem-vindo ao **Plantinhas**! 😊 Este projeto é como um jardim virtual com elementos de rede social, onde você pode acompanhar o crescimento das suas plantas e também dar uma espiadinha na grama do vizinho. Em outras palavras, é uma aplicação web que combina **cuidados com plantas** e **interação social** – tudo de um jeito divertido e didático.
