@@ -7,10 +7,10 @@ export default async function FeedPage() {
     const session = await auth();
 
     return (
-        <div className="bg-background flex h-full w-full items-center justify-center">
+        <div className="flex h-full w-full items-center justify-center">
             {session ? (
                 <div className="bg-card rounded-md border p-4">
-                    <p className="text-center text-2xl">Bom vindo!</p>
+                    <p className="text-center text-2xl">Bem vindo!</p>
                     <Image
                         src={session.user?.picture || ''}
                         alt="User Image"
@@ -36,7 +36,6 @@ export default async function FeedPage() {
             ) : (
                 <Link href="/signin">Entrar</Link>
             )}
-            <h1 className="text-white">Feed</h1>
         </div>
     );
 }

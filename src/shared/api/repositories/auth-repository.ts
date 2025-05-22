@@ -1,9 +1,10 @@
-import { SessionToken, UserPreview } from '@/shared/types/auth';
+import { ProfilePreview, SessionToken } from '@/shared/types/auth';
+import { Client } from '@/shared/types/client';
 import { HttpClient } from '../client/http-client';
 
-export class AuthService {
+export class AuthRepository {
     private url: string = process.env.AUTH_API_URL || '';
-    private client: HttpClient;
+    private client: Client;
 
     constructor() {
         this.client = new HttpClient(this.url);
@@ -36,7 +37,7 @@ export class AuthService {
      * @param accessToken token da sessão do usuário
      */
     public async getUser(accessToken: string) {
-        const response = await this.client.get<UserPreview>('/profile/', {
+        const response = await this.client.get<ProfilePreview>('/profile/', {
             cache: 'force-cache',
             headers: {
                 Authorization: `Bearer ${accessToken}`,

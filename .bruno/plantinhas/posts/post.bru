@@ -1,0 +1,29 @@
+meta {
+  name: post
+  type: http
+  seq: 1
+}
+
+post {
+  url: http://localhost:8000/forum/posts
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "id": 137,
+    "titulo": "once immediately round",
+    "foto": "https://picsum.photos/seed/ZkZ5SrrUY/1000/1000?grayscale&amp;blur&#x3D;5",
+    "conteudo": "",
+    "data": "Tue Dec 31 2019 07:36:22 GMT-0300 (Brasilia Standard Time)",
+    "autor": {
+      "id": 13,
+      "nome": "Warley Silva",
+      "fotoPerfil": "https://cdn.jsdelivr.net/gh/faker-js/assets-person-portrait/female/512/0.jpg"
+    },
+    "qtdeComentarios": 9,
+    "qtdeUpvotes": 10,
+    "qtdeDownvotes": 8
+  }
+}

@@ -1,0 +1,125 @@
+{
+    "GET": {
+        "/forum/posts": {
+            "total": 200,
+            "itensPorPagina": 10,
+            "paginaAtual": 1,
+            "ultimaPagina": 1,
+            "itens": [
+                {
+                    "id": 1,
+                    "titulo": "Lorem ipsum dolor sit amet",
+                    "conteudo": "## Lorem ipsum dolor sit amet",
+                    "foto": "https://example.com/foto.jpg",
+                    "data": "2023-10-01",
+                    "autor": {
+                        "id": 1,
+                        "nome": "João Silva",
+                        "fotoPerfil": "https://example.com/foto.jpg"
+                    },
+                    "qtdeComentarios": 10,
+                    "qtdeUpvotes": 5,
+                    "qtdeDownvotes": 2
+                },
+                {
+                    "id": 2,
+                    "titulo": "Lorem ipsum dolor sit amet",
+                    "conteudo": "## Lorem ipsum dolor sit amet",
+                    "foto": "https://example.com/foto.jpg",
+                    "data": "2023-10-02",
+                    "autor": {
+                        "id": 2,
+                        "nome": "Maria Oliveira",
+                        "fotoPerfil": "https://example.com/foto.jpg"
+                    },
+                    "qtde_comentarios": 8,
+                    "qtde_upvotes": 3,
+                    "qtde_downvotes": 1
+                }
+            ]
+        },
+        "/forum/posts/{id}/comentarios": {
+            "itens": [
+                {
+                    "id": 1,
+                    "data": "2023-10-01",
+                    "autor": {
+                        "id": 1,
+                        "nome": "João Silva",
+                        "fotoPerfil": "https://example.com/foto.jpg"
+                    },
+                    "conteudo": "## Lorem ipsum dolor sit amet",
+                    "qtdeComentarios": 10,
+                    "qtdeUpvotes": 5,
+                    "qtdeDownvotes": 2
+                },
+                {
+                    "id": 2,
+                    "data": "2023-10-02",
+                    "autor": {
+                        "id": 2,
+                        "nome": "Maria Oliveira",
+                        "fotoPerfil": "https://example.com/foto.jpg"
+                    },
+                    "conteudo": "Lorem ipsum dolor sit amet",
+                    "qtdeComentarios": 8,
+                    "qtdeUpvotes": 3,
+                    "qtdeDownvotes": 1
+                }
+            ]
+        },
+        "/forum/posts/{id}/comentarios/{commentId}/comentarios": {
+            "id": 1,
+            "data": "2023-10-01",
+            "autor": {
+                "id": 1,
+                "nome": "João Silva",
+                "fotoPerfil": "https://example.com/foto.jpg"
+            },
+            "conteudo": "## Lorem ipsum dolor sit amet",
+            "qtdeComentarios": 0,
+            "qtdeUpvotes": 5,
+            "qtdeDownvotes": 2
+        }
+    },
+    "POST": {
+        "/forum/posts": {
+            "titulo": "Lorem ipsum dolor sit amet",
+            "conteudo": "## Lorem ipsum dolor sit amet",
+            "foto": "https://example.com/foto.jpg",
+            "autor": {
+                "id": 1,
+                "nome": "João Silva",
+                "fotoPerfil": "https://example.com/foto.jpg"
+            }
+        },
+        "/forum/posts/{id}/comentarios": {
+            "conteudo": "## Lorem ipsum dolor sit amet",
+            "autor": {
+                "id": 1,
+                "nome": "João Silva",
+                "fotoPerfil": "https://example.com/foto.jpg"
+            }
+        },
+        "/forum/posts/{id}/comentarios/{commentId}/comentarios": {
+            "conteudo": "## Lorem ipsum dolor sit amet",
+            "autor": {
+                "id": 1,
+                "nome": "João Silva",
+                "fotoPerfil": "https://example.com/foto.jpg"
+            }
+        },
+        "/forum/posts/{id}/upvote": {
+            "upvote": true
+        },
+        "/forum/posts/{id}/downvote": {
+            "downvote": true
+        },
+        "/forum/posts/{id}/comentarios/{commentId}/upvote": {
+            "upvote": true
+        },
+        "/forum/posts/{id}/comentarios/{commentId}/downvote": {
+            "downvote": true
+        }
+    }
+}
