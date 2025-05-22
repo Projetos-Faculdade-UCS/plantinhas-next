@@ -19,7 +19,7 @@ interface Separator {
     path?: string;
 }
 
-type TabItem = Tab | Separator;
+export type TabItem = Tab | Separator;
 
 export interface ExpandableTabsProps {
     tabs: TabItem[];

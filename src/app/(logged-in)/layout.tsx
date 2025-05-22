@@ -1,5 +1,5 @@
 import Sidebar from '@/entities/sidebar';
-import { ExpandableTabsProps, FloatingDock } from '@/shared/ui/floating-dock';
+import { FloatingDock, TabItem } from '@/shared/ui/floating-dock';
 import type { Metadata } from 'next';
 import '../globals.css';
 
@@ -13,7 +13,7 @@ export default function LoggedInLayout({
 }: {
     children: React.ReactNode;
 }) {
-    const tabs: ExpandableTabsProps['tabs'] = [
+    const tabs: TabItem[] = [
         {
             title: 'Início',
             icon: <i className="ph ph-house-line text-xl"></i>,
@@ -39,7 +39,7 @@ export default function LoggedInLayout({
     return (
         <main className="bg-background relative h-full w-full">
             
-            <Sidebar />
+            <Sidebar tabs={tabs}/>
 
             <main className='ml-64'>{children}</main>
 

@@ -1,11 +1,16 @@
 import plantinhas from '@/public/assets/plantinhas.png';
 import { auth } from '@/shared/lib/auth';
 import { Button } from '@/shared/ui/button';
+import type { TabItem } from '@/shared/ui/floating-dock';
 import Image from 'next/image';
 import Link from 'next/link';
 import SidebarButton from './SidebarButton';
 
-export default async function Sidebar() {
+interface SidebarProps {
+    tabs: TabItem[];
+}
+
+export default async function Sidebar({tabs}: SidebarProps) {
     const session = await auth();
     return (
         <div className="fixed top-0 left-0 h-screen w-64 bg-background border-r border-r-[#D4D4D4] overflow-hidden flex flex-col justify-between">
@@ -23,26 +28,16 @@ export default async function Sidebar() {
 
                 <div className="flex flex-col gap-2 px-6">
                     {/* Sidebar buttons */}
-                    <SidebarButton
-                        icon={<i className="ph ph-house-line text-xl"></i>}
-                        title="Página inicial"
-                        path="/feed"
-                    />
-                    <SidebarButton
-                        icon={<i className="ph ph-potted-plant text-xl"></i>}
-                        title="Meu Jardim"
-                        path="/minhas-plantas"
-                    />
-                    <SidebarButton
-                        icon={<i className="ph ph-book-bookmark text-xl"></i>}
-                        title="Catálogo de plantas"
-                        path="/catalogo-plantas"
-                    />
-                    <SidebarButton
-                        icon={<i className="ph ph-users text-xl"></i>}
-                        title="Fórum"
-                        path="/forum"
-                    />
+                    {tabs
+                        .filter((tab) => tab.type !== 'separator')
+                        .map(tab => (
+                            <SidebarButton
+                                key={tab.title}
+                                icon={tab.icon}
+                                title={tab.title ?? ''}
+                                path={tab.path ?? ''}
+                            />
+                        ))}
 
                     <Button
                         asChild
