@@ -1,5 +1,6 @@
-import Sidebar from '@/entities/sidebar';
-import { FloatingDock, TabItem } from '@/shared/ui/floating-dock';
+import { FloatingDock } from '@/entities/menus/floating-dock';
+import Sidebar from '@/entities/menus/sidebar';
+import { Tab } from '@/entities/menus/types';
 import type { Metadata } from 'next';
 import '../globals.css';
 
@@ -13,7 +14,7 @@ export default function LoggedInLayout({
 }: {
     children: React.ReactNode;
 }) {
-    const tabs: TabItem[] = [
+    const tabs: Tab[] = [
         {
             title: 'Início',
             icon: <i className="ph ph-house-line text-xl"></i>,
@@ -29,7 +30,6 @@ export default function LoggedInLayout({
             icon: <i className="ph ph-book-bookmark text-xl"></i>,
             path: '/catalogo-plantas',
         },
-        { type: 'separator' },
         {
             title: 'Fórum',
             icon: <i className="ph ph-users text-xl"></i>,
@@ -43,13 +43,12 @@ export default function LoggedInLayout({
 
             <main className='md:ml-64'>{children}</main>
 
-            <div className="fixed bottom-10 z-10 flex md:hidden w-full justify-center">
-                <FloatingDock
-                    tabs={tabs}
-                    activeColor="text-primary"
-                    className="border-border"
-                />
-            </div>
+            <FloatingDock
+                tabs={tabs}
+                activeColor="text-primary"
+                className="border-border"
+            />
+
         </main>
     );
 }

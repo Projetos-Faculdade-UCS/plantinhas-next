@@ -1,13 +1,13 @@
+import type { Tab } from '@/entities/menus/types';
 import plantinhas from '@/public/assets/plantinhas.png';
 import { auth } from '@/shared/lib/auth';
 import { Button } from '@/shared/ui/button';
-import type { TabItem } from '@/shared/ui/floating-dock';
 import Image from 'next/image';
 import Link from 'next/link';
 import SidebarButton from './SidebarButton';
 
 interface SidebarProps {
-    tabs: TabItem[];
+    tabs: Tab[];
 }
 
 export default async function Sidebar({tabs}: SidebarProps) {
@@ -29,7 +29,6 @@ export default async function Sidebar({tabs}: SidebarProps) {
                 <div className="flex flex-col gap-2 px-6">
                     {/* Sidebar buttons */}
                     {tabs
-                        .filter((tab) => tab.type !== 'separator')
                         .map(tab => (
                             <SidebarButton
                                 key={tab.title}
