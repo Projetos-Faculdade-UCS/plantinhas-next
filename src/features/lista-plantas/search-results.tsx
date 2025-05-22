@@ -26,7 +26,7 @@ export function SearchResults({ search }: SearchResultsProps) {
                 {query.isPlaceholderData || query.isLoading ? (
                     <span className="animate-pulse">Carregando...</span>
                 ) : !!query.data?.total ? (
-                    <span>{query.data?.total} plantas encontradas</span>
+                    <span>Listando {query.data?.total} plantas</span>
                 ) : null}
             </span>
             {query.isLoading ? (

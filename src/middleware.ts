@@ -11,5 +11,5 @@ export default async function middleware(request: NextRequest) {
     return NextResponse.next();
 }
 export const config = {
-    matcher: ['/feed', '/perfil', '/minhas-plantas', '/catalogo'],
+    matcher: ['/feed', '/perfil', '/jardim', '/catalogo'],
 };
