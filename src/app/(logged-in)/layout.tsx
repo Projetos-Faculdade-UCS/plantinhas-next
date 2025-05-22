@@ -41,9 +41,9 @@ export default function LoggedInLayout({
             
             <Sidebar tabs={tabs}/>
 
-            <main className='ml-64'>{children}</main>
+            <main className='md:ml-64'>{children}</main>
 
-            <div className="absolute bottom-10 z-10 flex w-full justify-center">
+            <div className="fixed bottom-10 z-10 flex md:hidden w-full justify-center">
                 <FloatingDock
                     tabs={tabs}
                     activeColor="text-primary"

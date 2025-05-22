@@ -13,7 +13,7 @@ interface SidebarProps {
 export default async function Sidebar({tabs}: SidebarProps) {
     const session = await auth();
     return (
-        <div className="fixed top-0 left-0 h-screen w-64 bg-background border-r border-r-[#D4D4D4] overflow-hidden flex flex-col justify-between">
+        <div className="fixed top-0 left-0 h-screen w-64 bg-background border-r border-r-[#D4D4D4] overflow-hidden hidden md:flex flex-col justify-between">
             <div>
                 <div className="flex items-center gap-2 px-3 py-6">
                     {/* Sidebar header */}
