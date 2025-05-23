@@ -1,6 +1,8 @@
 import { PlantioPreview } from '@/shared/types/plantio';
 
-export const getProgresSituacao = (situacao: PlantioPreview['situacao']) => {
+export const getProgresSituacao = (
+    situacao: PlantioPreview['situacao']['label'],
+) => {
     switch (situacao) {
         case 'Colhido':
             return 1.1;

@@ -3,14 +3,17 @@ import { PlantaPreview } from './planta';
 export interface Plantio {
     id: number;
     planta: PlantaPreview;
-    situacao:
-        | 'Germinando'
-        | 'Crescendo'
-        | 'Florescendo'
-        | 'Frutificando'
-        | 'Pronto para colheita'
-        | 'Colhido'
-        | 'Para plantar';
+    situacao: {
+        value: number;
+        label:
+            | 'Germinando'
+            | 'Crescendo'
+            | 'Florescendo'
+            | 'Frutificando'
+            | 'Pronto para colheita'
+            | 'Colhido'
+            | 'Para plantar';
+    };
     saude: {
         label: string;
         value: number;

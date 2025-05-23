@@ -27,7 +27,6 @@ export function CardPlantio({ plantio }: CardPlantioProps) {
                         {plantio.planta.nome}
                     </span>
                 </div>
-                <div className="border-t border-dashed"></div>
                 <CardPlantioIncators plantio={plantio} />
                 <div className="absolute top-0 left-0 z-[1] flex w-full justify-center">
                     <Image
