@@ -4,7 +4,6 @@ type IndicadorSedeProps = {
     sede: PlantioPreview['sede'];
 };
 export function IndicadorSede({ sede }: IndicadorSedeProps) {
-    console.log('sede', sede);
     const sedeDeg = sede.value * 360;
     const isZero = sede.value < 0.005;
     const isFull = sede.value === 1;
@@ -18,7 +17,7 @@ export function IndicadorSede({ sede }: IndicadorSedeProps) {
                     background: `conic-gradient(${sedeColor} ${sedeDeg}deg, var(--muted) 0deg)`,
                 }}
             />
-            <div className="bg-card absolute flex h-8 w-8 items-center justify-center rounded-full">
+            <div className="bg-card z-[1] flex h-8 w-8 items-center justify-center rounded-full">
                 <i
                     className={`ph-duotone ph-drop flex text-2xl ${isZero ? 'text-muted-foreground' : isFull ? 'text-yellow-500' : 'text-blue-700'}`}
                 ></i>

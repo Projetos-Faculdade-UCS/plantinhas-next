@@ -4,14 +4,13 @@ export interface Plantio {
     id: number;
     planta: PlantaPreview;
     situacao:
-        | 'Plantado'
         | 'Germinando'
         | 'Crescendo'
         | 'Florescendo'
         | 'Frutificando'
         | 'Pronto para colheita'
         | 'Colhido'
-        | 'Finalizado';
+        | 'Para plantar';
     saude: {
         label: string;
         value: number;

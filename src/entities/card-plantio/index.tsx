@@ -4,8 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import styles from '../card-planta/animation.module.scss';
 import { Ondulacao } from '../card-planta/ondulacao';
-import { IndicadorSaude } from './indicador-saude';
-import { IndicadorSede } from './indicador-sede';
+import { CardPlantioIncators } from './card-plantio-indicators';
 
 type CardPlantioProps = {
     plantio: PlantioPreview;
@@ -15,7 +14,7 @@ export function CardPlantio({ plantio }: CardPlantioProps) {
     return (
         <Link
             href={`/jardim/plantio/${plantio.id}`}
-            className={`relative w-[14rem] shrink-0 ${styles.jumpOnHover}`}
+            className={`relative w-[13rem] shrink-0 ${styles.jumpOnHover}`}
         >
             <div className={`flex h-full flex-col`}>
                 <div className="h-8"></div>
@@ -28,12 +27,8 @@ export function CardPlantio({ plantio }: CardPlantioProps) {
                         {plantio.planta.nome}
                     </span>
                 </div>
-                <div
-                    className={`bg-card flex shrink-0 items-center justify-evenly rounded-b-md border-x border-b px-4 pb-2`}
-                >
-                    <IndicadorSaude saude={plantio.saude} />
-                    <IndicadorSede sede={plantio.sede} />
-                </div>
+                <div className="border-t border-dashed"></div>
+                <CardPlantioIncators plantio={plantio} />
                 <div className="absolute top-0 left-0 z-[1] flex w-full justify-center">
                     <Image
                         src={
