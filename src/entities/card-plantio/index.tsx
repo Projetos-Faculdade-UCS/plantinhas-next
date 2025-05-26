@@ -2,9 +2,10 @@ import { itim } from '@/shared/lib/utils';
 import { PlantioPreview } from '@/shared/types/plantio';
 import Image from 'next/image';
 import Link from 'next/link';
-import styles from '../card-planta/animation.module.scss';
+import animationStyles from '../card-planta/animation.module.scss';
 import { Ondulacao } from '../card-planta/ondulacao';
 import { CardPlantioIncators } from './card-plantio-indicators';
+import { WarningBubble } from './warning-bubble';
 
 type CardPlantioProps = {
     plantio: PlantioPreview;
@@ -14,7 +15,7 @@ export function CardPlantio({ plantio }: CardPlantioProps) {
     return (
         <Link
             href={`/jardim/plantio/${plantio.id}`}
-            className={`relative w-[13rem] shrink-0 ${styles.jumpOnHover}`}
+            className={`relative w-[13rem] shrink-0 ${animationStyles.jumpOnHover}`}
         >
             <div className={`flex h-full flex-col`}>
                 <div className="h-8"></div>
@@ -28,22 +29,24 @@ export function CardPlantio({ plantio }: CardPlantioProps) {
                     </span>
                 </div>
                 <CardPlantioIncators plantio={plantio} />
-                <div className="absolute top-0 left-0 z-[1] flex w-full justify-center">
-                    <Image
-                        src={
-                            plantio.planta.foto ||
-                            '/assets/plantas/girassol.png'
-                        }
-                        alt={plantio.planta.nome || 'Sem imagem'}
-                        width={1000}
-                        height={1000}
-                        className={`h-[120px] w-fit object-contain transition duration-300`}
-                    />
-                </div>
-                <div className="absolute top-0 left-0 z-[0] mt-12 flex w-full justify-center">
-                    <div className="bg-foreground h-20 w-20 rounded-full opacity-40 blur-lg"></div>
-                </div>
             </div>
+            <div className="absolute top-0 left-0 z-[1] flex w-full justify-center">
+                <Image
+                    src={plantio.planta.foto || '/assets/plantas/girassol.png'}
+                    alt={plantio.planta.nome || 'Sem imagem'}
+                    width={1000}
+                    height={1000}
+                    className={`h-[120px] w-fit object-contain transition duration-300`}
+                />
+            </div>
+            <div className="absolute top-0 left-0 z-[0] mt-12 flex w-full justify-center">
+                <div className="bg-foreground h-20 w-20 rounded-full opacity-40 blur-lg"></div>
+            </div>
+            <WarningBubble
+                situacao={plantio.situacao.value}
+                sede={plantio.sede.value}
+                saude={plantio.saude.value}
+            />
         </Link>
     );
 }

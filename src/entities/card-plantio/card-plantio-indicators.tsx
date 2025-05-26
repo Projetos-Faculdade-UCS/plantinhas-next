@@ -13,7 +13,7 @@ export function CardPlantioIncators({ plantio }: CardPlantioIncatorsProps) {
 
     return (
         <div
-            className={`bg-primary flex shrink-0 items-center justify-around rounded-b-md border-x border-b px-4 py-2`}
+            className={`bg-primary border-border-primary flex shrink-0 items-center justify-around rounded-b-md border-x border-b px-4 py-2`}
         >
             {active && (
                 <>
