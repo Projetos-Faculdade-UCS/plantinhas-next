@@ -53,17 +53,15 @@ export default async function Sidebar({tabs}: SidebarProps) {
             </div>
             {/* Rodapé */}
             {session ? (
-                <Link href="/perfil" passHref legacyBehavior>
-                    <a className="flex items-center gap-3 px-4 py-6 w-full hover:bg-gray-100">
-                        <Image
-                            src={session.user?.picture || ''}
-                            alt="User Image"
-                            width={40}
-                            height={40}
-                            className="rounded-full"
-                        />
-                        <span className="font-medium text-base">{session.user?.first_name} {session.user?.last_name}</span>
-                    </a>
+                <Link href="/perfil" className='flex items-center gap-3 px-4 py-6 w-full hover:bg-gray-100'>
+                    <Image
+                        src={session.user?.picture || ''}
+                        alt="User Image"
+                        width={40}
+                        height={40}
+                        className="rounded-full"
+                    />
+                    <span className="font-medium text-base">{session.user?.first_name} {session.user?.last_name}</span>
                 </Link>
             ) : (
                 <Link href="/signin">Entrar</Link>
