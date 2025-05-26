@@ -19,7 +19,7 @@ export default function SidebarButton({
 }: SidebarButtonProps) {
     const currentPath = usePathname();
 
-    const isActive = currentPath === path;
+    const isActive = currentPath.includes(path);
 
     return (
         <Link

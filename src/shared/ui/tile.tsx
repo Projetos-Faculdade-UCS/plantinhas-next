@@ -1,4 +1,7 @@
+import { cn } from '../lib/utils';
+
 type TileProps = {
+    className?: string;
     leading?: React.ReactNode;
     trailing?: React.ReactNode;
     value: React.ReactNode;
@@ -14,9 +17,11 @@ type TileProps = {
  * @param {React.ReactNode} props.value - Valor a ser exibido no cartão.
  * @param {React.ReactNode} props.title - Título a ser exibido no cartão.
  */
-export function Tile({ leading, trailing, value, title }: TileProps) {
+export function Tile({ leading, trailing, value, title, ...props }: TileProps) {
     return (
-        <div className="flex items-center justify-between">
+        <div
+            className={cn('flex items-center justify-between', props.className)}
+        >
             <div className="flex items-center gap-4">
                 {leading}
                 <div className="flex flex-col">

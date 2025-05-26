@@ -44,8 +44,9 @@ export default async function Sidebar({ tabs }: SidebarProps) {
                         variant={'default'}
                         className="bg-primary mt-4 flex w-full items-center justify-center gap-2 text-base"
                     >
-                        <Link href="/plantar">
-                            <span className="text-base">+ Plantar</span>
+                        <Link href="/jardim/plantio/plantar">
+                            <i className="ph ph-plus-circle flex text-lg"></i>
+                            <span className="text-base">Plantar</span>
                         </Link>
                     </Button>
                 </div>
