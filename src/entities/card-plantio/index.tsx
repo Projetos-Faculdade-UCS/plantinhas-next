@@ -15,7 +15,7 @@ export function CardPlantio({ plantio }: CardPlantioProps) {
     return (
         <Link
             href={`/jardim/plantio/${plantio.id}`}
-            className={`relative w-[13rem] shrink-0 ${animationStyles.jumpOnHover}`}
+            className={`relative w-[10.5rem] shrink-0 sm:w-[13rem] ${animationStyles.jumpOnHover}`}
         >
             <div className={`flex h-full flex-col`}>
                 <div className="h-8"></div>

@@ -1,9 +1,10 @@
 import { Tile } from '@/shared/ui/tile';
+import styles from './styles.module.scss';
 
 export function MyLocationMetrics() {
     return (
-        <div className="flex h-18 w-full flex-wrap gap-4">
-            <div className="bg-card flex h-full w-52 items-center rounded-md border px-4 shadow-sm">
+        <div className={`flex h-18 w-full flex-nowrap gap-4 ${styles.scrollX}`}>
+            <div className="bg-card flex h-full w-52 shrink-0 items-center rounded-md border px-4 shadow-sm">
                 <Tile
                     leading={
                         <i className="ph-doutone ph ph-cloud-sun text-secondary text-3xl"></i>
@@ -34,7 +35,7 @@ export function MyLocationMetrics() {
                     </div>
                 </div>
             </div>
-            <div className="flex h-full w-fit items-center gap-4 rounded-md bg-[#1E1E1E] px-4 py-1 shadow-sm">
+            <div className="flex h-full w-fit shrink-0 items-center gap-4 rounded-md bg-[#1E1E1E] px-4 py-1 shadow-sm">
                 <div className="bg-card flex items-center justify-center rounded-full p-2">
                     <i className="ph-duotone ph-ruler text-2xl text-[#1E1E1E]"></i>
                 </div>
