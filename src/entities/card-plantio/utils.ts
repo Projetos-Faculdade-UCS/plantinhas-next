@@ -7,15 +7,15 @@ export const getProgresSituacao = (
         case 'Colhido':
             return 1.1;
         case 'Pronto para colheita':
-            return 1;
+            return 0.5;
         case 'Frutificando':
-            return 0.9;
+            return 0.4;
         case 'Florescendo':
-            return 0.8;
+            return 0.3;
         case 'Crescendo':
-            return 0.7;
+            return 0.2;
         case 'Germinando':
-            return 0.6;
+            return 0.1;
         case 'Para plantar':
             return 0;
     }

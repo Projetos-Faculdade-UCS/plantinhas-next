@@ -18,7 +18,7 @@ export function IndicadorSede({ sede, monoColor }: IndicadorSedeProps) {
             : '#1447e6'; // cor principal
     return (
         <div
-            className="relative flex h-10 w-10 items-center justify-center rounded-full"
+            className="relative flex h-10 w-10 shrink-0 items-center justify-center rounded-full"
             style={{
                 background: monoColor ? 'var(--primary)' : 'var(--card)',
             }}

@@ -5,9 +5,8 @@ type WarningBubbleProps = {
     sede: number;
     saude: number;
 };
-export function WarningBubble({ situacao, sede, saude }: WarningBubbleProps) {
-    const canShowWarning =
-        situacao > 0 && situacao < 1 && (saude < 0.05 || sede < 0.05);
+export function WarningBubble({ situacao, saude }: WarningBubbleProps) {
+    const canShowWarning = situacao > 0 && situacao < 1 && saude < 0.1;
 
     if (canShowWarning) {
         return (

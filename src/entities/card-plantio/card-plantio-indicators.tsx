@@ -1,6 +1,5 @@
 import { PlantioPreview } from '@/shared/types/plantio';
 import { IndicadorSaude } from './indicador-saude';
-import { IndicadorSede } from './indicador-sede';
 import { IndicadorSituacao } from './indicador-situacao';
 
 type CardPlantioIncatorsProps = {
@@ -13,27 +12,26 @@ export function CardPlantioIncators({ plantio }: CardPlantioIncatorsProps) {
 
     return (
         <div
-            className={`bg-primary border-border-primary flex shrink-0 items-center justify-around rounded-b-md border-x border-b px-4 py-2`}
+            className={`to-primary border-border-primary flex w-full shrink-0 items-center justify-between gap-4 rounded-b-md border-x border-b bg-linear-to-t from-[#35602A] px-2 py-2`}
         >
             {active && (
                 <>
                     <IndicadorSituacao situacao={plantio.situacao} monoColor />
                     <IndicadorSaude saude={plantio.saude} monoColor />
-                    <IndicadorSede sede={plantio.sede} monoColor />
                 </>
             )}
             {isOver && (
-                <div className="text-primary-foreground flex h-10 items-center justify-center gap-2">
+                <div className="text-primary-foreground flex h-10 w-full items-center justify-center gap-2">
                     <i className="ph ph-basket text-2xl"></i>
-                    <span className="font-medium">
+                    <span className="text-lg font-medium">
                         {plantio.situacao.label}
                     </span>
                 </div>
             )}
             {notBegun && (
-                <div className="text-primary-foreground flex h-10 items-center justify-center gap-2">
+                <div className="text-primary-foreground flex h-10 w-full items-center justify-center gap-2">
                     <i className="ph ph-shovel text-2xl"></i>
-                    <span className="font-medium">Plantar</span>
+                    <span className="text-lg font-medium">Plantar</span>
                 </div>
             )}
         </div>

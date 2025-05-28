@@ -8,50 +8,39 @@ export function IndicadorSituacao({
     situacao,
     monoColor,
 }: IndicadorSituacaoProps) {
-    const situacaoDeg = situacao.value * 360;
     const isZero = situacao.value == 0;
     const isOver = situacao.value > 1;
     const isFull = situacao.value === 1;
 
-    const ringColor = isFull
+    const dashColor = isFull
         ? 'var(--secondary)'
         : monoColor
           ? 'var(--primary-foreground)'
           : 'var(--primary)'; // cor principal
 
-    console.log('situacao', situacao);
-
     return (
-        <div
-            className="relative flex h-10 w-10 items-center justify-center rounded-full"
-            style={{
-                background: monoColor ? 'var(--primary)' : 'var(--card)',
-            }}
-        >
-            <div
-                className={`absolute inset-0 rounded-full`}
+        <div className="flex w-[70%] shrink flex-col gap-1">
+            <span
+                className="text-primary-foreground truncate text-lg font-medium"
                 style={{
-                    background: `conic-gradient(${ringColor} ${situacaoDeg}deg, transparent 0deg)`,
-                }}
-            />
-            <div
-                className="z-[1] flex h-8 w-8 items-center justify-center rounded-full"
-                style={{
-                    background: monoColor ? 'var(--primary)' : 'var(--card)',
+                    color: dashColor,
                 }}
             >
-                <i
-                    className={`ph z-[1] flex text-xl ${isOver ? 'ph-basket' : isZero ? 'ph-shovel' : 'ph-plant'}`}
-                    style={{
-                        color: ringColor,
-                    }}
-                ></i>
-                <div
-                    className="absolute inset-0 rounded-full opacity-20"
-                    style={{
-                        background: ringColor,
-                    }}
-                ></div>
+                {situacao.label}
+            </span>
+            <div className="flex items-center gap-2">
+                {Array.from({ length: 5 }, (_, index) => {
+                    const isActive = situacao.value * 10 > index;
+                    return (
+                        <div
+                            key={index}
+                            className={`h-2 w-5 rounded-sm border ${isActive ? 'opacity-100' : 'opacity-40'}`}
+                            style={{
+                                backgroundColor: dashColor,
+                            }}
+                        />
+                    );
+                })}
             </div>
         </div>
     );
