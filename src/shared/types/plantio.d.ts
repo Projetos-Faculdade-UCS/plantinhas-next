@@ -22,6 +22,7 @@ export interface Plantio {
         label: string;
         value: number;
     };
+    quantidade: number;
     dataPlantio: string;
     dataColheita: string;
     informacoesAdicionais: string;
@@ -29,7 +30,7 @@ export interface Plantio {
 
 export type PlantioPreview = Pick<
     Plantio,
-    'id' | 'planta' | 'situacao' | 'saude' | 'sede'
+    'id' | 'planta' | 'situacao' | 'saude' | 'sede' | 'quantidade'
 >;
 
 export interface ListagemPlantios {
