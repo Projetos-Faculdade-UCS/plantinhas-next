@@ -37,7 +37,7 @@ export default async function PlantaPage({
                         className="mt-4 flex w-full items-center justify-center gap-2 text-base bg-primary"
                     >   
                         <Link href="/plantar" >
-                            <i className="ph ph-potted-plant text-xl"></i>
+                            <i className="ph-duotone ph-potted-plant text-xl"></i>
                             <span className="text-base">
                                 Plantar
                             </span>                    
@@ -105,11 +105,11 @@ export default async function PlantaPage({
                         <h3 className="text-muted-foreground text-base">Condições ideais</h3>
                         <div className="flex items-center gap-4">
                             <div className="flex items-center justify-center w-14 h-14 text-5xl">
-                                {planta.data.estacaoIdeal === 'Outono' && <i className="ph ph-leaf text-orange-400" />}
-                                {planta.data.estacaoIdeal === 'Verão' && <i className="ph ph-sun text-yellow-400" />}
-                                {planta.data.estacaoIdeal === 'Inverno' && <i className="ph ph-snowflake text-sky-400" />}
-                                {planta.data.estacaoIdeal === 'Primavera' && <i className="ph ph-flower-lotus text-pink-400" />}
-                                {planta.data.estacaoIdeal === 'Todo o ano' && <i className="ph ph-calendar-blank text-zinc-400" />}
+                                {planta.data.estacaoIdeal === 'Outono' && <i className="ph ph-duotone ph-leaf text-orange-400" />}
+                                {planta.data.estacaoIdeal === 'Verão' && <i className="ph ph-duotone ph-sun text-yellow-400" />}
+                                {planta.data.estacaoIdeal === 'Inverno' && <i className="ph ph-duotone ph-snowflake text-sky-400" />}
+                                {planta.data.estacaoIdeal === 'Primavera' && <i className="ph ph-duotone ph-flower-lotus text-primary" />}
+                                {planta.data.estacaoIdeal === 'Todo o ano' && <i className="ph ph-duotone ph-calendar-blank text-amber-800" />}
                             </div>
                             <div className="flex flex-col">
                                 <span className="font-bold text-lg">{planta.data.estacaoIdeal}</span>
