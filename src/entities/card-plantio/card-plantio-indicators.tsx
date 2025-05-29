@@ -12,26 +12,26 @@ export function CardPlantioIncators({ plantio }: CardPlantioIncatorsProps) {
 
     return (
         <div
-            className={`to-primary border-border-primary flex w-full shrink-0 items-center justify-between gap-4 rounded-b-md border-x border-b bg-linear-to-t from-[#35602A] px-2 py-2`}
+            className={`to-primary border-border-primary flex w-full shrink-0 items-center justify-between gap-4 rounded-b-md border-x border-b bg-linear-to-t from-[#37652B] px-2 py-2`}
         >
             {active && (
                 <>
-                    <IndicadorSituacao situacao={plantio.situacao} monoColor />
+                    <IndicadorSituacao
+                        situacao={plantio.situacao}
+                        monoColor
+                        className="w-[70%]"
+                    />
                     <IndicadorSaude saude={plantio.saude} monoColor />
                 </>
             )}
-            {isOver && (
+            {(isOver || notBegun) && (
                 <div className="text-primary-foreground flex h-10 w-full items-center justify-center gap-2">
-                    <i className="ph ph-basket text-2xl"></i>
+                    {isOver && <i className="ph ph-basket text-2xl"></i>}
+
+                    {notBegun && <i className="ph ph-shovel text-2xl"></i>}
                     <span className="text-lg font-medium">
                         {plantio.situacao.label}
                     </span>
-                </div>
-            )}
-            {notBegun && (
-                <div className="text-primary-foreground flex h-10 w-full items-center justify-center gap-2">
-                    <i className="ph ph-shovel text-2xl"></i>
-                    <span className="text-lg font-medium">Plantar</span>
                 </div>
             )}
         </div>

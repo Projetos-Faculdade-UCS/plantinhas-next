@@ -3,8 +3,13 @@ import { PlantioPreview } from '@/shared/types/plantio';
 type IndicadorSaudeProps = {
     saude: PlantioPreview['saude'];
     monoColor?: boolean;
+    withRing?: boolean;
 };
-export function IndicadorSaude({ saude, monoColor }: IndicadorSaudeProps) {
+export function IndicadorSaude({
+    saude,
+    monoColor,
+    withRing = true,
+}: IndicadorSaudeProps) {
     const saudeDeg = saude.value * 360;
     const isZero = saude.value < 0.005;
     const isFull = saude.value === 1;
@@ -24,12 +29,14 @@ export function IndicadorSaude({ saude, monoColor }: IndicadorSaudeProps) {
                 background: monoColor ? 'var(--primary)' : 'var(--card)',
             }}
         >
-            <div
-                className={`absolute inset-0 rounded-full`}
-                style={{
-                    background: `conic-gradient(${ringColor} ${saudeDeg}deg, transparent 0deg)`,
-                }}
-            />
+            {withRing && (
+                <div
+                    className={`absolute inset-0 rounded-full`}
+                    style={{
+                        background: `conic-gradient(${ringColor} ${saudeDeg}deg, transparent 0deg)`,
+                    }}
+                />
+            )}
             <div
                 className="z-[1] flex h-8 w-8 items-center justify-center rounded-full"
                 style={{

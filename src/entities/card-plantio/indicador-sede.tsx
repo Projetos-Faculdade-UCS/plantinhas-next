@@ -3,8 +3,13 @@ import { PlantioPreview } from '@/shared/types/plantio';
 type IndicadorSedeProps = {
     sede: PlantioPreview['sede'];
     monoColor?: boolean;
+    withRing?: boolean;
 };
-export function IndicadorSede({ sede, monoColor }: IndicadorSedeProps) {
+export function IndicadorSede({
+    sede,
+    monoColor,
+    withRing = true,
+}: IndicadorSedeProps) {
     const sedeDeg = sede.value * 360;
     const isZero = sede.value < 0.005;
     const isFull = sede.value === 1;
@@ -23,12 +28,14 @@ export function IndicadorSede({ sede, monoColor }: IndicadorSedeProps) {
                 background: monoColor ? 'var(--primary)' : 'var(--card)',
             }}
         >
-            <div
-                className={`absolute inset-0 rounded-full`}
-                style={{
-                    background: `conic-gradient(${ringColor} ${sedeDeg}deg, transparent 0deg)`,
-                }}
-            />
+            {withRing && (
+                <div
+                    className={`absolute inset-0 rounded-full`}
+                    style={{
+                        background: `conic-gradient(${ringColor} ${sedeDeg}deg, transparent 0deg)`,
+                    }}
+                />
+            )}
             <div
                 className="z-[1] flex h-8 w-8 items-center justify-center rounded-full"
                 style={{

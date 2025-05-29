@@ -1,8 +1,5 @@
-import { IndicadorSaude } from '@/entities/card-plantio/indicador-saude';
-import { IndicadorSede } from '@/entities/card-plantio/indicador-sede';
-import { IndicadorSituacao } from '@/entities/card-plantio/indicador-situacao';
+import { HeaderIndicadores } from '@/entities/detalhe-plantio/header-indicadores';
 import { Repositories } from '@/shared/api/repositories';
-import { Tile } from '@/shared/ui/tile';
 import Image from 'next/image';
 import Link from 'next/link';
 import { use } from 'react';
@@ -14,10 +11,6 @@ export default function PlantioPage({
 }) {
     const plantioId = Number(use(params).plantioId);
     const { data: plantio } = use(Repositories.plantios.getPlantio(plantioId));
-
-    const empty =
-        plantio.situacao.label === 'Colhido' ||
-        plantio.situacao.label === 'Para plantar';
 
     return (
         <div className="flex h-full w-full flex-col">
@@ -51,27 +44,11 @@ export default function PlantioPage({
                             </Link>
                         </div>
                     </div>
-                    <div className="flex gap-12">
-                        <Tile
-                            leading={
-                                <IndicadorSituacao
-                                    situacao={plantio.situacao}
-                                />
-                            }
-                            title="Situação"
-                            value={plantio.situacao.label}
-                        />
-                        <Tile
-                            leading={<IndicadorSaude saude={plantio.saude} />}
-                            title="Saúde"
-                            value={empty ? '-' : plantio.saude.label}
-                        />
-                        <Tile
-                            leading={<IndicadorSede sede={plantio.sede} />}
-                            title="Sede"
-                            value={empty ? '-' : plantio.sede.label}
-                        />
-                    </div>
+                    <HeaderIndicadores
+                        situacao={plantio.situacao}
+                        saude={plantio.saude}
+                        sede={plantio.sede}
+                    />
                 </div>
             </div>
         </div>
