@@ -50,16 +50,20 @@ export default async function PlantaPage({
                         <h2 className="text-3xl font-semibold mb-0">{planta.data.nome}</h2>
                         <h4 className="text-lg italic text-muted-foreground">{planta.data.nomeCientifico}</h4>
                         <div className="flex flex-wrap gap-2 mt-2">
-                            <div className="rounded-full bg-primary text-white px-3 py-1 text-sm font-medium">
+                            <Link
+                                href={`/catalogo/?categoria=${planta.data.categoria.id}`}
+                                className="rounded-md bg-primary text-white px-3 py-1 text-sm font-medium"
+                            >
                                 {planta.data.categoria.nome}
-                            </div>
-                            {planta.data.subcategorias.map((sub, idx) => (
-                                <div
-                                    key={idx}
-                                    className="rounded-full bg-background border border-[#D4D4D4] px-3 py-1 text-sm font-medium"
+                            </Link>
+                            {planta.data.subcategorias.map((sub) => (
+                                <Link
+                                    key={sub.id}
+                                    href={`/catalogo/?subcategoria=${sub.id}`}
+                                    className="rounded-md bg-background border border-[#D4D4D4] px-3 py-1 text-sm font-medium"
                                 >
-                                    {sub}
-                                </div>
+                                    {sub.nome}
+                                </Link>
                             ))}
                         </div>
                     </section>
