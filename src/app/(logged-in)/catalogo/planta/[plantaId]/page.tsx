@@ -71,7 +71,7 @@ export default async function PlantaPage({
                     {/* Sessão 2: Dificuldade */}
                     <section>
                         <div className="flex items-center gap-4">
-                            <span className="text-5xl font-bold">{planta.data.dificuldade.value}</span>
+                            <span className="text-5xl font-bold">{planta.data.dificuldade.value.toLocaleString('pt-BR', { minimumFractionDigits: 1, maximumFractionDigits: 1 })}</span>
                             <div className="flex flex-col">
                                 <span className="text-sm text-muted-foreground tracking-wider">Dificuldade</span>
                                 <span className="text-lg font-semibold">{planta.data.dificuldade.label}</span>
