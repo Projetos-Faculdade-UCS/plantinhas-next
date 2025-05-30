@@ -36,7 +36,7 @@ export default async function PlantaPage({
                         variant={'default'}
                         className="mt-4 flex w-full items-center justify-center gap-2 text-base bg-primary"
                     >   
-                        <Link href="/plantar" >
+                        <Link href="/jardim/plantio/plantar" >
                             <i className="ph ph-potted-plant text-xl"></i>
                             <span className="text-base">
                                 Plantar
@@ -58,7 +58,7 @@ export default async function PlantaPage({
                                     key={idx}
                                     className="rounded-full bg-background border border-[#D4D4D4] px-3 py-1 text-sm font-medium"
                                 >
-                                    {sub}
+                                    {sub.nome}
                                 </div>
                             ))}
                         </div>

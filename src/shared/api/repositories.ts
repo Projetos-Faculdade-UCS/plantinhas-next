@@ -1,5 +1,6 @@
 import { HttpClient } from './client/http-client';
 import { AuthRepository } from './repositories/auth-repository';
+import { IARepository } from './repositories/ia-repository';
 import { PlantaRepository } from './repositories/planta-repository';
 import { PlantioRepository } from './repositories/plantio-repository';
 import { ProfileRepository } from './repositories/profile-repository';
@@ -23,6 +24,7 @@ export class Repositories {
     private static _profile: ProfileRepository;
     private static _plantas: PlantaRepository;
     private static _plantios: PlantioRepository;
+    private static _ia: IARepository;
 
     // Getter para o cliente de autenticação
     public static get auth(): AuthRepository {
@@ -52,6 +54,14 @@ export class Repositories {
             this._plantios = new PlantioRepository();
         }
         return this._plantios;
+    }
+
+    // Getter para o cliente de IA
+    public static get ia(): IARepository {
+        if (!this._ia) {
+            this._ia = new IARepository();
+        }
+        return this._ia;
     }
 
     /**
