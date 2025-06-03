@@ -5,7 +5,7 @@ import {
 import { Client } from '@/shared/types/client';
 import { HttpClient } from '../client/http-client';
 
-export class IARepository {
+export class AiRepository {
     private url: string = process.env.AI_API_URL || 'http://localhost:8000'; // Default para localhost:8000
     private client: Client;
 
@@ -18,9 +18,7 @@ export class IARepository {
      * @param dadosPlantio Objeto contendo os dados do plantio, conforme IAEntradaPlantioSchema.
      * @returns Retorna a resposta da API de IA, conforme IASaidaPlantioSchema.
      */
-    public async processarPlantio(
-        dadosPlantio: IAEntradaPlantio,
-    ){
+    public async processarPlantio(dadosPlantio: IAEntradaPlantio) {
         try {
             const response = await this.client.post<IASaidaPlantio>(
                 '/',
@@ -35,10 +33,15 @@ export class IARepository {
             if (response && response.data) {
                 return { data: response.data, error: null };
             } else {
-                console.error('[IARepository] Resposta inesperada do HttpClient:', response);
-                return { data: null, error: 'Resposta inválida do serviço de IA.' };
+                console.error(
+                    '[IARepository] Resposta inesperada do HttpClient:',
+                    response,
+                );
+                return {
+                    data: null,
+                    error: 'Resposta inválida do serviço de IA.',
+                };
             }
-
         } catch (error: unknown) {
             console.error('[IARepository] Erro ao processar plantio:', error);
             let errorMessage = 'Ocorreu um erro ao contatar a API de IA.';
@@ -51,4 +54,4 @@ export class IARepository {
             };
         }
     }
-} 
+}
