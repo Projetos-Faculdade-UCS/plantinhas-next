@@ -1,11 +1,11 @@
 meta {
-  name: gerar-tarefas
+  name: gerar-tarefas-mockoon
   type: http
-  seq: 2
+  seq: 3
 }
 
 post {
-  url: http://localhost:8001
+  url: http://localhost:8000/ia/gerar_plantio/
   body: json
   auth: none
 }
@@ -21,15 +21,13 @@ body:json {
         "label": "dificil"
       },
       "temperatura_ideal":{
-          "ideal": 20,
-          "maxima": 25,
-          "minima": 5
-      }
+      
+    }
     },
     "quantidade": 7,
     "ambiente": { "local": "rua", "condicao": "externo" },
     "sistemaCultivo": "canteiro",
-    "informacoes_adicionais": "", // Alterado de null para string vazia
+    "informacoes_adicionais": "",
     "habilidades_existentes": [
       "Habilidade em jardinagem",
       "Conhecimento sobre plantas aromáticas",
