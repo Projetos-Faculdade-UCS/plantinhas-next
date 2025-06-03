@@ -11,7 +11,7 @@ export interface Planta {
         ideal: number;
     };
     categoria: CategoriaPreview;
-    subCategorias: string[];
+    subcategorias: SubcategoriaPreview[];
     dificuldade: {
         label: string;
         value: number;
@@ -20,7 +20,7 @@ export interface Planta {
 
 export type PlantaPreview = Pick<
     Planta,
-    'id' | 'nome' | 'foto' | 'dificuldade'
+    'id' | 'nome' | 'foto' | 'dificuldade' | 'nomeCientifico' | 'temperatura'
 >;
 
 export interface Categoria {
@@ -31,6 +31,12 @@ export interface Categoria {
 }
 
 export type CategoriaPreview = Pick<Categoria, 'id' | 'nome' | 'descricao'>;
+
+export interface SubcategoriaPreview {
+    id: number;
+    nome: string;
+    descricao: string;
+}
 
 export interface ListagemCategorias {
     quantidade: number;

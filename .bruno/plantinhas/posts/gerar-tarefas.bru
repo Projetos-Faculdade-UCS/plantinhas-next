@@ -1,0 +1,39 @@
+meta {
+  name: gerar-tarefas
+  type: http
+  seq: 2
+}
+
+post {
+  url: http://localhost:8001
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "data_inicio_plantio": "2025-05-30",
+    "planta": {
+      "nome": "uva",
+      "nome_cientifico": "Sed modi.",
+      "dificuldade": {
+        "value": "2",
+        "label": "dificil"
+      },
+      "temperatura_ideal":{
+          "ideal": 20,
+          "maxima": 25,
+          "minima": 5
+      }
+    },
+    "quantidade": 7,
+    "ambiente": { "local": "rua", "condicao": "externo" },
+    "sistemaCultivo": "canteiro",
+    "informacoes_adicionais": "", // Alterado de null para string vazia
+    "habilidades_existentes": [
+      "Habilidade em jardinagem",
+      "Conhecimento sobre plantas aromáticas",
+      "Experiência com hortas urbanas"
+    ]
+  }
+}

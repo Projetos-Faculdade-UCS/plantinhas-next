@@ -1,0 +1,53 @@
+
+$left: -7px;
+$bottom: -13px;
+$rotation: 38deg;
+$borderWidth: 2px;
+
+
+.speechBubble{
+    position: relative;
+    background: var(--card);
+    border: $borderWidth solid var(--destructive);
+
+    &::after {
+        content: "";
+        position: absolute;
+        bottom: $bottom;
+        left: $left; /* adjust as needed */
+        width: 0;
+        height: 0;
+        border: 10px solid transparent;
+        border-top-color: var(--destructive);   
+        transform: rotate($rotation);
+        margin-left: -$borderWidth; /* center the tail */
+    }
+
+    &::before {
+        content: "";
+        position: absolute;
+        bottom: calc($bottom + $borderWidth);
+        left: $left;
+        width: 0;
+        height: 0;
+        border: 10px solid transparent;
+        border-top-color: var(--card); /* fill of the tail */
+        z-index: 1;
+        transform: rotate($rotation);
+    }
+}
+
+
+.shaky{
+    animation: shake 2.5s ease-in-out infinite;
+}
+
+@keyframes shake {
+  0% { transform: translate(0, 0); }
+  2% { transform: translate(-2px, 2px) rotate(-1deg); }
+  4% { transform: translate(2px, -2px) rotate(1deg); }
+  6% { transform: translate(-2px, 2px) rotate(0deg); }
+  8% { transform: translate(2px, 0px) rotate(1deg); }
+  10% { transform: translate(0, 0) rotate(0deg); }
+  100% { transform: translate(0, 0) rotate(0deg); }
+}

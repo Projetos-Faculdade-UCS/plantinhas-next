@@ -3,15 +3,17 @@ import { PlantaPreview } from './planta';
 export interface Plantio {
     id: number;
     planta: PlantaPreview;
-    situacao:
-        | 'Plantado'
-        | 'Germinando'
-        | 'Crescendo'
-        | 'Florescendo'
-        | 'Frutificando'
-        | 'Pronto para colheita'
-        | 'Colhido'
-        | 'Finalizado';
+    situacao: {
+        value: number;
+        label:
+            | 'Germinando'
+            | 'Crescendo'
+            | 'Florescendo'
+            | 'Frutificando'
+            | 'Pronto para colheita'
+            | 'Colhido'
+            | 'Para plantar';
+    };
     saude: {
         label: string;
         value: number;
@@ -20,6 +22,7 @@ export interface Plantio {
         label: string;
         value: number;
     };
+    quantidade: number;
     dataPlantio: string;
     dataColheita: string;
     informacoesAdicionais: string;
@@ -27,7 +30,7 @@ export interface Plantio {
 
 export type PlantioPreview = Pick<
     Plantio,
-    'id' | 'planta' | 'situacao' | 'saude' | 'sede'
+    'id' | 'planta' | 'situacao' | 'saude' | 'sede' | 'quantidade'
 >;
 
 export interface ListagemPlantios {
