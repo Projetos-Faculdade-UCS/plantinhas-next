@@ -1,5 +1,10 @@
+import { getProgresSituacao } from '@/entities/card-plantio/utils';
 import { Client } from '@/shared/types/client';
-import { ListagemPlantios, Plantio } from '@/shared/types/plantio';
+import {
+    ListagemPlantios,
+    Plantio,
+    PlantioPreview,
+} from '@/shared/types/plantio';
 import { JWTClient } from '../client/jwt-client';
 
 export class PlantioRepository {
@@ -21,7 +26,7 @@ export class PlantioRepository {
         if (page) {
             params.append('page', page.toString());
         }
-        return this.client.get<ListagemPlantios>(
+        const plantiosData = await this.client.get<ListagemPlantios>(
             `/gerenciamento/plantios/?${params.toString()}`,
             {
                 next: {
@@ -30,6 +35,23 @@ export class PlantioRepository {
                 },
             },
         );
+        // Adiciona a propriedade situacao com o valor correto
+        const plantioItens = plantiosData.data.itens.map((plantio) => {
+            const situacao =
+                plantio.situacao as unknown as PlantioPreview['situacao']['label'];
+            plantio.situacao = {
+                label: situacao,
+                value: getProgresSituacao(situacao),
+            };
+            return plantio;
+        });
+        return {
+            ...plantiosData,
+            data: {
+                ...plantiosData.data,
+                itens: plantioItens,
+            },
+        };
     }
     /**
      * Retorna um plantio específico
@@ -39,11 +61,22 @@ export class PlantioRepository {
      * cache de 1 minuto
      */
     public async getPlantio(id: number) {
-        return this.client.get<Plantio>(`/gerenciamento/plantios/${id}/`, {
-            next: {
-                tags: ['plantio', `${id}`],
-                revalidate: 60,
+        const plantioData = await this.client.get<Plantio>(
+            `/gerenciamento/plantios/${id}/`,
+            {
+                next: {
+                    tags: ['plantio', `${id}`],
+                    revalidate: 0,
+                },
             },
-        });
+        );
+
+        const situacaoPlantio = plantioData.data
+            .situacao as unknown as PlantioPreview['situacao']['label'];
+        plantioData.data.situacao = {
+            label: situacaoPlantio,
+            value: getProgresSituacao(situacaoPlantio),
+        };
+        return plantioData;
     }
 }
