@@ -24,7 +24,7 @@ export default async function PlantaPage({
                     <p className="text-base">Voltar</p>
                 </Link>
             </div>
-            <div className="flex flex-col md:flex-row gap-8 mt-4 items-start">
+            <div className="flex flex-col md:flex-row gap-8 mt-4 mb-25 md:mb-0 items-center md:items-start">
                 <PlantaImagemSection planta={planta.data} />
                 <div className="flex-1 flex flex-col gap-8">
                     <IdentificacaoPlantaSection planta={planta.data} />
