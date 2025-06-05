@@ -1,7 +1,7 @@
-import { CondicoesIdeaisPlantaSection } from '@/entities/detalhe-planta/CondicoesIdeaisPlantaSection';
-import { DificuldadePlantaSection } from '@/entities/detalhe-planta/DificuldadePlantaSection';
-import { IdentificacaoPlantaSection } from '@/entities/detalhe-planta/IdentificacaoPlantaSection';
-import { PlantaImagemSection } from '@/entities/detalhe-planta/PlantaImagemSection';
+import { CondicoesIdeaisPlantaSection } from '@/entities/detalhe-planta/condicoes-ideais-planta-section';
+import { DificuldadePlantaSection } from '@/entities/detalhe-planta/dificuldade-planta-section';
+import { IdentificacaoPlantaSection } from '@/entities/detalhe-planta/identificacao-planta-section';
+import { PlantaImagemSection } from '@/entities/detalhe-planta/planta-imagem-section';
 import { Repositories } from '@/shared/api/repositories';
 import Link from 'next/link';
 
