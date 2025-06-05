@@ -1,13 +1,23 @@
 import { Planta } from '@/shared/types/planta.d';
 import { Button } from '@/shared/ui/button';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger
+} from "@/shared/ui/dialog";
 import Image from 'next/image';
 import Link from 'next/link';
+import { CopyForm } from './copy-form';
 
 interface PlantaImagemSectionProps {
   planta: Planta;
 }
 
 export function PlantaImagemSection({ planta }: PlantaImagemSectionProps) {
+
   return (
     <div className="flex-shrink-0 w-72 flex flex-col items-center">
       <Image
@@ -18,14 +28,29 @@ export function PlantaImagemSection({ planta }: PlantaImagemSectionProps) {
         className="object-cover rounded-lg"
       />
       <div className="flex w-full items-center gap-2 mt-4">
-        <Button
-          type="button"
-          variant="default"
-          className="flex items-center justify-center bg-primary w-10 h-10 min-w-0 min-h-0 rounded-lg p-0"
-          aria-label="Compartilhar"
-        >
-          <i className="ph ph-share-network text-xl text-white"></i>
-        </Button>
+        <Dialog>
+          <DialogTrigger asChild>
+            <Button
+              type="button"
+              variant="default"
+              className="flex items-center justify-center bg-primary w-10 h-10 min-w-0 min-h-0 rounded-lg p-0 cursor-pointer"
+              aria-label="Compartilhar"
+            >
+              <i className="ph ph-share-network text-xl text-white"></i>
+            </Button>
+          </DialogTrigger>
+          <DialogContent className="sm:max-w-md">
+            <DialogHeader>
+              <DialogTitle>Compartilhar link</DialogTitle>
+              <DialogDescription>
+                Qualquer pessoa com este link poderá visualizar esta página.
+              </DialogDescription>
+            </DialogHeader>
+            <div className="flex items-center gap-2">
+              <CopyForm />
+            </div>
+          </DialogContent>
+        </Dialog>
         <Button
           asChild
           variant={'default'}
