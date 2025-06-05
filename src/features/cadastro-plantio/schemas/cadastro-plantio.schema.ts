@@ -1,39 +1,52 @@
-import { z } from 'zod';
+import i18next from 'i18next';
+import * as z from 'zod';
+import { zodI18nMap } from 'zod-i18n-map';
+import translation from 'zod-i18n-map/locales/pt/zod.json';
+/**
+ * definindo a linguagem da engine de validação dos formulários
+ * */
+i18next.init({
+    lng: 'pt',
+    resources: {
+        pt: { zod: translation },
+    },
+});
+z.setErrorMap(zodI18nMap);
 
 export const AmbientesSchema = z.object({
-  local: z.enum([
-    'quintal',
-    'sacada',
-    'estufa',
-    'rua',
-    'quarto',
-    'sala de estar',
-    'banheiro',
-    'cobertura',
-    'outro',
-  ]),
-  condicao: z.enum(['externo', 'interno', 'semi-protegido', 'comunitario']),
+    local: z.enum([
+        'quintal',
+        'sacada',
+        'estufa',
+        'rua',
+        'quarto',
+        'sala de estar',
+        'banheiro',
+        'cobertura',
+        'outro',
+    ]),
+    condicao: z.enum(['externo', 'interno', 'semi-protegido', 'comunitario']),
 });
 
 export const SistemaCultivoEnum = z.enum([
-  'vaso de flor',
-  'canteiro',
-  'caixa de cultivo',
-  'Canteiro elevado',
-  'horta vertical',
-  'espaldeira',
-  'outros',
+    'vaso de flor',
+    'canteiro',
+    'caixa de cultivo',
+    'Canteiro elevado',
+    'horta vertical',
+    'espaldeira',
+    'outros',
 ]);
 
 export const CadastroPlantioSchema = z.object({
-  plantaId: z.string().min(1, 'Selecione uma planta'), // Assumindo que o ID da planta será uma string (ex: vinda da API)
-  quantidade: z.number().min(1, 'A quantidade deve ser pelo menos 1'),
-  ambiente: AmbientesSchema,
-  sistemaCultivo: SistemaCultivoEnum,
-  informacoesAdicionais: z.string().optional(),
-  // habilidades_existentes será adicionado depois, buscando do perfil-repository
+    plantaId: z.string().min(1, 'Selecione uma planta'), // Assumindo que o ID da planta será uma string (ex: vinda da API)
+    quantidade: z.number().min(1, 'A quantidade deve ser pelo menos 1'),
+    ambiente: AmbientesSchema,
+    sistemaCultivo: SistemaCultivoEnum,
+    informacoesAdicionais: z.string().optional(),
+    // habilidades_existentes será adicionado depois, buscando do perfil-repository
 });
 
 export type CadastroPlantioFormValues = z.infer<typeof CadastroPlantioSchema>;
 
-// Removendo PlantioPayloadSchema e PlantioPayload, pois usaremos IAEntradaPlantioSchema diretamente. 
+// Removendo PlantioPayloadSchema e PlantioPayload, pois usaremos IAEntradaPlantioSchema diretamente.
