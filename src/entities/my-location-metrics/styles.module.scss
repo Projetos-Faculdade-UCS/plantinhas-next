@@ -1,0 +1,9 @@
+.scrollX{
+    overflow-x: scroll;
+
+    scrollbar-width: 0px;
+    -ms-overflow-style: none; /* IE and Edge */
+    &::-webkit-scrollbar {
+        display: none; /* Chrome, Safari and Opera */
+    }
+}

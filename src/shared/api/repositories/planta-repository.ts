@@ -86,7 +86,7 @@ export class PlantaRepository {
         return this.client.get<Planta>(`/gerenciamento/plantas/${id}/`, {
             next: {
                 tags: ['planta', `${id}`],
-                revalidate: 60,
+                revalidate: 0,
             },
         });
     }
