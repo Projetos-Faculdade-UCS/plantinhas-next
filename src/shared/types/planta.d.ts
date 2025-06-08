@@ -11,7 +11,7 @@ export interface Planta {
         ideal: number;
     };
     categoria: CategoriaPreview;
-    subcategorias: SubcategoriaPreview[];
+    subcategorias: CategoriaPreview[];
     dificuldade: {
         label: string;
         value: number;
