@@ -40,3 +40,13 @@ export interface ListagemPlantios {
     ultimaPagina: number;
     itens: PlantioPreview[];
 }
+
+export interface TarefaPlantio {
+    id: number;
+    descricao: string;
+    ultimaAlteracao: string; // ISO date string
+    frequencia: 'Diária' | 'Semanal' | 'Mensal' | 'Anual';
+    quantidadeTotal: number;
+    quantidadeCompletada: number;
+    status: 'Pendente' | 'Concluído'
+}
