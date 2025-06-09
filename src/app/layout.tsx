@@ -1,3 +1,5 @@
+import '@/public/phosphor/duotone/duotone.css';
+import '@/public/phosphor/regular/regular.css';
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
@@ -15,6 +17,11 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
     title: 'Plantinhas',
     description: 'Aprenda a cuidar de plantas',
+    openGraph: {
+        title: 'Plantinhas',
+        description: 'Aprenda a cuidar de plantas',
+        siteName: 'Plantinhas',
+    },
 };
 
 export default function RootLayout({
@@ -25,16 +32,10 @@ export default function RootLayout({
     return (
         <html lang="pt-BR">
             <head>
-                <link
-                    rel="stylesheet"
-                    type="text/css"
-                    href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css"
-                ></link>
-                <link
-                    rel="stylesheet"
-                    type="text/css"
-                    href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/duotone/style.css"
-                ></link>
+                <meta
+                    name="viewport"
+                    content="width=device-width, initial-scale=1"
+                />
             </head>
 
             <body
