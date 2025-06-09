@@ -13,7 +13,7 @@ export class NetWorkError extends Error {
 }
 
 export class BadRequestError extends NetWorkError {
-    data!: ValidationError;
+    declare data: ValidationError;
 
     constructor(message: string, data?: ValidationError) {
         super(message, 400, data);
