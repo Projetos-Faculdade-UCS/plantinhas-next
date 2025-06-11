@@ -7,9 +7,16 @@ import {
     AccordionTrigger,
 } from "@/shared/ui/accordion";
 import { Button } from '@/shared/ui/button';
+import { formatDistanceToNow } from 'date-fns';
+import { ptBR } from 'date-fns/locale';
 import Image from 'next/image';
 import Link from 'next/link';
 import { use } from 'react';
+
+function getTimeAgo(dateString: string | undefined): string {
+    if (!dateString) return 'Nunca';
+    return formatDistanceToNow(new Date(dateString), { addSuffix: true, locale: ptBR });
+}
 
 export default function PlantioPage({
     params,
@@ -19,6 +26,11 @@ export default function PlantioPage({
     const plantioId = Number(use(params).plantioId);
     const { data: plantio } = use(Repositories.plantios.getPlantio(plantioId));
     const tarefas = use(Repositories.plantios.getTarefasPlantio(plantioId));
+
+    const tarefasMapeadas = tarefas.map((tarefa) => ({
+        ...tarefa,
+        timeAgo: getTimeAgo(tarefa.ultimaAlteracao),
+    }));
 
     return (
         <div className="flex h-full w-full flex-col">
@@ -74,16 +86,19 @@ export default function PlantioPage({
                                     </AccordionTrigger>
                                 </AccordionItem>
                             )}
-                            {tarefas.map((tarefa) => (
+                            {tarefasMapeadas.map((tarefa) => (
                                 <AccordionItem
                                     key={tarefa.id}
                                     value={`tarefa-${tarefa.id}`}
                                     className="rounded-lg bg-[#FFFFFF] border border-[#D4D4D4] px-4 py-2"
                                 >
                                     <AccordionTrigger asChild className='hover:no-underline gap-1'>
-                                        <div className="w-full cursor-pointer flex flex-col py-3">
-                                            <span className="font-medium text-base leading-tight">{tarefa.descricao}</span>
-                                            <span className="text-xs text-muted-foreground leading-none">{tarefa.status}</span>
+                                        <div className="w-full cursor-pointer flex flex-row items-center justify-between py-3">
+                                            <div className="flex flex-col gap-1">
+                                                <span className="font-medium text-base leading-tight">{tarefa.nome}</span>
+                                                <span className="text-xs text-muted-foreground leading-none">{tarefa.status}</span>
+                                            </div>
+                                            <span className="text-xs text-muted-foreground ml-4 whitespace-nowrap">{tarefa.timeAgo}</span>
                                         </div>
                                     </AccordionTrigger>
                                     <AccordionContent>
