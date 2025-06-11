@@ -43,10 +43,27 @@ export interface ListagemPlantios {
 
 export interface TarefaPlantio {
     id: number;
-    descricao: string;
-    ultimaAlteracao: string; // ISO date string
-    frequencia: 'Diária' | 'Semanal' | 'Mensal' | 'Anual';
+    nome: string;
+    status: 'Pendente' | 'Concluído'
+    tipo: 'cultivo', 'irrigacao', 'nutricao' , 'inspecao', 'poda', 'colheita';
     quantidadeTotal: number;
     quantidadeCompletada: number;
-    status: 'Pendente' | 'Concluído'
+    ultimaAlteracao: string; // ISO date string
+    frequencia: string; // pesquisar lib para transformar cron em frequencia(?)
+    habilidadeRequerida: number,
+    tutorial: {
+        materiais: [
+            {
+            nome: string,
+            quantidade: number,
+            unidade: string
+            },
+        ],
+        etapas: [
+            {
+            descricao: string,
+            ordem: number
+            },
+        ]
+    }
 }
