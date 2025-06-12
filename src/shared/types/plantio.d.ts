@@ -45,11 +45,13 @@ export interface TarefaPlantio {
     id: number;
     nome: string;
     status: 'Pendente' | 'Concluído'
+    dataProximaOcorrencia: string;
+    podeConcluirTarefa: boolean;
     tipo: 'cultivo', 'irrigacao', 'nutricao' , 'inspecao', 'poda', 'colheita';
     quantidadeTotal: number;
     quantidadeCompletada: number;
-    ultimaAlteracao: string; // ISO date string
-    frequencia: string; // pesquisar lib para transformar cron em frequencia(?)
+    ultimaAlteracao: string;
+    frequencia: string;
     habilidadeRequerida: number,
     tutorial: {
         materiais: [
