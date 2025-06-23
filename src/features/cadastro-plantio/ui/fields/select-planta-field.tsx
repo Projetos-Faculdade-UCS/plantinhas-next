@@ -18,11 +18,11 @@ import { useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
 import { useState } from 'react';
 import { Control } from 'react-hook-form';
-import { searchPlantasAction } from '../../actions/plantio.actions';
-import { CadastroPlantioFormValues } from '../../schemas/cadastro-plantio.schema';
+import { NewPlantioForm } from '../../lib/cadastro-plantio.schema';
+import { searchPlantasAction } from '../../lib/plantio.action';
 
 interface PlantaFieldProps {
-    control: Control<CadastroPlantioFormValues>;
+    control: Control<NewPlantioForm>;
     disabled: boolean;
 }
 

@@ -44,9 +44,6 @@ export const CadastroPlantioSchema = z.object({
     ambiente: AmbientesSchema,
     sistemaCultivo: SistemaCultivoEnum,
     informacoesAdicionais: z.string().optional(),
-    // habilidades_existentes será adicionado depois, buscando do perfil-repository
 });
 
-export type CadastroPlantioFormValues = z.infer<typeof CadastroPlantioSchema>;
-
-// Removendo PlantioPayloadSchema e PlantioPayload, pois usaremos IAEntradaPlantioSchema diretamente.
+export type NewPlantioForm = z.infer<typeof CadastroPlantioSchema>;

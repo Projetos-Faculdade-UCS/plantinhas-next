@@ -1,7 +1,7 @@
 import {
     IAEntradaPlantio,
     IASaidaPlantio,
-} from '@/features/cadastro-plantio/schemas/ia-api.schema';
+} from '@/features/cadastro-plantio/lib/ia-api.schema';
 import { Client } from '@/shared/types/client';
 import { HttpClient } from '../client/http-client';
 

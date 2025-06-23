@@ -1,4 +1,4 @@
-import { CadastroPlantioForm } from '@/features/cadastro-plantio/components/CadastroPlantioForm';
+import { CadastroPlantioForm } from '@/features/cadastro-plantio/ui/CadastroPlantioForm';
 import { Suspense } from 'react';
 
 export default function CriarPlantioPage() {

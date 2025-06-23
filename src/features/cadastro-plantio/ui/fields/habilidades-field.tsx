@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { getHabilidadesAction } from '../../actions/plantio.actions';
+import { getHabilidadesAction } from '../../lib/plantio.action';
 
 export function HabilidadesField() {
     const {

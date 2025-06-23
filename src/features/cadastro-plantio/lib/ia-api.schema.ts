@@ -19,7 +19,7 @@ export type IAPlanta = z.infer<typeof IAPlantaSchema>;
 
 export const IAAmbienteSchema = z.object({
     local: z.string(),
-    condicao: z.enum(['interno', 'externo']),
+    condicao: z.enum(['interno', 'externo', 'semi-protegido', 'comunitario']),
 });
 export type IAAmbiente = z.infer<typeof IAAmbienteSchema>;
 

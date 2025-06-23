@@ -1,5 +1,9 @@
 'use client';
 
+import {
+    CadastroPlantioSchema,
+    NewPlantioForm,
+} from '@/features/cadastro-plantio/lib/cadastro-plantio.schema';
 import { Button } from '@/shared/ui/button';
 import {
     Card,
@@ -13,25 +17,20 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useSearchParams } from 'next/navigation';
 import { useState, useTransition } from 'react';
 import { useForm } from 'react-hook-form';
-import { processarPlantioIAAction } from '../actions/plantio.actions';
-import {
-    CadastroPlantioFormValues,
-    CadastroPlantioSchema,
-} from '../schemas/cadastro-plantio.schema';
-import { IAEntradaPlantio } from '../schemas/ia-api.schema';
+import { IAEntradaPlantio } from '../lib/ia-api.schema';
+import { processarPlantioIAAction } from '../lib/plantio.action';
 
 // Importando os novos componentes de campo
 import { AmbienteCondicaoField } from './fields/AmbienteCondicaoField';
 import { AmbienteLocalField } from './fields/AmbienteLocalField';
 import { InformacoesAdicionaisField } from './fields/InformacoesAdicionaisField';
-import { QuantidadeField } from './fields/QuantidadeField';
+import { QuantidadeField } from './fields/quantidade-field';
 import { SelectPlantaField } from './fields/select-planta-field';
 import { SistemaCultivoField } from './fields/SistemaCultivoField';
 import { SubmittedJsonDisplay } from './SubmittedJsonDisplay';
 
 // Importando os novos hooks
-import { usePlantaDetalhes } from '../hooks/usePlantaDetalhes';
-import { usePlantioPayload } from '../hooks/usePlantioPayload';
+import { formatPlantioForm } from '../lib/format-plantio-form';
 import { HabilidadesField } from './fields/habilidades-field';
 
 export function CadastroPlantioForm() {
@@ -40,7 +39,7 @@ export function CadastroPlantioForm() {
     const [aiResponse, setAiResponse] = useState<string | null>(null);
     const [submitError, setSubmitError] = useState<string | null>(null);
 
-    const form = useForm<CadastroPlantioFormValues>({
+    const form = useForm<NewPlantioForm>({
         resolver: zodResolver(CadastroPlantioSchema),
         defaultValues: {
             plantaId: searchParams.get('plantaId') || undefined,
@@ -49,78 +48,45 @@ export function CadastroPlantioForm() {
             ambiente: { local: undefined, condicao: undefined },
             sistemaCultivo: undefined,
         },
-        mode: 'onChange',
+        mode: 'onSubmit',
     });
 
-    const watchedPlantaId = form.watch('plantaId');
-    const {
-        plantaSelecionadaDetalhes,
-        isLoadingDetalhes: isLoadingPlantaDetalhes,
-    } = usePlantaDetalhes(watchedPlantaId);
+    // const watchedPlantaId = form.watch('plantaId');
+    // const allFormValues = form.watch();
 
-    const allFormValues = form.watch();
-    const {
-        plantioPayload: iaInputPayload,
-        payloadValidationError,
-        isProcessingPayload,
-    } = usePlantioPayload({
-        quantidade: allFormValues.quantidade,
-        localAmbiente: allFormValues.ambiente?.local,
-        condicaoAmbiente: allFormValues.ambiente?.condicao,
-        sistemaCultivo: allFormValues.sistemaCultivo,
-        informacoesAdicionais: allFormValues.informacoesAdicionais,
-        plantaDetalhes: plantaSelecionadaDetalhes,
-    });
-
-    async function onSubmit(data: CadastroPlantioFormValues) {
+    async function onSubmit(data: NewPlantioForm) {
         setAiResponse(null);
+        try {
+            startAiTransition(async () => {
+                const iaInputPayload = await formatPlantioForm(data);
+                const resultIA = await processarPlantioIAAction(
+                    iaInputPayload as IAEntradaPlantio,
+                );
 
-        if (payloadValidationError) {
-            console.error(
-                'Erro de validação do payload (IA) detectado pelo hook usePlantioPayload:',
-                payloadValidationError,
-            );
-            setSubmitError(payloadValidationError);
-            return;
+                if (resultIA.error) {
+                    setSubmitError(resultIA.error);
+                    setAiResponse(null);
+                } else if (resultIA.data) {
+                    setAiResponse(JSON.stringify(resultIA.data, null, 2));
+                    setSubmitError(null);
+                    console.log('Resposta da IA:', resultIA.data);
+                } else {
+                    setSubmitError(
+                        'A API de IA não retornou uma resposta válida.',
+                    );
+                    setAiResponse(null);
+                }
+            });
+        } catch (error) {
+            console.error('Erro ao formatar dados para IA:', error);
+            setSubmitError('Erro ao formatar dados para IA');
         }
-
-        if (!iaInputPayload) {
-            console.error(
-                'Payload de entrada para IA (iaInputPayload) não está pronto ou é nulo. Verifique os campos e dependências.',
-            );
-            setSubmitError(
-                'Os dados para a IA não puderam ser preparados. Verifique os campos ou tente novamente.',
-            );
-            return;
-        }
-
-        startAiTransition(async () => {
-            console.log('Enviando para IA:', iaInputPayload);
-            const resultIA = await processarPlantioIAAction(
-                iaInputPayload as IAEntradaPlantio,
-            );
-
-            if (resultIA.error) {
-                setSubmitError(resultIA.error);
-                setAiResponse(null);
-            } else if (resultIA.data) {
-                setAiResponse(JSON.stringify(resultIA.data, null, 2));
-                setSubmitError(null);
-                console.log('Resposta da IA:', resultIA.data);
-            } else {
-                setSubmitError('A API de IA não retornou uma resposta válida.');
-                setAiResponse(null);
-            }
-        });
     }
 
-    const isBusy =
-        isLoadingPlantaDetalhes || isProcessingPayload || isLoadingAi;
+    const isBusy = isLoadingAi;
 
     const getButtonText = () => {
         if (isLoadingAi) return 'Processando com IA...';
-        if (isProcessingPayload) return 'Preparando Dados para IA...';
-        if (isLoadingPlantaDetalhes) return 'Carregando Componentes...';
         return 'Registrar Plantio (com IA)';
     };
     const formErrors = form.formState.errors;
