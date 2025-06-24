@@ -24,14 +24,13 @@ import { processarPlantioIAAction } from '../lib/plantio.action';
 import { AmbienteCondicaoField } from './fields/AmbienteCondicaoField';
 import { AmbienteLocalField } from './fields/AmbienteLocalField';
 import { InformacoesAdicionaisField } from './fields/InformacoesAdicionaisField';
-import { QuantidadeField } from './fields/quantidade-field';
-import { SelectPlantaField } from './fields/select-planta-field';
 import { SistemaCultivoField } from './fields/SistemaCultivoField';
 import { SubmittedJsonDisplay } from './SubmittedJsonDisplay';
 
 // Importando os novos hooks
 import { formatPlantioForm } from '../lib/format-plantio-form';
 import { HabilidadesField } from './fields/habilidades-field';
+import { Pokedex } from './pokedex';
 
 export function CadastroPlantioForm() {
     const searchParams = useSearchParams();
@@ -111,25 +110,7 @@ export function CadastroPlantioForm() {
                 <div className="grid grid-cols-1 items-start gap-6 lg:grid-cols-3">
                     {/* Coluna 1: Detalhes da Planta e Observações */}
                     <div className="space-y-6 lg:col-span-2">
-                        <Card>
-                            <CardHeader>
-                                <CardTitle>Detalhes da Planta</CardTitle>
-                                <CardDescription>
-                                    Selecione a planta e a quantidade a ser
-                                    registrada.
-                                </CardDescription>
-                            </CardHeader>
-                            <CardContent className="space-y-6">
-                                <SelectPlantaField
-                                    control={form.control}
-                                    disabled={isBusy}
-                                />
-                                <QuantidadeField
-                                    control={form.control}
-                                    disabled={isBusy}
-                                />
-                            </CardContent>
-                        </Card>
+                        <Pokedex control={form.control} isBusy={isBusy} />
 
                         <Card>
                             <CardHeader>

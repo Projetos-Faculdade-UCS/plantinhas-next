@@ -5,7 +5,7 @@ type TileProps = {
     leading?: React.ReactNode;
     trailing?: React.ReactNode;
     value: React.ReactNode;
-    title: React.ReactNode;
+    title?: React.ReactNode;
 };
 
 /**
@@ -25,9 +25,11 @@ export function Tile({ leading, trailing, value, title, ...props }: TileProps) {
             <div className="flex items-center gap-4">
                 {leading}
                 <div className="flex flex-col">
-                    <span className="text-muted-foreground text-sm">
-                        {title}
-                    </span>
+                    {title && (
+                        <span className="text-muted-foreground text-sm">
+                            {title}
+                        </span>
+                    )}
                     <span className="font-medium">{value}</span>
                 </div>
             </div>

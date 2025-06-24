@@ -55,8 +55,11 @@ export function SelectPlantaField({ control, disabled }: PlantaFieldProps) {
                         disabled={disabled && plantas.length === 0}
                     >
                         <FormControl>
-                            <SelectTrigger>
-                                <SelectValue placeholder="Selecione uma planta" />
+                            <SelectTrigger className="py-2">
+                                <SelectValue
+                                    placeholder="Selecione uma planta"
+                                    className="py-2"
+                                />
                             </SelectTrigger>
                         </FormControl>
                         <SelectContent>
@@ -82,11 +85,11 @@ export function SelectPlantaField({ control, disabled }: PlantaFieldProps) {
                             {plantas.map((planta) => (
                                 <SelectItem
                                     key={planta.id}
+                                    className="py-2"
                                     value={String(planta.id)}
                                 >
                                     <Tile
-                                        title={planta.nome}
-                                        value={planta.dificuldade.label}
+                                        value={planta.nome}
                                         leading={
                                             planta.foto ? (
                                                 <Image
