@@ -34,7 +34,7 @@ export default function PlantioPage({
                     alt={plantio.planta.nome}
                     width={1000}
                     height={1000}
-                    className={`h-[240px] w-fit object-contain`}
+                    className={`h-[180px] w-fit object-contain`}
                 />
                 <div className="flex flex-col gap-8">
                     <div className="flex flex-col gap-1">
