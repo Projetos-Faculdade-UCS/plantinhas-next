@@ -2,7 +2,7 @@ import { TarefaPlantio } from '@/shared/types/plantio';
 import { Button } from '@/shared/ui/button';
 
 interface DetalheTarefaProps {
-    tarefa: TarefaPlantio;
+    tarefa: (TarefaPlantio & { timeAgo?: string });
 }
 
 export function DetalheTarefa({ tarefa }: DetalheTarefaProps) {
@@ -35,9 +35,13 @@ export function DetalheTarefa({ tarefa }: DetalheTarefaProps) {
             {/* Header fixo com botão fechar e título */}
             <div className="flex-shrink-0 border-b">
                 <div className="flex items-center justify-between mb-3">
-                    <h3 className="text-xl font-bold flex items-center gap-2">
-                        {tarefa.nome}
-                    </h3>
+                    <div className="flex flex-col gap-1">
+                        <h3 className="text-xl font-bold">
+                            {tarefa.nome}
+                        </h3>
+                        <span className="text-xs text-muted-foreground">{tarefa.timeAgo}</span>
+                    </div>
+
                     <button type="button" className="flex items-center justify-center w-8 h-8 cursor-pointer" title="Fechar">
                         <i className="ph ph-x text-xl text-muted-foreground" />
                     </button>
