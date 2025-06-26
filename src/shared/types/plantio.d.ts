@@ -44,7 +44,7 @@ export interface ListagemPlantios {
 export interface TarefaPlantio {
     id: number;
     nome: string;
-    status: 'Pendente' | 'Concluído'
+    concluido: boolean;
     dataProximaOcorrencia: string;
     podeConcluirTarefa: boolean;
     tipo: 'cultivo', 'irrigacao', 'nutricao' , 'inspecao', 'poda', 'colheita';
