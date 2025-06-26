@@ -1,11 +1,26 @@
 'use client'
 import { DetalheTarefa } from '@/entities/detalhe-plantio/detalhe-tarefa';
 import { TarefaPlantio } from '@/shared/types/plantio';
+import Image from 'next/image';
 import { useState } from 'react';
 
 interface ListaTarefasPlantioProps {
     tarefas: (TarefaPlantio & { timeAgo?: string })[];
 }
+
+const TAREFA_IMAGE_MAP: Record<string, string> = {
+    'colheita': 'colher',
+    'cultivo': 'plantar',
+    'inspeção': 'inspecionar',
+    'irrigação': 'regar',
+    'nutrição': 'adubar',
+    'poda': 'podar',
+};
+
+const getTarefaImage = (tipo: string) => {
+    const imageName = TAREFA_IMAGE_MAP[tipo.toLowerCase()] || 'plantar';
+    return `/assets/thumbnail-tarefas/${imageName}.png`;
+};
 
 export function ListaTarefasPlantio({ tarefas }: ListaTarefasPlantioProps) {
     const [selectedIdx, setSelectedIdx] = useState(0);
@@ -24,13 +39,22 @@ export function ListaTarefasPlantio({ tarefas }: ListaTarefasPlantioProps) {
                 {tarefas.map((tarefa, idx) => (
                     <div
                         key={tarefa.id}
-                        className={`rounded-lg border-2 px-4 py-2 cursor-pointer transition-colors 
+                        className={`rounded-lg border-2 cursor-pointer transition-colors 
                             ${selectedIdx === idx ? 'border-primary bg-primary-foreground' : 'border-[#D4D4D4] bg-[#FFFFFF]'}
                         `}
                         onClick={() => setSelectedIdx(idx)}
                     >
-                        <div className="w-full flex flex-row items-center justify-between py-3">
-                            <div className="w-full flex flex-col justify-between">
+                        <div className="w-full flex flex-row items-center justify-between">
+                            <div className="flex items-center px-6 py-4 border-r-2 border-[#D4D4D4]">
+                                <Image
+                                    src={getTarefaImage(tarefa.tipo)}
+                                    alt={tarefa.nome}
+                                    width={45}
+                                    height={45}
+                                    className="rounded-md"
+                                />
+                            </div>
+                            <div className="w-full flex flex-col justify-between px-4">
                                 <div className="flex flex-col gap-1">
                                     <span className="font-medium text-base leading-tight">{tarefa.nome}</span>
                                 </div>
@@ -40,7 +64,7 @@ export function ListaTarefasPlantio({ tarefas }: ListaTarefasPlantioProps) {
                                     <span className="ml-1 text-base font-medium">{tarefa.quantidadeCompletada} de {tarefa.quantidadeTotal}</span>
                                 </div>
                             </div>
-                            <i className="ph ph-caret-right text-lg text-muted-foreground" />
+                            <i className="ph ph-caret-right text-lg text-muted-foreground px-4" />
                         </div>
                     </div>
                 ))}
