@@ -3,12 +3,14 @@ import { cn } from '@/shared/lib/utils';
 type SearchInputProps = React.ComponentProps<'input'> & {
     onClear?: () => void;
     onChange?: (val: string) => void;
+    onSubmit?: () => void;
 };
 
 export function SearchInput({
     className,
     onChange,
     onClear,
+    onSubmit,
     ...props
 }: SearchInputProps) {
     return (
@@ -40,7 +42,8 @@ export function SearchInput({
             </div>
 
             <button
-                type="submit"
+                type="button"
+                onClick={() => onSubmit?.()}
                 className="bg-primary text-primary-foreground h-full cursor-pointer px-2"
             >
                 <i className="ph ph-magnifying-glass flex" />
