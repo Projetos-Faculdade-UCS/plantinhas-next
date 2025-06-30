@@ -7,7 +7,7 @@ export async function CatalogoPlantas() {
     const catalogo = await Repositories.plantas.getCatalogo();
     return (
         <div className="flex flex-col gap-4">
-            {catalogo.data.items.map((categoria) => (
+            {catalogo.data.itens.map((categoria) => (
                 <div key={categoria.id} className="flex w-full flex-col gap-2">
                     <Link
                         href={`/catalogo/categoria/${categoria.id}`}

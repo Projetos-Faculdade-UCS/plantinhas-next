@@ -9,7 +9,7 @@ import {
 import { JWTClient } from '../client/jwt-client';
 
 export class PlantaRepository {
-    private url: string = process.env.PLANTAS_API_URL || '';
+    private url: string = process.env.CATALOGO_API_URL || '';
     private client: Client;
 
     constructor() {
@@ -23,15 +23,12 @@ export class PlantaRepository {
      * cache de 1 minuto
      */
     public async getCatalogo() {
-        return this.client.get<ListagemCategorias>(
-            '/gerenciamento/categorias/',
-            {
-                next: {
-                    tags: ['catalogo'],
-                    revalidate: 60,
-                },
+        return this.client.get<ListagemCategorias>('/categorias/', {
+            next: {
+                tags: ['catalogo'],
+                revalidate: 60,
             },
-        );
+        });
     }
 
     /**
@@ -42,15 +39,12 @@ export class PlantaRepository {
      * cache de 1 minuto
      */
     public async getCategoria(idCategoria: number) {
-        return this.client.get<Categoria>(
-            `/gerenciamento/categorias/${idCategoria}/`,
-            {
-                next: {
-                    tags: ['categoria', `${idCategoria}`],
-                    revalidate: 60,
-                },
+        return this.client.get<Categoria>(`/categorias/${idCategoria}/`, {
+            next: {
+                tags: ['categoria', `${idCategoria}`],
+                revalidate: 60,
             },
-        );
+        });
     }
 
     /**
@@ -67,7 +61,7 @@ export class PlantaRepository {
             page: pagina,
         });
         return this.client.get<ListagemPlantas>(
-            `/gerenciamento/categorias/${idCategoria}/plantas?${params.toString()}`,
+            `/categorias/${idCategoria}/plantas?${params.toString()}`,
             {
                 next: {
                     tags: ['plantasPorCategoria', `${params.toString()}`],
@@ -83,7 +77,7 @@ export class PlantaRepository {
      * @returns Retorna uma planta específica
      */
     public async getPlanta(id: number) {
-        return this.client.get<Planta>(`/gerenciamento/plantas/${id}/`, {
+        return this.client.get<Planta>(`/plantas/${id}/`, {
             next: {
                 tags: ['planta', `${id}`],
                 revalidate: 0,
@@ -102,7 +96,7 @@ export class PlantaRepository {
             page: pagina,
         });
         return this.client.get<ListagemPlantas>(
-            `/gerenciamento/plantas/?${params.toString()}`,
+            `/plantas/?${params.toString()}`,
             {
                 next: {
                     tags: ['plantas', `${params.toString()}`],
@@ -127,14 +121,10 @@ export class PlantaRepository {
         formData.append('nome', planta.nome);
         formData.append('foto', planta.foto);
 
-        return this.client.post<Planta>(
-            `/gerenciamento/plantas/sugerir`,
-            formData,
-            {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                },
+        return this.client.post<Planta>(`/plantas/sugerir`, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
             },
-        );
+        });
     }
 }

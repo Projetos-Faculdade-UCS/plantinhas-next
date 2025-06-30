@@ -3,7 +3,7 @@ import { Client } from '@/shared/types/client';
 import { JWTClient } from '../client/jwt-client';
 
 export class ProfileRepository {
-    private url: string = process.env.PROFILE_API_URL || '';
+    private url: string = process.env.AUTH_API_URL || '';
     private client: Client;
 
     constructor() {

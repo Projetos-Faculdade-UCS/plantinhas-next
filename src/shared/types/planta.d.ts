@@ -3,14 +3,13 @@ export interface Planta {
     nome: string;
     nomeCientifico: string;
     foto?: string;
+    horasSol: string;
     descricao: string;
     estacaoIdeal: 'Outono' | 'Verão' | 'Inverno' | 'Primavera' | 'Todo o ano';
-    temperatura: {
-        minima: number;
-        maxima: number;
-        ideal: number;
-    };
-    categoria: CategoriaPreview;
+    temperaturaMinima: number;
+    temperaturaMaxima: number;
+    temperaturaIdeal: number;
+    categoria: Categoria;
     subcategorias: SubcategoriaPreview[];
     dificuldade: {
         label: string;
@@ -39,8 +38,11 @@ export interface SubcategoriaPreview {
 }
 
 export interface ListagemCategorias {
-    quantidade: number;
-    items: (Categoria & { plantas: PlantaPreview[] })[];
+    total: number;
+    itensPorPagina: number;
+    paginaAtual: number;
+    ultimaPagina: number;
+    itens: (Categoria & { plantas: PlantaPreview[] })[];
 }
 
 export interface ListagemPlantas {
