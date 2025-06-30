@@ -1,7 +1,6 @@
 'use server';
 
 import { Repositories } from '@/shared/api/repositories';
-import { PerfilRepository } from '@/shared/api/repositories/perfil-repository';
 import { ListagemPlantas, Planta } from '@/shared/types/planta';
 import { IAEntradaPlantio, IASaidaPlantio } from './ia-api.schema';
 
@@ -13,8 +12,8 @@ interface ActionResult<T> {
 export async function getHabilidadesAction(): Promise<ActionResult<string[]>> {
     try {
         console.log('[DEBUG] getHabilidadesAction:');
-        const perfilRepository = new PerfilRepository();
-        const habilidades = await perfilRepository.getHabilidadesExistentes();
+        const habilidades =
+            await Repositories.profile.getHabilidadesExistentes();
         return { data: habilidades };
     } catch (error) {
         console.error('Error in getHabilidadesAction:', error);
