@@ -44,20 +44,23 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             return token;
         },
         async session({ session, token }) {
-            if (token.exp && token.exp < Date.now() / 1000) {
-                try {
-                    const newSession = await Repositories.auth.refreshToken(
-                        token.refreshToken!,
-                    );
-                    const { access, refresh, exp } = newSession.data;
-                    token.accessToken = access;
-                    token.refreshToken = refresh;
-                    session.accessToken = access;
-                    session.refreshToken = refresh;
-                    token.exp = exp;
-                } catch (error) {
-                    console.error('Error refreshing token:', error);
-                    session.error = 'RefreshTokenError';
+            if (token.exp) {
+                const expDate = new Date(token.exp! * 1000);
+                if (expDate < new Date()) {
+                    try {
+                        const newSession = await Repositories.auth.refreshToken(
+                            token.refreshToken!,
+                        );
+                        const { access, refresh, exp } = newSession.data;
+                        token.accessToken = access;
+                        token.refreshToken = refresh;
+                        session.accessToken = access;
+                        session.refreshToken = refresh;
+                        token.exp = exp;
+                    } catch (error) {
+                        console.error('Error refreshing token:', error);
+                        session.error = 'RefreshTokenError';
+                    }
                 }
             }
 

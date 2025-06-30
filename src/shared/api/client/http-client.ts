@@ -112,7 +112,7 @@ export class HttpClient implements Client {
         }>;
     }
 
-    private async responseHandler<T>(response: Response) {
+    protected async responseHandler<T>(response: Response) {
         const res = response as CustomResponse<T>;
 
         if (res.status === 200 || res.status === 201 || res.status === 204) {
@@ -162,13 +162,20 @@ export class HttpClient implements Client {
         );
     }
 
-    private async parseJson<T>(response: CustomResponse<T>) {
+    protected async parseJson<T>(response: CustomResponse<T>) {
         try {
             return await response.json();
         } catch (e) {
             console.error('Error parsing JSON response:', e);
             return {
-                message: response.statusText || 'Erro ao processar a resposta',
+                type: 'ParseError',
+                errors: [
+                    {
+                        code: 'JSON_PARSE_ERROR',
+                        detail: 'Failed to parse JSON response',
+                        attr: null,
+                    },
+                ],
             } as ResponseError;
         }
     }

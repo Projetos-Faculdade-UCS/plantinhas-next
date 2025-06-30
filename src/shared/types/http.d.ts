@@ -1,6 +1,15 @@
 export type CustomFetchProps = Omit<RequestInit, 'method'>;
 
-export type ResponseError = { code: string; message: string };
+export type ApiPlantinhasError = {
+    code: string;
+    detail: string;
+    attr: unknown;
+};
+
+export type ResponseError = {
+    type: string;
+    errors: ApiPlantinhasError[];
+};
 
 export type ValidationError = {
     [key: string]: string[] | ValidationError[];
