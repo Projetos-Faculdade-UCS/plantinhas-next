@@ -30,7 +30,7 @@ import { SubmittedJsonDisplay } from './SubmittedJsonDisplay';
 // Importando os novos hooks
 import { formatPlantioForm } from '../lib/format-plantio-form';
 import { HabilidadesField } from './fields/habilidades-field';
-import { Pokedex } from './pokedex';
+import { Pokedex } from './select-planta/pokedex';
 
 export function CadastroPlantioForm() {
     const searchParams = useSearchParams();
@@ -49,9 +49,6 @@ export function CadastroPlantioForm() {
         },
         mode: 'onSubmit',
     });
-
-    // const watchedPlantaId = form.watch('plantaId');
-    // const allFormValues = form.watch();
 
     async function onSubmit(data: NewPlantioForm) {
         setAiResponse(null);

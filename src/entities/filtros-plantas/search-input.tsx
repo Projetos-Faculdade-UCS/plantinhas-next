@@ -1,6 +1,9 @@
 import { cn } from '@/shared/lib/utils';
 
-type SearchInputProps = React.ComponentProps<'input'> & {
+type SearchInputProps = Omit<
+    React.ComponentProps<'input'>,
+    'onChange' | 'onSubmit'
+> & {
     onClear?: () => void;
     onChange?: (val: string) => void;
     onSubmit?: () => void;
@@ -23,7 +26,9 @@ export function SearchInput({
             <div className="relative flex h-full w-full items-center">
                 <input
                     {...props}
-                    onChange={onChange}
+                    onChange={(e) => {
+                        onChange?.(e.target.value);
+                    }}
                     type="text"
                     className="placeholder:text-muted-foreground h-full w-full pr-7 pl-2 outline-none"
                 />
@@ -31,8 +36,8 @@ export function SearchInput({
                     <button
                         type="button"
                         onClick={() => {
-                            onChange?.('');
                             onClear?.();
+                            onChange?.('');
                         }}
                         className="absolute end-0 h-9 cursor-pointer px-2 py-0"
                     >

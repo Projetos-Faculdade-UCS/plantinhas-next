@@ -3,10 +3,8 @@ import {
     FormControl,
     FormField,
     FormItem,
-    FormLabel,
     FormMessage,
 } from '@/shared/ui/form';
-import { Input } from '@/shared/ui/input';
 import { Control } from 'react-hook-form';
 import { NewPlantioForm } from '../../lib/cadastro-plantio.schema';
 import styles from './styles.module.scss'; // Importando o CSS específico
@@ -22,27 +20,31 @@ export function QuantidadeField({ control, disabled }: QuantidadeFieldProps) {
             name="quantidade"
             render={({ field }) => (
                 <FormItem>
-                    <FormLabel>Quantidade</FormLabel>
+                    {/* <FormLabel>Quantidade</FormLabel> */}
                     <div className="flex items-center gap-2">
                         <Button
                             type="button"
                             variant="outline"
-                            className="h-8 w-8"
+                            disabled={field.value <= 1 || disabled}
+                            className="h-8 w-8 cursor-pointer"
                             onClick={() => field.onChange(field.value - 1)}
                         >
                             <i className="ph ph-minus" />
                         </Button>
                         <FormControl>
-                            <Input
+                            <input
                                 type="number"
                                 placeholder="Ex: 1"
                                 {...field}
-                                className={`${styles.numberInput} w-[8rem] text-center`}
+                                className={`${styles.numberInput} w-full border-none text-center text-lg font-semibold shadow-none outline-none`}
                                 onChange={(event) =>
                                     field.onChange(
                                         parseInt(event.target.value, 10) || 0,
                                     )
                                 }
+                                onFocus={(event) => {
+                                    event.target.select();
+                                }}
                                 min={1}
                                 disabled={disabled}
                             />
@@ -50,7 +52,8 @@ export function QuantidadeField({ control, disabled }: QuantidadeFieldProps) {
                         <Button
                             type="button"
                             variant="outline"
-                            className="h-8 w-8"
+                            className="h-8 w-8 cursor-pointer"
+                            disabled={disabled}
                             onClick={() => field.onChange(field.value + 1)}
                         >
                             <i className="ph ph-plus" />
