@@ -4,6 +4,7 @@ import {
     ListagemPlantios,
     Plantio,
     PlantioPreview,
+    TarefaPlantio,
 } from '@/shared/types/plantio';
 import { JWTClient } from '../client/jwt-client';
 
@@ -78,5 +79,16 @@ export class PlantioRepository {
             value: getProgresSituacao(situacaoPlantio),
         };
         return plantioData;
+    }
+    /**
+     * Retorna as tarefas de um plantio específico
+     * @param id ID do plantio
+     * @returns Array de tarefas do plantio
+     */
+    public async getTarefasPlantio(id: number) {
+        const tarefas = await this.client.get<TarefaPlantio[]>(
+            `/gerenciamento/plantios/${id}/tarefas/`
+        );
+        return tarefas.data;
     }
 }
