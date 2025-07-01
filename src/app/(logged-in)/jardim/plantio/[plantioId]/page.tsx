@@ -16,8 +16,10 @@ export default function PlantioPage({
         <div className="flex h-full w-full flex-col">
             <div className="flex gap-12">
                 <Image
-                    src={plantio.planta.foto || '/assets/plantas/girassol.png'}
-                    alt={plantio.planta.nome}
+                    src={
+                        plantio.plantaId.foto || '/assets/plantas/girassol.png'
+                    }
+                    alt={plantio.plantaId.nome}
                     width={1000}
                     height={1000}
                     className={`h-[240px] w-fit object-contain`}
@@ -32,12 +34,12 @@ export default function PlantioPage({
                             <p className="text-base">Voltar</p>
                         </Link>
                         <h1 className="text-2xl font-bold">
-                            {plantio.planta.nome}
+                            {plantio.plantaId.nome}
                         </h1>
                         <div className="text-muted-foreground flex items-center gap-2">
                             <span className="italic">Cientificus</span>
                             <Link
-                                href={`/catalogo/planta/${plantio.planta.id}`}
+                                href={`/catalogo/planta/${plantio.plantaId.id}`}
                                 className=""
                             >
                                 <i className="ph ph-arrow-square-out flex" />

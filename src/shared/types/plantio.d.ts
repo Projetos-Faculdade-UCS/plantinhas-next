@@ -1,8 +1,6 @@
-import { PlantaPreview } from './planta';
-
 export interface Plantio {
     id: number;
-    planta: PlantaPreview;
+    plantaId: number;
     situacao: {
         value: number;
         label:

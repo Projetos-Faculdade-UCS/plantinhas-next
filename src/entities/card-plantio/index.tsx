@@ -25,15 +25,17 @@ export function CardPlantio({ plantio }: CardPlantioProps) {
                     <span
                         className={`z-[1] w-full text-center text-xl ${itim.className}`}
                     >
-                        {plantio.planta.nome}
+                        {plantio.plantaId.nome}
                     </span>
                 </div>
                 <CardPlantioIncators plantio={plantio} />
             </div>
             <div className="absolute top-0 left-0 z-[1] flex w-full justify-center">
                 <Image
-                    src={plantio.planta.foto || '/assets/plantas/girassol.png'}
-                    alt={plantio.planta.nome || 'Sem imagem'}
+                    src={
+                        plantio.plantaId.foto || '/assets/plantas/girassol.png'
+                    }
+                    alt={plantio.plantaId.nome || 'Sem imagem'}
                     width={1000}
                     height={1000}
                     className={`h-[120px] w-fit object-contain transition duration-300`}
