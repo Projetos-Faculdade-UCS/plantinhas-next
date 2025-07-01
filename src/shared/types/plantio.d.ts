@@ -1,16 +1,18 @@
+type SituacaoPlantio =
+    | 'Germinando'
+    | 'Crescendo'
+    | 'Florescendo'
+    | 'Frutificando'
+    | 'Pronto para colheita'
+    | 'Colhido'
+    | 'Para plantar';
+
 export interface Plantio {
     id: number;
     plantaId: number;
     situacao: {
         value: number;
-        label:
-            | 'Germinando'
-            | 'Crescendo'
-            | 'Florescendo'
-            | 'Frutificando'
-            | 'Pronto para colheita'
-            | 'Colhido'
-            | 'Para plantar';
+        label: SituacaoPlantio;
     };
     saude: {
         label: string;
@@ -28,42 +30,61 @@ export interface Plantio {
 
 export type PlantioPreview = Pick<
     Plantio,
-    'id' | 'planta' | 'situacao' | 'saude' | 'sede' | 'quantidade'
+    'id' | 'plantaId' | 'situacao' | 'saude' | 'sede' | 'quantidade'
 >;
 
-export interface ListagemPlantios {
+/**
+ * Representação de um plantio da forma que vem da API.
+ * Esta representação é usada para mapear os dados recebidos da API e
+ * transformá-los na estrutura esperada pelo frontend.
+ */
+export type RawPlantio = Omit<Plantio, 'situacao'> & {
+    situacao: SituacaoPlantio;
+};
+
+export type RawPlantioPreview = Pick<
+    RawPlantio,
+    'id' | 'plantaId' | 'situacao' | 'saude' | 'sede' | 'quantidade'
+>;
+
+export interface PagedResponse<T> {
     total: number;
     itensPorPagina: number;
     paginaAtual: number;
     ultimaPagina: number;
-    itens: PlantioPreview[];
+    itens: T[];
 }
-
 export interface TarefaPlantio {
     id: number;
     nome: string;
     concluido: boolean;
     dataProximaOcorrencia: string;
     podeConcluirTarefa: boolean;
-    tipo: 'cultivo', 'irrigacao', 'nutricao' , 'inspecao', 'poda', 'colheita';
+    tipo:
+        | 'cultivo'
+        | 'irrigacao'
+        | 'nutricao'
+        | 'inspecao'
+        | 'poda'
+        | 'colheita';
     quantidadeTotal: number;
     quantidadeCompletada: number;
     ultimaAlteracao: string;
     frequencia: string;
-    habilidadeRequerida: number,
+    habilidadeRequerida: number;
     tutorial: {
         materiais: [
             {
-            nome: string,
-            quantidade: number,
-            unidade: string
+                nome: string;
+                quantidade: number;
+                unidade: string;
             },
-        ],
+        ];
         etapas: [
             {
-            descricao: string,
-            ordem: number
+                descricao: string;
+                ordem: number;
             },
-        ]
-    }
+        ];
+    };
 }
