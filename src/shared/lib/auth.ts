@@ -7,6 +7,12 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         error: '/signin',
         signIn: '/signin',
     },
+    session: {
+        //TODO: Token.exp está fixo em 1 hora, mas deveria ser dinâmico
+        // de acordo com o token retornado pelo servidor em `Repositories.auth.googleSignIn`
+        maxAge: 1 * 60 * 60,
+        strategy: 'jwt',
+    },
     providers: [
         Google({
             clientId: process.env.AUTH_GOOGLE_ID || '',
@@ -26,7 +32,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
                     try {
                         const userData =
-                            await Repositories.auth.getUser(access);
+                            await Repositories.profile.static.getUser(access);
                         token.user = {
                             ...token.user,
                             ...userData,

@@ -1,4 +1,4 @@
-import { ProfilePreview, SessionToken } from '@/shared/types/auth';
+import { SessionToken } from '@/shared/types/auth';
 import { Client } from '@/shared/types/client';
 import { HttpClient } from '../client/http-client';
 
@@ -29,27 +29,6 @@ export class AuthRepository {
             },
         );
         return response;
-    }
-
-    /**
-     * Retorna o informações básicas do usuário
-     *
-     * @param accessToken token da sessão do usuário
-     */
-    public async getUser(accessToken: string) {
-        const response = await this.client.get<ProfilePreview>('/profile/', {
-            cache: 'force-cache',
-            headers: {
-                Authorization: `Bearer ${accessToken}`,
-            },
-        });
-        return {
-            id: String(response.data.user.id),
-            username: response.data.user.username,
-            first_name: response.data.user.first_name,
-            last_name: response.data.user.last_name,
-            picture: response.data.profile_picture,
-        };
     }
 
     /**
