@@ -112,6 +112,38 @@ export class HttpClient implements Client {
         }>;
     }
 
+    /**
+     * Performs a GET request to retrieve a Blob from the API
+     * @param url API URL
+     * @param init Request configuration
+     * @returns Promise with the Blob data and status code
+     * @throws {NetWorkError} For other network-related errors
+     */
+    public async getBlob(
+        absoluteUrl: string,
+        init?: CustomFetchProps,
+    ): Promise<{
+        status: number;
+        data: Blob;
+    }> {
+        const { headers, ...config } = init || {};
+
+        const resp = await fetch(absoluteUrl, {
+            method: 'GET',
+            headers: await this.getHeaders(headers),
+            ...config,
+        });
+
+        if (!resp.ok) {
+            throw new NetWorkError(
+                `Requisição retornou ${resp.status} - ${resp.statusText}`,
+                resp.status,
+            );
+        }
+        const data = await resp.blob();
+        return { status: resp.status, data };
+    }
+
     protected async responseHandler<T>(response: Response) {
         const res = response as CustomResponse<T>;
 

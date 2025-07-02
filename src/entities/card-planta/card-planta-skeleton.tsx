@@ -22,7 +22,7 @@ export function CardPlantaSkeleton() {
             </div>
             <div className="absolute top-0 left-0 z-[1] flex w-full justify-center">
                 <Image
-                    src="/assets/erro-planta.png"
+                    src="/assets/loading.png"
                     alt={'Sem imagem'}
                     width={1000}
                     height={1000}

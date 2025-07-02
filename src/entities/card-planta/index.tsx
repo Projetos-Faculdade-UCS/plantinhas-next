@@ -1,7 +1,7 @@
 import { PlantaPreview } from '@/shared/types/planta';
 import { Itim } from 'next/font/google';
 import Link from 'next/link';
-import { FallbackImage } from '../imgem-planta/fallback-image';
+import { FallbackImage } from '../imagem/fallback-image';
 import styles from './animation.module.scss';
 import { Ondulacao } from './ondulacao';
 const itim = Itim({
@@ -46,7 +46,6 @@ export default function CardPlanta({ planta, deactivated }: CardPlantaProps) {
                 <FallbackImage
                     key={planta.id}
                     src={planta.foto!}
-                    fallbackSrc="/assets/erro-planta.png"
                     alt={planta.nome || 'Sem imagem'}
                     width={288}
                     height={288}

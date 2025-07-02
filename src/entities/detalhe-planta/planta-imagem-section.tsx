@@ -10,7 +10,7 @@ import {
     DialogTrigger,
 } from '@/shared/ui/dialog';
 import Link from 'next/link';
-import { FallbackImage } from '../imgem-planta/fallback-image';
+import { FallbackImage } from '../imagem/fallback-image';
 import { CopyForm } from './copy-form';
 
 interface PlantaImagemSectionProps {
@@ -21,8 +21,7 @@ export function PlantaImagemSection({ planta }: PlantaImagemSectionProps) {
     return (
         <div className="flex w-72 flex-shrink-0 flex-col items-center">
             <FallbackImage
-                fallbackSrc="/assets/erro-planta.png"
-                fallBackMessage="Erro ao carregar a imagem"
+                fallbackMessage="Erro ao carregar a imagem"
                 src={planta.foto!}
                 alt={`Foto da planta ${planta.nome}`}
                 width={288}

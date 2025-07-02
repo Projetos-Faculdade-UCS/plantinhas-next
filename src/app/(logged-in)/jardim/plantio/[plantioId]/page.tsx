@@ -1,7 +1,7 @@
 import { HeaderIndicadores } from '@/entities/detalhe-plantio/header-indicadores';
 import { ListaTarefasPlantio } from '@/entities/detalhe-plantio/lista-tarefas-plantio';
 import { ResumoPlanta } from '@/entities/detalhe-plantio/resumo-planta';
-import { ImagemPlanta } from '@/entities/imgem-planta';
+import { FetchPlantaImage } from '@/entities/imagem/fetch-planta-image';
 import { Repositories } from '@/shared/api/repositories';
 import { formatDistanceToNow } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
@@ -33,7 +33,8 @@ export default function PlantioPage({
     return (
         <div className="flex h-full w-full flex-col">
             <div className="flex gap-12">
-                <ImagemPlanta
+                <FetchPlantaImage
+                    fallbackMessage="Erro ao carregar a imagem"
                     plantaId={plantio.plantaId}
                     width={1000}
                     height={1000}

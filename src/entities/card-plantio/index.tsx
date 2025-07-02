@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { use } from 'react';
 import animationStyles from '../card-planta/animation.module.scss';
 import { Ondulacao } from '../card-planta/ondulacao';
-import { ImagemPlanta } from '../imgem-planta';
+import { FetchPlantaImage } from '../imagem/fetch-planta-image';
 import { CardPlantioIncators } from './card-plantio-indicators';
 import { WarningBubble } from './warning-bubble';
 
@@ -29,7 +29,7 @@ export function CardPlantio({ plantio }: CardPlantioProps) {
                 <CardPlantioIncators plantio={plantio} />
             </div>
             <div className="absolute top-0 left-0 z-[1] flex w-full justify-center">
-                <ImagemPlanta
+                <FetchPlantaImage
                     plantaId={plantio.plantaId}
                     width={1000}
                     height={1000}

@@ -2,9 +2,9 @@
 import Image from 'next/image';
 import { useState } from 'react';
 
-type FallbackImageProps = React.ComponentProps<typeof Image> & {
-    fallbackSrc: string;
-    fallBackMessage?: string;
+type FallbackImageProps = Omit<React.ComponentProps<typeof Image>, 'src'> & {
+    fallbackMessage?: string;
+    src?: string;
 };
 
 /**
@@ -15,19 +15,18 @@ type FallbackImageProps = React.ComponentProps<typeof Image> & {
 export function FallbackImage({
     alt = 'Imagem padrão de planta',
     src,
-    fallbackSrc,
-    fallBackMessage,
+    fallbackMessage,
     onError,
     ...props
 }: FallbackImageProps) {
     const [error, setError] = useState(false);
 
     return (
-        <>
+        <div className="flex flex-col items-center justify-center">
             <Image
-                src={error ? fallbackSrc : src}
-                // placeholder="blur"
-                // blurDataURL={fallbackSrc}
+                placeholder="blur"
+                blurDataURL={'/assets/loading.png'}
+                src={!src || error ? '/assets/erro-planta.png' : src}
                 alt={alt}
                 onError={(e) => {
                     setError(true);
@@ -35,11 +34,11 @@ export function FallbackImage({
                 }}
                 {...props}
             />
-            {error && fallBackMessage && (
+            {error && fallbackMessage && (
                 <span className="text-muted-foreground text-xs">
-                    {fallBackMessage}
+                    {fallbackMessage}
                 </span>
             )}
-        </>
+        </div>
     );
 }

@@ -1,16 +1,16 @@
 import { objectToSearchParams } from '@/shared/lib/utils';
-import { Client } from '@/shared/types/client';
 import {
     Categoria,
     ListagemCategorias,
     ListagemPlantas,
     Planta,
 } from '@/shared/types/planta';
+import { HttpClient } from '../client/http-client';
 import { JWTClient } from '../client/jwt-client';
 
 export class PlantaRepository {
     private url: string = process.env.CATALOGO_API_URL || '';
-    private client: Client;
+    private client: HttpClient;
 
     constructor() {
         this.client = new JWTClient(this.url);
@@ -83,6 +83,16 @@ export class PlantaRepository {
                 revalidate: 20, // Cache de 20 segundos para evitar requisições excessivas
             },
         });
+    }
+
+    public async getFotoPlanta(fotoUrl: string) {
+        const resp = await this.client.getBlob(fotoUrl, {
+            next: {
+                tags: ['fotoPlanta', `${fotoUrl}`],
+                revalidate: 20, // Cache de 20 segundos para evitar requisições excessivas
+            },
+        });
+        return resp;
     }
 
     /**
