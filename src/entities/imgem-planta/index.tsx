@@ -32,7 +32,7 @@ export function ImagemPlanta({
     } catch {
         return (
             <Image
-                src="/assets/plantas/girassol.png"
+                src="/assets/erro-planta.png"
                 alt="Imagem padrão de planta"
                 className={`${className} grayscale`}
                 {...props}
