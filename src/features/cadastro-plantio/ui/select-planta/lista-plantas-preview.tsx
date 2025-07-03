@@ -59,13 +59,15 @@ export function ListaPlantasPreview({
                         <Tile
                             value={planta.nome}
                             leading={
-                                <FallbackImage
-                                    src={planta.foto}
-                                    alt={planta.nome}
-                                    className="h-12 w-12 rounded"
-                                    width={200}
-                                    height={200}
-                                />
+                                <div className="w-12">
+                                    <FallbackImage
+                                        src={planta.foto}
+                                        alt={planta.nome}
+                                        className="h-12 w-fit shrink-0 rounded"
+                                        width={200}
+                                        height={200}
+                                    />
+                                </div>
                             }
                         />
                     </button>

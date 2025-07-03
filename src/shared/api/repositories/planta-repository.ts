@@ -2,9 +2,10 @@ import { objectToSearchParams } from '@/shared/lib/utils';
 import {
     Categoria,
     ListagemCategorias,
-    ListagemPlantas,
     Planta,
+    PlantaPreview,
 } from '@/shared/types/planta';
+import { PagedResponse } from '@/shared/types/utils';
 import { HttpClient } from '../client/http-client';
 import { JWTClient } from '../client/jwt-client';
 
@@ -63,7 +64,7 @@ export class PlantaRepository {
         const searchParams = objectToSearchParams({
             ...params,
         });
-        return this.client.get<ListagemPlantas>(
+        return this.client.get<PagedResponse<PlantaPreview>>(
             `/categorias/${idCategoria}/plantas?${searchParams.toString()}`,
             {
                 next: {
@@ -105,7 +106,7 @@ export class PlantaRepository {
      */
     public async searchPlantas(params: { [key: string]: string | number }) {
         const searchParams = objectToSearchParams(params);
-        return this.client.get<ListagemPlantas>(
+        return this.client.get<PagedResponse<PlantaPreview>>(
             `/plantas/?${searchParams.toString()}`,
             {
                 next: {

@@ -1,4 +1,4 @@
-import CardPlanta from '@/entities/card-planta';
+import { ListaPlantasCategoria } from '@/features/lista-plantas/lista-plantas-categoria';
 import { Repositories } from '@/shared/api/repositories';
 import Link from 'next/link';
 
@@ -9,13 +9,7 @@ export default async function PlantasPorCategoriaPage({
 }) {
     const categoriaId = Number((await params).categoriaId);
     const plantaRepository = Repositories.plantas;
-    const [plantas, categoria] = await Promise.all([
-        plantaRepository.getPlantasPorCategoria(categoriaId, {
-            pagina: 1,
-            itensPorPagina: 10,
-        }),
-        plantaRepository.getCategoria(categoriaId),
-    ]);
+    const categoria = await plantaRepository.getCategoria(categoriaId);
 
     return (
         <>
@@ -31,11 +25,7 @@ export default async function PlantasPorCategoriaPage({
                 <p className="text-muted-foreground text-base">
                     {categoria.data.descricao}
                 </p>
-            </div>
-            <div className="flex flex-wrap gap-8">
-                {plantas.data.itens.map((planta) => (
-                    <CardPlanta key={planta.id} planta={planta} />
-                ))}
+                <ListaPlantasCategoria />
             </div>
         </>
     );

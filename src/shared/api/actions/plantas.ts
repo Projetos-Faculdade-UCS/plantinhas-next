@@ -1,6 +1,7 @@
 'use server';
 
-import { Planta } from '@/shared/types/planta';
+import { Planta, PlantaPreview } from '@/shared/types/planta';
+import { PagedResponse } from '@/shared/types/utils';
 import { NetWorkError } from '../client/errors';
 import { Repositories } from '../repositories';
 
@@ -19,6 +20,29 @@ export async function getPlantas(
     } catch (error) {
         return {
             error: (error as Error).message || 'Falha ao buscar plantas.',
+        };
+    }
+}
+
+export async function getPlantasPorCategoria(
+    idCategoria: number,
+    page: number = 1,
+    tamanhoPagina: number = 10,
+): Promise<{ data?: PagedResponse<PlantaPreview>; error?: string }> {
+    try {
+        const response = await Repositories.plantas.getPlantasPorCategoria(
+            idCategoria,
+            {
+                pagina: page,
+                itensPorPagina: tamanhoPagina,
+            },
+        );
+        return { data: response.data };
+    } catch (error) {
+        return {
+            error:
+                (error as Error).message ||
+                'Falha ao buscar plantas por categoria.',
         };
     }
 }

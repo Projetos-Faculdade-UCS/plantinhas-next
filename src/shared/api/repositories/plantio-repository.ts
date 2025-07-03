@@ -1,13 +1,13 @@
 import { getProgresSituacao } from '@/entities/card-plantio/utils';
 import { Client } from '@/shared/types/client';
 import {
-    PagedResponse,
     Plantio,
     PlantioPreview,
     RawPlantio,
     RawPlantioPreview,
     TarefaPlantio,
 } from '@/shared/types/plantio';
+import { PagedResponse } from '@/shared/types/utils';
 import { JWTClient } from '../client/jwt-client';
 
 export class PlantioRepository {

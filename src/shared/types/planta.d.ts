@@ -44,11 +44,3 @@ export interface ListagemCategorias {
     ultimaPagina: number;
     itens: (Categoria & { plantas: PlantaPreview[] })[];
 }
-
-export interface ListagemPlantas {
-    total: number;
-    itensPorPagina: number;
-    paginaAtual: number;
-    ultimaPagina: number;
-    itens: PlantaPreview[];
-}

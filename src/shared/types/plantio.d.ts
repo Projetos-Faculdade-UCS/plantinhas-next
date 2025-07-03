@@ -47,13 +47,6 @@ export type RawPlantioPreview = Pick<
     'id' | 'plantaId' | 'situacao' | 'saude' | 'sede' | 'quantidade'
 >;
 
-export interface PagedResponse<T> {
-    total: number;
-    itensPorPagina: number;
-    paginaAtual: number;
-    ultimaPagina: number;
-    itens: T[];
-}
 export interface TarefaPlantio {
     id: number;
     nome: string;
@@ -88,3 +81,15 @@ export interface TarefaPlantio {
         ];
     };
 }
+
+export type TarefaPlantioPreview = Pick<
+    TarefaPlantio,
+    | 'id'
+    | 'concluido'
+    | 'podeConcluirTarefa'
+    | 'nome'
+    | 'quantidadeTotal'
+    | 'quantidadeCompletada'
+    | 'ultimaAlteracao'
+    | 'tipo'
+>;
