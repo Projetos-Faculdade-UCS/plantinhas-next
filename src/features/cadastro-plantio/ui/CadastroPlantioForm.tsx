@@ -16,7 +16,7 @@ import { Form } from '@/shared/ui/form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useSearchParams } from 'next/navigation';
 import { useState, useTransition } from 'react';
-import { useForm } from 'react-hook-form';
+import { FieldErrors, useForm } from 'react-hook-form';
 import { IAEntradaPlantio } from '../lib/ia-api.schema';
 import { processarPlantioIAAction } from '../lib/plantio.action';
 
@@ -41,7 +41,7 @@ export function CadastroPlantioForm() {
     const form = useForm<NewPlantioForm>({
         resolver: zodResolver(CadastroPlantioSchema),
         defaultValues: {
-            plantaId: searchParams.get('plantaId') || undefined,
+            plantaId: Number(searchParams.get('plantaId')) || undefined,
             quantidade: 1,
             informacoesAdicionais: '',
             ambiente: { local: undefined, condicao: undefined },
@@ -51,6 +51,7 @@ export function CadastroPlantioForm() {
     });
 
     async function onSubmit(data: NewPlantioForm) {
+        console.log('Dados do formulário:', data);
         setAiResponse(null);
         try {
             startAiTransition(async () => {
@@ -78,6 +79,9 @@ export function CadastroPlantioForm() {
             setSubmitError('Erro ao formatar dados para IA');
         }
     }
+    function onError(errors: FieldErrors<NewPlantioForm>) {
+        console.error('Erro de validação do formulário:', errors);
+    }
 
     const isBusy = isLoadingAi;
 
@@ -89,7 +93,10 @@ export function CadastroPlantioForm() {
 
     return (
         <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+            <form
+                onSubmit={form.handleSubmit(onSubmit, onError)}
+                className="space-y-8"
+            >
                 {Object.keys(formErrors).length > 0 && (
                     <Card className="border-destructive bg-destructive/10 py-0">
                         <CardHeader className="p-4">

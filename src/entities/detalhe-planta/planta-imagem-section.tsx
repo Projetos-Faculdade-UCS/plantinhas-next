@@ -58,7 +58,9 @@ export function PlantaImagemSection({ planta }: PlantaImagemSectionProps) {
                     variant={'default'}
                     className="bg-primary flex h-10 min-w-0 flex-1 items-center justify-center gap-2 rounded-lg text-base"
                 >
-                    <Link href="/plantar">
+                    <Link
+                        href={`/jardim/plantio/plantar?plantaId=${planta.id}`}
+                    >
                         <i className="ph-duotone ph-potted-plant text-xl"></i>
                         <span className="text-base">Plantar</span>
                     </Link>

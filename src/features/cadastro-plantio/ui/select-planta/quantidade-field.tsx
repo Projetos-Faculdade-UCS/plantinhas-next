@@ -7,7 +7,7 @@ import {
 } from '@/shared/ui/form';
 import { Control } from 'react-hook-form';
 import { NewPlantioForm } from '../../lib/cadastro-plantio.schema';
-import styles from './styles.module.scss'; // Importando o CSS específico
+import styles from '../fields/styles.module.scss'; // Importando o CSS específico
 interface QuantidadeFieldProps {
     control: Control<NewPlantioForm>;
     disabled: boolean;
@@ -20,7 +20,6 @@ export function QuantidadeField({ control, disabled }: QuantidadeFieldProps) {
             name="quantidade"
             render={({ field }) => (
                 <FormItem>
-                    {/* <FormLabel>Quantidade</FormLabel> */}
                     <div className="flex items-center gap-2">
                         <Button
                             type="button"
