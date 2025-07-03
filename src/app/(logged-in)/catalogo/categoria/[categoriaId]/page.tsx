@@ -10,7 +10,10 @@ export default async function PlantasPorCategoriaPage({
     const categoriaId = Number((await params).categoriaId);
     const plantaRepository = Repositories.plantas;
     const [plantas, categoria] = await Promise.all([
-        plantaRepository.getPlantasPorCategoria(categoriaId, 1),
+        plantaRepository.getPlantasPorCategoria(categoriaId, {
+            pagina: 1,
+            itensPorPagina: 10,
+        }),
         plantaRepository.getCategoria(categoriaId),
     ]);
 

@@ -39,7 +39,9 @@ export const SistemaCultivoEnum = z.enum([
 ]);
 
 export const CadastroPlantioSchema = z.object({
-    plantaId: z.string().min(1, 'Selecione uma planta'), // Assumindo que o ID da planta será uma string (ex: vinda da API)
+    plantaId: z.number({
+        required_error: 'Selecione uma planta para continuar',
+    }),
     quantidade: z.number().min(1, 'A quantidade deve ser pelo menos 1'),
     ambiente: AmbientesSchema,
     sistemaCultivo: SistemaCultivoEnum,

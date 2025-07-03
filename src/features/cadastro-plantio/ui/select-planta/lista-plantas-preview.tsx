@@ -1,10 +1,11 @@
 import { SearchInput } from '@/entities/filtros-plantas/search-input';
+import { FallbackImage } from '@/entities/imagem/fallback-image';
+import { getPlantas } from '@/shared/api/actions/plantas';
 import { PlantaPreview } from '@/shared/types/planta';
 import { Tile } from '@/shared/ui/tile';
 import { useQuery } from '@tanstack/react-query';
-import Image from 'next/image';
 import { useRef, useState } from 'react';
-import { searchPlantasAction } from '../../lib/plantio.action';
+import styles from '../fields/styles.module.scss'; // Importando o CSS específico
 
 type ListaPlantasPreviewProps = {
     onSelectPlanta: (planta: PlantaPreview) => void;
@@ -17,20 +18,16 @@ export function ListaPlantasPreview({
     const { data: plantas = [], isLoading } = useQuery({
         queryKey: ['plantas', search],
         queryFn: async () => {
-            const response = await searchPlantasAction(search);
-            console.log('Response from searchPlantasAction:', response);
-            if (response.error) {
-                throw new Error('Erro ao carregar plantas');
-            }
+            const response = await getPlantas(search);
             return response.data?.itens || [];
         },
         refetchOnWindowFocus: false,
     });
     return (
-        <div className="flex flex-col gap-4">
+        <div className="flex h-full flex-col gap-4">
             <SearchInput
                 ref={searchRef}
-                className="mx-4 w-48"
+                className="mx-4 w-48 shrink-0"
                 id="search-plant-in-pokedex"
                 onSubmit={() => {
                     setSearch(searchRef.current?.value || '');
@@ -47,7 +44,9 @@ export function ListaPlantasPreview({
                     Nenhuma planta encontrada.
                 </div>
             )}
-            <div className="flex h-full flex-col gap-2 overflow-y-scroll px-4">
+            <div
+                className={`mr-2 flex max-h-full flex-col gap-2 ${styles.list} px-4`}
+            >
                 {plantas.map((planta) => (
                     <button
                         type="button"
@@ -60,17 +59,13 @@ export function ListaPlantasPreview({
                         <Tile
                             value={planta.nome}
                             leading={
-                                planta.foto ? (
-                                    <Image
-                                        src={planta.foto}
-                                        alt={planta.nome}
-                                        className="h-8 w-8 rounded"
-                                        width={200}
-                                        height={200}
-                                    />
-                                ) : (
-                                    <span className="h-8 w-8 rounded bg-gray-200" />
-                                )
+                                <FallbackImage
+                                    src={planta.foto}
+                                    alt={planta.nome}
+                                    className="h-12 w-12 rounded"
+                                    width={200}
+                                    height={200}
+                                />
                             }
                         />
                     </button>

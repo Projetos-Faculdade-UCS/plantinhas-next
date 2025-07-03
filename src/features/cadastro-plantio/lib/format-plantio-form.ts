@@ -1,6 +1,7 @@
+import { getPlantaById } from '@/shared/api/actions/plantas';
 import { NewPlantioForm } from './cadastro-plantio.schema';
 import { IAEntradaPlantio } from './ia-api.schema';
-import { getHabilidadesAction, getPlantaAction } from './plantio.action';
+import { getHabilidadesAction } from './plantio.action';
 
 /**
  * Formata os dados do formulário de plantio para o formato esperado pela IA.
@@ -10,7 +11,7 @@ import { getHabilidadesAction, getPlantaAction } from './plantio.action';
 export async function formatPlantioForm(
     plantio: NewPlantioForm,
 ): Promise<IAEntradaPlantio> {
-    const planta = (await getPlantaAction(Number(plantio.plantaId))).data;
+    const planta = (await getPlantaById(Number(plantio.plantaId))).data;
     const habilidades = (await getHabilidadesAction()).data;
     if (!planta || !habilidades) {
         throw new Error('Planta não encontrada ou inválida');
@@ -23,7 +24,11 @@ export async function formatPlantioForm(
             nome: planta.nome,
             nome_cientifico: planta.nomeCientifico || planta.nome,
             dificuldade: planta.dificuldade,
-            temperatura_ideal: planta.temperatura,
+            temperatura_ideal: {
+                minima: Number(planta.temperaturaMinima),
+                maxima: Number(planta.temperaturaMaxima),
+                ideal: Number(planta.temperaturaIdeal),
+            },
         },
         quantidade: plantio.quantidade,
         ambiente: plantio.ambiente,

@@ -15,7 +15,9 @@ export function SearchResults({ search }: SearchResultsProps) {
     const query = useQuery({
         queryKey: ['search-plantas', deferredSearch],
         queryFn: async () => {
-            return getPlantas(deferredSearch, 1);
+            return getPlantas(deferredSearch, 1).then((response) => {
+                return response.data;
+            });
         },
         placeholderData: (previousData) => previousData,
     });

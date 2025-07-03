@@ -5,10 +5,10 @@ export interface Planta {
     foto?: string;
     horasSol: string;
     descricao: string;
-    estacaoIdeal: 'Outono' | 'Verão' | 'Inverno' | 'Primavera' | 'Todo o ano';
-    temperaturaMinima: number;
-    temperaturaMaxima: number;
-    temperaturaIdeal: number;
+    estacaoPlantio: 'Outono' | 'Verão' | 'Inverno' | 'Primavera' | 'Todo o ano';
+    temperaturaMinima: string;
+    temperaturaMaxima: string;
+    temperaturaIdeal: string;
     categoria: Categoria;
     subcategorias: SubcategoriaPreview[];
     dificuldade: {
@@ -19,7 +19,7 @@ export interface Planta {
 
 export type PlantaPreview = Pick<
     Planta,
-    'id' | 'nome' | 'foto' | 'dificuldade' | 'nomeCientifico' | 'temperatura'
+    'id' | 'nome' | 'foto' | 'dificuldade'
 >;
 
 export interface Categoria {

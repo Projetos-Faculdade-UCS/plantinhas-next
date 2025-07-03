@@ -56,15 +56,18 @@ export class PlantaRepository {
      *
      * cache de 1 minuto
      */
-    public async getPlantasPorCategoria(idCategoria: number, pagina: number) {
-        const params = objectToSearchParams({
-            page: pagina,
+    public async getPlantasPorCategoria(
+        idCategoria: number,
+        params: { [key: string]: string | number },
+    ) {
+        const searchParams = objectToSearchParams({
+            ...params,
         });
         return this.client.get<ListagemPlantas>(
-            `/categorias/${idCategoria}/plantas?${params.toString()}`,
+            `/categorias/${idCategoria}/plantas?${searchParams.toString()}`,
             {
                 next: {
-                    tags: ['plantasPorCategoria', `${params.toString()}`],
+                    tags: ['plantasPorCategoria', `${searchParams.toString()}`],
                     revalidate: 60,
                 },
             },
@@ -100,13 +103,10 @@ export class PlantaRepository {
      * @param search Termo de pesquisa
      * @param pagina Página atual
      */
-    public async searchPlantas(search?: string, pagina?: number) {
-        const params = objectToSearchParams({
-            search: search,
-            page: pagina,
-        });
+    public async searchPlantas(params: { [key: string]: string | number }) {
+        const searchParams = objectToSearchParams(params);
         return this.client.get<ListagemPlantas>(
-            `/plantas/?${params.toString()}`,
+            `/plantas/?${searchParams.toString()}`,
             {
                 next: {
                     tags: ['plantas', `${params.toString()}`],
