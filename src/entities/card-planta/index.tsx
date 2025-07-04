@@ -17,7 +17,7 @@ export default function CardPlanta({ planta, deactivated }: CardPlantaProps) {
     return (
         <Link
             href={`/catalogo/planta/${planta.id}`}
-            className={`relative w-[9.5rem] shrink-0 ${styles.jumpOnHover}`}
+            className={`relative w-[9.5rem] shrink-0 ${styles.jumpOnHover} ${!planta.foto && 'order-2'}`}
         >
             <div className={`flex h-full flex-col`}>
                 <div className="h-8"></div>
