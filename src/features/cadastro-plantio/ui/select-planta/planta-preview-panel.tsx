@@ -23,22 +23,21 @@ export function PlantaPreviewPainel({
     hasError?: boolean;
 }) {
     return (
-        <div className="flex h-full flex-col items-center justify-center space-y-2 px-4">
+        <div className="flex h-full items-center justify-center">
             {planta ? (
-                <>
-                    <FallbackImage
-                        key={planta.id}
-                        fallbackMessage="Imagem indisponível"
-                        src={planta.foto!}
-                        alt={planta.nome}
-                        width={128}
-                        height={128}
-                    />
-                    <h2
-                        className={`${itim.className} bg-muted w-full rounded-md py-0 text-center text-lg`}
-                    >
-                        {planta.nome}
-                    </h2>
+                <div className="flex flex-col items-center justify-center space-y-2 px-4 sm:px-8 md:space-x-2">
+                    <div className="relative">
+                        <FallbackImage
+                            key={planta.id}
+                            fallbackMessage="Imagem indisponível"
+                            src={planta.foto!}
+                            className="z-[1]"
+                            alt={planta.nome}
+                            width={128}
+                            height={128}
+                        />
+                        <span className="bg-foreground absolute inset-0 z-[0] mx-4 mt-10 rounded-full opacity-40 blur-lg"></span>
+                    </div>
                     <FormField
                         control={control}
                         name="plantaId"
@@ -52,8 +51,13 @@ export function PlantaPreviewPainel({
                             </>
                         )}
                     />
+                    <h2
+                        className={`${itim.className} bg-muted mx-auto w-full rounded-md border py-0 text-center text-lg shadow-sm`}
+                    >
+                        {planta.nome}
+                    </h2>
                     <QuantidadeField control={control} disabled={isBusy} />
-                </>
+                </div>
             ) : hasError ? (
                 <p className="text-destructive text-center text-sm">
                     Selecione uma planta para continuar

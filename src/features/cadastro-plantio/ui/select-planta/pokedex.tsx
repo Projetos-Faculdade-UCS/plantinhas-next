@@ -36,8 +36,8 @@ export function Pokedex({ control, isBusy = false }: PokedexProps) {
     }, [plantaIdController.field.value, plantaSelecionada]);
 
     return (
-        <div className="flex h-[350px]">
-            <Card className="w-fit shrink-0 rounded-r-none border">
+        <div className="flex h-[300px]">
+            <Card className="bg-muted w-fit shrink-0 rounded-r-none border pt-4 pb-1">
                 <ListaPlantasPreview
                     onSelectPlanta={(planta) => {
                         plantaIdController.field.onChange(planta.id);
@@ -45,7 +45,7 @@ export function Pokedex({ control, isBusy = false }: PokedexProps) {
                     }}
                 />
             </Card>
-            <Card className="grow rounded-l-none border-l-0">
+            <Card className="grow rounded-l-none border-l-0 px-0 py-4">
                 <PlantaPreviewPainel
                     control={control}
                     isBusy={isBusy}

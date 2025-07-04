@@ -19,13 +19,13 @@ export function QuantidadeField({ control, disabled }: QuantidadeFieldProps) {
             control={control}
             name="quantidade"
             render={({ field }) => (
-                <FormItem>
-                    <div className="flex items-center gap-2">
+                <FormItem className="w-full">
+                    <div className="flex w-full items-center gap-2">
                         <Button
                             type="button"
                             variant="outline"
                             disabled={field.value <= 1 || disabled}
-                            className="h-8 w-8 cursor-pointer"
+                            className="bg-muted h-8 w-8 cursor-pointer disabled:cursor-not-allowed"
                             onClick={() => field.onChange(field.value - 1)}
                         >
                             <i className="ph ph-minus" />
@@ -51,7 +51,7 @@ export function QuantidadeField({ control, disabled }: QuantidadeFieldProps) {
                         <Button
                             type="button"
                             variant="outline"
-                            className="h-8 w-8 cursor-pointer"
+                            className="bg-muted h-8 w-8 cursor-pointer"
                             disabled={disabled}
                             onClick={() => field.onChange(field.value + 1)}
                         >

@@ -1,5 +1,5 @@
 import CardPlanta from '@/entities/card-planta';
-import { PrateleiraPlantas } from '@/entities/prateleira-plantas';
+import { Prateleira } from '@/entities/prateleira';
 import { Repositories } from '@/shared/api/repositories';
 import Link from 'next/link';
 
@@ -18,14 +18,14 @@ export async function CatalogoPlantas() {
                         <i className="ph ph-caret-right text-xl" />
                     </Link>
 
-                    <PrateleiraPlantas>
+                    <Prateleira className="w-full">
                         {categoria.plantas.map((planta) => (
                             <CardPlanta
                                 key={`${categoria.id} ${planta.id}`}
                                 planta={planta}
                             />
                         ))}
-                    </PrateleiraPlantas>
+                    </Prateleira>
                 </div>
             ))}
         </div>

@@ -31,7 +31,7 @@ export default function CardPlanta({ planta, deactivated }: CardPlantaProps) {
                     </span>
                 </div>
                 <div
-                    className={`flex h-9 shrink-0 items-center justify-between rounded-b-md border-x border-b px-4 transition duration-300 ${styles.cardFooter} ${deactivated ? 'bg-muted-foreground border' : 'border-border-primary to-primary bg-linear-to-t from-[#37652B]'}`}
+                    className={`flex h-9 shrink-0 items-center justify-between rounded-b-md border-x border-b px-4 ${styles.cardFooter} ${deactivated ? 'bg-muted-foreground border' : 'border-border-primary to-primary bg-linear-to-t from-[#37652B]'}`}
                 >
                     <span className="text-primary-foreground">
                         {planta.dificuldade.label}

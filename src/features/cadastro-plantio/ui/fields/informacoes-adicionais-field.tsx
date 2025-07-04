@@ -1,6 +1,5 @@
 import {
     FormControl,
-    FormDescription,
     FormField,
     FormItem,
     FormLabel,
@@ -25,18 +24,16 @@ export function InformacoesAdicionaisField({
             name="informacoesAdicionais"
             render={({ field }) => (
                 <FormItem>
-                    <FormLabel>Informações Adicionais (Opcional)</FormLabel>
+                    <FormLabel>Informações Adicionais</FormLabel>
                     <FormControl>
                         <Textarea
                             placeholder="Ex: Usar fertilizante orgânico a cada duas semanas."
-                            className="resize-none"
+                            className="bg-card"
                             {...field}
                             disabled={disabled}
                         />
                     </FormControl>
-                    <FormDescription>
-                        Alguma observação ou detalhe extra sobre o plantio?
-                    </FormDescription>
+
                     <FormMessage />
                 </FormItem>
             )}

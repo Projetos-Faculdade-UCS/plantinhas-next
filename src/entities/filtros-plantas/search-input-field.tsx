@@ -31,6 +31,7 @@ export function SearchInputField({
                                 onChange?.(val);
                             }}
                             onClear={onClear}
+                            className="sm:w-[250px]"
                             placeholder="Buscar planta"
                         />
                     </FormControl>

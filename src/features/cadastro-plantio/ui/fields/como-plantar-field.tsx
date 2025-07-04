@@ -4,39 +4,55 @@ import { Control } from 'react-hook-form';
 import { NewPlantioForm } from '../../lib/cadastro-plantio.schema';
 import { OpcaoCultivoButton } from '../opcao-cultivo-button';
 
-const condicoesPlantio = [
-    { value: 'externo', label: 'Externo' },
-    { value: 'interno', label: 'Interno' },
-    { value: 'semi-protegido', label: 'Semi-protegido' },
-    { value: 'comunitario', label: 'Comunitário' },
+const opcoes = [
+    {
+        foto: '/assets/form-plantio/vaso.png',
+        label: 'Vaso',
+        value: 'vaso de flor',
+    },
+    {
+        foto: '/assets/form-plantio/canteiro.png',
+        label: 'Canteiro',
+        value: 'canteiro',
+    },
+    {
+        foto: '/assets/form-plantio/espaldeiras.png',
+        label: 'Espaldeiras',
+        value: 'espaldeira',
+    },
+    {
+        foto: '/assets/form-plantio/caixa-cultivo.png',
+        label: 'Caixa',
+        value: 'caixa de cultivo',
+    },
+    {
+        label: 'Outros',
+        value: 'outros',
+    },
 ];
 
-interface AmbienteCondicaoFieldProps {
+type ComoPlantarProps = {
     control: Control<NewPlantioForm>;
-    disabled: boolean;
-}
-
-export function AmbienteCondicaoField({
-    control,
-    disabled,
-}: AmbienteCondicaoFieldProps) {
+    isBusy?: boolean;
+};
+export function ComoPlantarField({ control, isBusy }: ComoPlantarProps) {
     return (
         <FormField
             control={control}
-            name="ambiente.condicao"
+            name="sistemaCultivo"
             render={({ field }) => (
-                <FormItem>
+                <FormItem className="flex w-full flex-col">
                     <FormLabel className="px-2 text-base font-semibold">
-                        Condições do Ambiente
+                        Como Plantar?
                     </FormLabel>
                     <Prateleira alwaysShowArrows={false} gap="1rem">
-                        {condicoesPlantio.map((opcao) => (
+                        {opcoes.map((opcao) => (
                             <OpcaoCultivoButton
                                 key={opcao.label}
                                 opcao={opcao}
                                 value={field.value}
                                 onChange={field.onChange}
-                                disabled={disabled}
+                                disabled={isBusy}
                             />
                         ))}
                     </Prateleira>

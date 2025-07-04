@@ -19,7 +19,7 @@ export function SearchInput({
     return (
         <div
             className={cn(
-                'bg-card border-input flex h-9 items-center overflow-hidden rounded-md border text-base sm:w-[250px]',
+                'bg-card border-input flex h-9 w-full items-center overflow-hidden rounded-md border text-base',
                 className,
             )}
         >

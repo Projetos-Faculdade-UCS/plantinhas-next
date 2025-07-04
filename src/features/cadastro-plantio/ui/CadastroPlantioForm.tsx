@@ -5,13 +5,7 @@ import {
     NewPlantioForm,
 } from '@/features/cadastro-plantio/lib/cadastro-plantio.schema';
 import { Button } from '@/shared/ui/button';
-import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardHeader,
-    CardTitle,
-} from '@/shared/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/shared/ui/card';
 import { Form } from '@/shared/ui/form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useSearchParams } from 'next/navigation';
@@ -21,15 +15,13 @@ import { IAEntradaPlantio } from '../lib/ia-api.schema';
 import { processarPlantioIAAction } from '../lib/plantio.action';
 
 // Importando os novos componentes de campo
-import { AmbienteCondicaoField } from './fields/AmbienteCondicaoField';
-import { AmbienteLocalField } from './fields/AmbienteLocalField';
-import { InformacoesAdicionaisField } from './fields/InformacoesAdicionaisField';
-import { SistemaCultivoField } from './fields/SistemaCultivoField';
+import { InformacoesAdicionaisField } from './fields/informacoes-adicionais-field';
+import { OndePlantarField } from './fields/onde-plantar-field';
 import { SubmittedJsonDisplay } from './SubmittedJsonDisplay';
 
 // Importando os novos hooks
-import Image from 'next/image';
 import { formatPlantioForm } from '../lib/format-plantio-form';
+import { ComoPlantarField } from './fields/como-plantar-field';
 import { HabilidadesField } from './fields/habilidades-field';
 import { Pokedex } from './select-planta/pokedex';
 
@@ -37,7 +29,6 @@ export function CadastroPlantioForm() {
     const searchParams = useSearchParams();
     const [isLoadingAi, startAiTransition] = useTransition();
     const [aiResponse, setAiResponse] = useState<string | null>(null);
-    const [submitError, setSubmitError] = useState<string | null>(null);
 
     const form = useForm<NewPlantioForm>({
         resolver: zodResolver(CadastroPlantioSchema),
@@ -45,7 +36,7 @@ export function CadastroPlantioForm() {
             plantaId: Number(searchParams.get('plantaId')) || undefined,
             quantidade: 1,
             informacoesAdicionais: '',
-            ambiente: { local: undefined, condicao: undefined },
+            ambiente: { local: undefined, condicao: 'externo' },
             sistemaCultivo: undefined,
         },
         mode: 'onSubmit',
@@ -62,22 +53,16 @@ export function CadastroPlantioForm() {
                 );
 
                 if (resultIA.error) {
-                    setSubmitError(resultIA.error);
                     setAiResponse(null);
                 } else if (resultIA.data) {
                     setAiResponse(JSON.stringify(resultIA.data, null, 2));
-                    setSubmitError(null);
                     console.log('Resposta da IA:', resultIA.data);
                 } else {
-                    setSubmitError(
-                        'A API de IA não retornou uma resposta válida.',
-                    );
                     setAiResponse(null);
                 }
             });
         } catch (error) {
             console.error('Erro ao formatar dados para IA:', error);
-            setSubmitError('Erro ao formatar dados para IA');
         }
     }
     function onError(errors: FieldErrors<NewPlantioForm>) {
@@ -96,115 +81,55 @@ export function CadastroPlantioForm() {
         <Form {...form}>
             <form
                 onSubmit={form.handleSubmit(onSubmit, onError)}
-                className="space-y-8"
+                className="space-y-4"
             >
-                {Object.keys(formErrors).length > 0 && (
-                    <Card className="border-destructive bg-destructive/10 py-0">
-                        <CardHeader className="p-4">
-                            <CardTitle className="text-destructive">
-                                Ocorreu um Erro
-                            </CardTitle>
-                            <CardDescription className="text-destructive">
-                                {submitError ||
-                                    'Verifique os campos e tente novamente.'}
-                            </CardDescription>
-                        </CardHeader>
-                    </Card>
-                )}
-
-                <div className="grid grid-cols-1 items-start gap-6 lg:grid-cols-3">
-                    {/* Coluna 1: Detalhes da Planta e Observações */}
-                    <div className="space-y-6 lg:col-span-2">
+                <div className="grid grid-cols-1 items-start gap-6 lg:grid-cols-4">
+                    <div className="space-y-4 lg:col-span-2">
                         <Pokedex control={form.control} isBusy={isBusy} />
-                        <Card>
-                            <CardHeader>
-                                <CardTitle>Como Plantar?</CardTitle>
+                        <InformacoesAdicionaisField
+                            control={form.control}
+                            disabled={isBusy}
+                        />
+                        <Card className="gap-2 p-4">
+                            <CardHeader className="px-0">
+                                <CardTitle>Habilidades</CardTitle>
                             </CardHeader>
-                            <CardContent>
-                                <div className="tems-center flex gap-2">
-                                    <button className="hover:bg-muted flex flex-col rounded-md p-2 transition-colors duration-200">
-                                        <Image
-                                            src={
-                                                '/assets/form-plantio/vaso.png'
-                                            }
-                                            alt="Vaso de planta"
-                                            width={200}
-                                            height={200}
-                                            className="mx-auto h-12 w-12 object-contain"
-                                        />
-                                        <span className="text-muted-foreground">
-                                            Vaso de flor
-                                        </span>
-                                    </button>
-                                </div>
-                            </CardContent>
-                        </Card>
-                        <Card>
-                            <CardHeader>
-                                <CardTitle>Observações Adicionais</CardTitle>
-                                <CardDescription>
-                                    Forneça qualquer detalhe extra sobre o
-                                    plantio (opcional).
-                                </CardDescription>
-                            </CardHeader>
-                            <CardContent>
-                                <InformacoesAdicionaisField
-                                    control={form.control}
-                                    disabled={isBusy}
-                                />
-                            </CardContent>
-                        </Card>
-                    </div>
-
-                    {/* Coluna 2: Condições de Plantio e Habilidades */}
-                    <div className="space-y-6">
-                        <Card>
-                            <CardHeader>
-                                <CardTitle>Condições de Plantio</CardTitle>
-                                <CardDescription>
-                                    Especifique o ambiente e o sistema de
-                                    cultivo.
-                                </CardDescription>
-                            </CardHeader>
-                            <CardContent className="space-y-6">
-                                <AmbienteLocalField
-                                    control={form.control}
-                                    disabled={isBusy}
-                                />
-                                <AmbienteCondicaoField
-                                    control={form.control}
-                                    disabled={isBusy}
-                                />
-                                <SistemaCultivoField
-                                    control={form.control}
-                                    disabled={isBusy}
-                                />
-                            </CardContent>
-                        </Card>
-
-                        <Card>
-                            <CardHeader>
-                                <CardTitle>Habilidades de Jardinagem</CardTitle>
-                                <CardDescription>
-                                    Selecione suas habilidades de jardinagem.
-                                </CardDescription>
-                            </CardHeader>
-                            <CardContent>
+                            <CardContent className="px-0">
                                 <HabilidadesField />
                             </CardContent>
                         </Card>
                     </div>
+
+                    <div className="space-y-4 lg:col-span-2">
+                        <OndePlantarField
+                            control={form.control}
+                            isBusy={isBusy}
+                        />
+                        <ComoPlantarField
+                            control={form.control}
+                            isBusy={isBusy}
+                        />
+                        {/* <AmbienteCondicaoField
+                            control={form.control}
+                            disabled={isBusy}
+                        /> */}
+                    </div>
                 </div>
-
-                <Button
-                    type="submit"
-                    disabled={isBusy}
-                    className="w-full py-6 text-lg"
-                >
-                    {getButtonText()}
-                </Button>
+                <div className="flex flex-col gap-2">
+                    {Object.keys(formErrors).length > 0 && (
+                        <div className="text-destructive text-sm">
+                            O formulário contém erros
+                        </div>
+                    )}
+                    <Button
+                        type="submit"
+                        disabled={isBusy}
+                        className="w-full cursor-pointer text-base"
+                    >
+                        {getButtonText()}
+                    </Button>
+                </div>
             </form>
-
             <SubmittedJsonDisplay jsonString={aiResponse} />
         </Form>
     );

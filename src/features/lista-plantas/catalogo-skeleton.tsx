@@ -1,5 +1,5 @@
 import { CardPlantaSkeleton } from '@/entities/card-planta/card-planta-skeleton';
-import { PrateleiraPlantas } from '@/entities/prateleira-plantas';
+import { Prateleira } from '@/entities/prateleira';
 import { Skeleton } from '@/shared/ui/skeleton';
 
 export function CatalogoSkeleton() {
@@ -12,11 +12,11 @@ export function CatalogoSkeleton() {
                         <Skeleton className="h-6 w-4" />
                         <Skeleton className="h-6 w-4" />
                     </div>
-                    <PrateleiraPlantas>
+                    <Prateleira className="w-full">
                         {Array.from({ length: 8 }).map((_, index) => (
                             <CardPlantaSkeleton key={index} />
                         ))}
-                    </PrateleiraPlantas>
+                    </Prateleira>
                 </div>
             ))}
         </div>

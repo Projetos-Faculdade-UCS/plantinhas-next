@@ -2,11 +2,23 @@
 import { useHorizontalScroll } from '@/shared/lib/use-horizontal-scroll';
 import { useRef } from 'react';
 
+type PrateleiraPlantasProps = {
+    children: React.ReactNode;
+    className?: string;
+    gap?: string;
+    alwaysShowArrows?: boolean;
+};
+
 /**
- * @fileoverview Prateleira de Plantas
+ * @fileoverview Prateleira de itens quaisqueres
  * @description Componente que renderiza uma lista horizontal de plantas.
  */
-export function PrateleiraPlantas({ children }: { children: React.ReactNode }) {
+export function Prateleira({
+    children,
+    className,
+    alwaysShowArrows = true,
+    ...props
+}: PrateleiraPlantasProps) {
     const scrollDivRef = useRef<HTMLDivElement | null>(null);
     const { canScrollRight, canScrollLeft, scrollRight, scrollLeft } =
         useHorizontalScroll({
@@ -14,11 +26,22 @@ export function PrateleiraPlantas({ children }: { children: React.ReactNode }) {
             defaultCanScrollRight: true,
         });
     return (
-        <div className="relative flex w-full items-center">
+        <div className={`relative flex items-center ${className}`}>
             {canScrollLeft && (
-                <div className="absolute top-0 left-0 z-[2] h-full w-14">
-                    <div className="flex h-full w-full items-center justify-center opacity-0 hover:opacity-100">
+                <div
+                    className="top-0 left-0 z-[2] h-full w-14"
+                    style={{
+                        position: 'absolute',
+                    }}
+                >
+                    <div
+                        className="flex h-full w-full items-center justify-center hover:opacity-100"
+                        style={{
+                            opacity: alwaysShowArrows ? 0 : 1,
+                        }}
+                    >
                         <button
+                            type="button"
                             className="bg-card cursor-pointer rounded-full border p-1 shadow-sm"
                             onClick={() => {
                                 scrollRight();
@@ -30,21 +53,33 @@ export function PrateleiraPlantas({ children }: { children: React.ReactNode }) {
                 </div>
             )}
             <div
-                className="flex w-full flex-nowrap gap-8 overflow-x-scroll p-2"
+                className="flex flex-nowrap overflow-x-scroll p-2"
                 ref={scrollDivRef}
                 style={{
                     scrollbarWidth: 'none',
                     msOverflowStyle: 'none',
                     WebkitOverflowScrolling: 'touch',
                     scrollBehavior: 'smooth',
+                    gap: props.gap || '2rem',
                 }}
             >
                 {children}
             </div>
             {canScrollRight && (
-                <div className="absolute top-0 right-0 z-[2] h-full w-14">
-                    <div className="flex h-full w-full items-center justify-center opacity-0 hover:opacity-100">
+                <div
+                    className="top-0 right-0 z-[2] h-full w-14"
+                    style={{
+                        position: 'absolute',
+                    }}
+                >
+                    <div
+                        className="flex h-full w-full items-center justify-center hover:opacity-100"
+                        style={{
+                            opacity: alwaysShowArrows ? 0 : 1,
+                        }}
+                    >
                         <button
+                            type="button"
                             className="bg-card cursor-pointer rounded-full border p-1 shadow-sm"
                             onClick={() => {
                                 scrollLeft();
