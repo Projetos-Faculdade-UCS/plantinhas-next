@@ -5,7 +5,7 @@ import { useDebounce } from '@/shared/lib/use-debounce';
 import { PlantaPreview } from '@/shared/types/planta';
 import { Tile } from '@/shared/ui/tile';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
-import { useRef, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import styles from '../fields/styles.module.scss'; // Importando o CSS específico
 
 type ListaPlantasPreviewProps = {
@@ -16,9 +16,10 @@ export function ListaPlantasPreview({
 }: ListaPlantasPreviewProps) {
     const searchRef = useRef<HTMLInputElement>(null);
     const [search, setSearch] = useState<string>('');
-    const debouncedSearch = useDebounce(search, 400);
+    const debouncedSearch = useDebounce(search, 500);
+
     const {
-        data: plantas = [],
+        data = [],
         isLoading,
         isPlaceholderData,
     } = useQuery({
@@ -30,11 +31,13 @@ export function ListaPlantasPreview({
         refetchOnWindowFocus: false,
         placeholderData: keepPreviousData,
     });
+
+    const plantas = useMemo(() => data, [data]);
     return (
-        <div className="flex h-full flex-col gap-4">
+        <div className="flex h-full flex-col">
             <SearchInput
                 ref={searchRef}
-                className="mx-4 w-48 shrink-0"
+                className="mx-2 max-w-48 shrink-0 sm:mx-4"
                 id="search-plant-in-pokedex"
                 onChange={(val) => {
                     setSearch(val);
@@ -52,7 +55,7 @@ export function ListaPlantasPreview({
                 </div>
             )}
             <div
-                className={`mr-2 flex max-h-full flex-col gap-2 ${styles.list} px-4 transition-opacity duration-300 ${
+                className={`mt-1 mr-1 flex max-h-full flex-col gap-2 px-2 pt-1 ${styles.list} transition-opacity duration-300 sm:pr-2 sm:pl-4 ${
                     isPlaceholderData ? 'opacity-50' : 'opacity-100'
                 }`}
             >
@@ -63,9 +66,10 @@ export function ListaPlantasPreview({
                             onSelectPlanta(planta);
                         }}
                         key={planta.id}
-                        className="hover:bg-muted cursor-pointer rounded-md py-1 transition duration-200 hover:scale-105"
+                        className="bg-card cursor-pointer rounded-md border py-1 transition duration-200 hover:scale-105"
                     >
                         <Tile
+                            gap={'8px'}
                             value={planta.nome}
                             leading={
                                 <div className="w-12">

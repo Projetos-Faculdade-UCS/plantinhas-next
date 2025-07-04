@@ -1,7 +1,4 @@
 'use client';
-type SearchResultsProps = {
-    search: string;
-};
 
 import CardPlanta from '@/entities/card-planta';
 import { CardPlantaSkeleton } from '@/entities/card-planta/card-planta-skeleton';
@@ -10,15 +7,19 @@ import { cleanPaginatedPlantas } from '@/shared/lib/clean-paginated-query';
 import { useDebounce } from '@/shared/lib/use-debounce';
 import { useVerticalScroll } from '@/shared/lib/use-vertical-croll';
 import { useInfiniteQuery } from '@tanstack/react-query';
+import { useMemo } from 'react';
 
-export function SearchResults({ search }: SearchResultsProps) {
-    const debouncedSearch = useDebounce(search, 400);
+type SearchResultsProps = {
+    search: string;
+};
+export function SearchResults(props: SearchResultsProps) {
+    const search = useDebounce(props.search, 500);
 
     const { data, ...query } = useInfiniteQuery({
-        queryKey: ['search-plantas', debouncedSearch],
+        queryKey: ['search-plantas', search],
         initialPageParam: 1,
         queryFn: async ({ pageParam = 1 }) => {
-            const resp = await getPlantas(debouncedSearch, pageParam);
+            const resp = await getPlantas(search, pageParam);
             if (resp.error || resp.data === undefined) {
                 throw new Error(resp.error);
             }
@@ -34,7 +35,7 @@ export function SearchResults({ search }: SearchResultsProps) {
         throwOnError: false,
     });
 
-    const plantas = cleanPaginatedPlantas(data);
+    const plantas = useMemo(() => cleanPaginatedPlantas(data), [data]);
     const totalPlantas = data?.pages[0].total || 0;
     const { triggerScrollRef } = useVerticalScroll({
         onScrollEnd: () => {
