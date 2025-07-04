@@ -34,6 +34,9 @@ export function FiltrosPlanta() {
             >
                 <SearchInputField
                     control={formData.control}
+                    onChange={() => {
+                        formData.handleSubmit(handleSubmit)();
+                    }}
                     onClear={() => formData.handleSubmit(handleSubmit)()}
                 />
                 <Button type="button" variant="default" className="px-2">

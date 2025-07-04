@@ -8,9 +8,11 @@ import { TFiltrosPlanta } from './types';
 export function SearchInputField({
     control,
     onClear,
+    onChange,
 }: {
     control: Control<TFiltrosPlanta>;
     onClear?: () => void;
+    onChange?: (value: string) => void;
 }) {
     const ref = useRef<HTMLInputElement>(null);
     return (
@@ -24,7 +26,10 @@ export function SearchInputField({
                             ref={ref}
                             value={field.value}
                             onSubmit={() => submitNearForm(ref.current!)}
-                            onChange={(val) => field.onChange(val)}
+                            onChange={(val) => {
+                                field.onChange(val);
+                                onChange?.(val);
+                            }}
                             onClear={onClear}
                             placeholder="Buscar planta"
                         />

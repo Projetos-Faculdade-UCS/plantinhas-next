@@ -7,18 +7,18 @@ import CardPlanta from '@/entities/card-planta';
 import { CardPlantaSkeleton } from '@/entities/card-planta/card-planta-skeleton';
 import { getPlantas } from '@/shared/api/actions/plantas';
 import { cleanPaginatedPlantas } from '@/shared/lib/clean-paginated-query';
+import { useDebounce } from '@/shared/lib/use-debounce';
 import { useVerticalScroll } from '@/shared/lib/use-vertical-croll';
 import { useInfiniteQuery } from '@tanstack/react-query';
-import { useDeferredValue } from 'react';
 
 export function SearchResults({ search }: SearchResultsProps) {
-    const deferredSearch = useDeferredValue(search);
+    const debouncedSearch = useDebounce(search, 400);
 
     const { data, ...query } = useInfiniteQuery({
-        queryKey: ['search-plantas', deferredSearch],
+        queryKey: ['search-plantas', debouncedSearch],
         initialPageParam: 1,
         queryFn: async ({ pageParam = 1 }) => {
-            const resp = await getPlantas(deferredSearch, pageParam);
+            const resp = await getPlantas(debouncedSearch, pageParam);
             if (resp.error || resp.data === undefined) {
                 throw new Error(resp.error);
             }

@@ -1,9 +1,10 @@
 import { SearchInput } from '@/entities/filtros-plantas/search-input';
 import { FallbackImage } from '@/entities/imagem/fallback-image';
 import { getPlantas } from '@/shared/api/actions/plantas';
+import { useDebounce } from '@/shared/lib/use-debounce';
 import { PlantaPreview } from '@/shared/types/planta';
 import { Tile } from '@/shared/ui/tile';
-import { useQuery } from '@tanstack/react-query';
+import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { useRef, useState } from 'react';
 import styles from '../fields/styles.module.scss'; // Importando o CSS específico
 
@@ -15,13 +16,19 @@ export function ListaPlantasPreview({
 }: ListaPlantasPreviewProps) {
     const searchRef = useRef<HTMLInputElement>(null);
     const [search, setSearch] = useState<string>('');
-    const { data: plantas = [], isLoading } = useQuery({
-        queryKey: ['plantas', search],
+    const debouncedSearch = useDebounce(search, 400);
+    const {
+        data: plantas = [],
+        isLoading,
+        isPlaceholderData,
+    } = useQuery({
+        queryKey: ['plantas', debouncedSearch],
         queryFn: async () => {
-            const response = await getPlantas(search);
+            const response = await getPlantas(debouncedSearch);
             return response.data?.itens || [];
         },
         refetchOnWindowFocus: false,
+        placeholderData: keepPreviousData,
     });
     return (
         <div className="flex h-full flex-col gap-4">
@@ -29,8 +36,8 @@ export function ListaPlantasPreview({
                 ref={searchRef}
                 className="mx-4 w-48 shrink-0"
                 id="search-plant-in-pokedex"
-                onSubmit={() => {
-                    setSearch(searchRef.current?.value || '');
+                onChange={(val) => {
+                    setSearch(val);
                 }}
                 placeholder="Buscar planta"
             />
@@ -45,7 +52,9 @@ export function ListaPlantasPreview({
                 </div>
             )}
             <div
-                className={`mr-2 flex max-h-full flex-col gap-2 ${styles.list} px-4`}
+                className={`mr-2 flex max-h-full flex-col gap-2 ${styles.list} px-4 transition-opacity duration-300 ${
+                    isPlaceholderData ? 'opacity-50' : 'opacity-100'
+                }`}
             >
                 {plantas.map((planta) => (
                     <button
