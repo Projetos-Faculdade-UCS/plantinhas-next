@@ -13,7 +13,7 @@ export async function getPlantas(
     try {
         const response = await Repositories.plantas.searchPlantas({
             search,
-            page,
+            pagina: page,
             itensPorPagina: tamanhoPagina,
         });
         return { data: response.data };

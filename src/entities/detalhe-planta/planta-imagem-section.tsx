@@ -26,7 +26,7 @@ export function PlantaImagemSection({ planta }: PlantaImagemSectionProps) {
                 alt={`Foto da planta ${planta.nome}`}
                 width={288}
                 height={288}
-                className="rounded-lg object-cover"
+                className="h-[270px] w-fit rounded-lg"
             />
             <div className="mt-4 flex w-full items-center gap-2">
                 <Dialog>
@@ -37,7 +37,7 @@ export function PlantaImagemSection({ planta }: PlantaImagemSectionProps) {
                             className="bg-primary flex h-10 min-h-0 w-10 min-w-0 cursor-pointer items-center justify-center rounded-lg p-0"
                             aria-label="Compartilhar"
                         >
-                            <i className="ph ph-share-network text-xl text-white"></i>
+                            <i className="ph ph-share-network text-primary-foreground text-xl"></i>
                         </Button>
                     </DialogTrigger>
                     <DialogContent className="sm:max-w-md">
