@@ -28,6 +28,7 @@ import { SistemaCultivoField } from './fields/SistemaCultivoField';
 import { SubmittedJsonDisplay } from './SubmittedJsonDisplay';
 
 // Importando os novos hooks
+import Image from 'next/image';
 import { formatPlantioForm } from '../lib/format-plantio-form';
 import { HabilidadesField } from './fields/habilidades-field';
 import { Pokedex } from './select-planta/pokedex';
@@ -115,7 +116,29 @@ export function CadastroPlantioForm() {
                     {/* Coluna 1: Detalhes da Planta e Observações */}
                     <div className="space-y-6 lg:col-span-2">
                         <Pokedex control={form.control} isBusy={isBusy} />
-
+                        <Card>
+                            <CardHeader>
+                                <CardTitle>Como Plantar?</CardTitle>
+                            </CardHeader>
+                            <CardContent>
+                                <div className="tems-center flex gap-2">
+                                    <button className="hover:bg-muted flex flex-col rounded-md p-2 transition-colors duration-200">
+                                        <Image
+                                            src={
+                                                '/assets/form-plantio/vaso.png'
+                                            }
+                                            alt="Vaso de planta"
+                                            width={200}
+                                            height={200}
+                                            className="mx-auto h-12 w-12 object-contain"
+                                        />
+                                        <span className="text-muted-foreground">
+                                            Vaso de flor
+                                        </span>
+                                    </button>
+                                </div>
+                            </CardContent>
+                        </Card>
                         <Card>
                             <CardHeader>
                                 <CardTitle>Observações Adicionais</CardTitle>
