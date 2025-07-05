@@ -24,11 +24,13 @@ export function InformacoesAdicionaisField({
             name="informacoesAdicionais"
             render={({ field }) => (
                 <FormItem>
-                    <FormLabel>Informações Adicionais</FormLabel>
+                    <FormLabel className="text-base font-semibold">
+                        Informações Adicionais
+                    </FormLabel>
                     <FormControl>
                         <Textarea
                             placeholder="Ex: Usar fertilizante orgânico a cada duas semanas."
-                            className="bg-card"
+                            className="bg-card min-h-[74px]"
                             {...field}
                             disabled={disabled}
                         />

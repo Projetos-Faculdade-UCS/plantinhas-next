@@ -42,6 +42,13 @@ export class NotFoundError extends NetWorkError {
     }
 }
 
+export class NotAcceptableError extends NetWorkError {
+    constructor(message: string, data?: unknown) {
+        super(message, 406, data);
+        this.name = 'NotAcceptableError';
+    }
+}
+
 export class ServerError extends NetWorkError {
     constructor(message: string, data?: unknown) {
         super(message, 500, data);

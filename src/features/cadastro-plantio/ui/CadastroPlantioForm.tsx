@@ -5,7 +5,6 @@ import {
     NewPlantioForm,
 } from '@/features/cadastro-plantio/lib/cadastro-plantio.schema';
 import { Button } from '@/shared/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/shared/ui/card';
 import { Form } from '@/shared/ui/form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useSearchParams } from 'next/navigation';
@@ -22,7 +21,6 @@ import { SubmittedJsonDisplay } from './SubmittedJsonDisplay';
 // Importando os novos hooks
 import { formatPlantioForm } from '../lib/format-plantio-form';
 import { ComoPlantarField } from './fields/como-plantar-field';
-import { HabilidadesField } from './fields/habilidades-field';
 import { Pokedex } from './select-planta/pokedex';
 
 export function CadastroPlantioForm() {
@@ -71,10 +69,6 @@ export function CadastroPlantioForm() {
 
     const isBusy = isLoadingAi;
 
-    const getButtonText = () => {
-        if (isLoadingAi) return 'Processando com IA...';
-        return 'Registrar Plantio (com IA)';
-    };
     const formErrors = form.formState.errors;
 
     return (
@@ -90,14 +84,6 @@ export function CadastroPlantioForm() {
                             control={form.control}
                             disabled={isBusy}
                         />
-                        <Card className="gap-2 p-4">
-                            <CardHeader className="px-0">
-                                <CardTitle>Habilidades</CardTitle>
-                            </CardHeader>
-                            <CardContent className="px-0">
-                                <HabilidadesField />
-                            </CardContent>
-                        </Card>
                     </div>
 
                     <div className="space-y-4 lg:col-span-2">
@@ -109,10 +95,6 @@ export function CadastroPlantioForm() {
                             control={form.control}
                             isBusy={isBusy}
                         />
-                        {/* <AmbienteCondicaoField
-                            control={form.control}
-                            disabled={isBusy}
-                        /> */}
                     </div>
                 </div>
                 <div className="flex flex-col gap-2">
@@ -126,7 +108,8 @@ export function CadastroPlantioForm() {
                         disabled={isBusy}
                         className="w-full cursor-pointer text-base"
                     >
-                        {getButtonText()}
+                        <span>Plantar com IA</span>
+                        <i className="ph ph-sparkle text-lg" />
                     </Button>
                 </div>
             </form>

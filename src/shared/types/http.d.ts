@@ -21,7 +21,7 @@ export type CustomResponse<T> =
           json: () => T | PromiseLike<T>;
       })
     | (Omit<Response, 'json'> & {
-          status: 401 | 403 | 404 | 500 | 502 | 503;
+          status: 401 | 406 | 403 | 404 | 500 | 502 | 503;
           json: () => ResponseError | PromiseLike<ResponseError>;
       })
     | (Omit<Response, 'json'> & {

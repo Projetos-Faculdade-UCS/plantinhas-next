@@ -180,6 +180,13 @@ export class HttpClient implements Client {
             );
         }
 
+        if (res.status === 406) {
+            throw new NotFoundError(
+                `Recurso não encontrado: ${res.statusText}`,
+                await this.parseJson(res),
+            );
+        }
+
         if (res.status >= 500) {
             throw new ServerError(
                 `Erro do servidor: ${res.statusText}`,
