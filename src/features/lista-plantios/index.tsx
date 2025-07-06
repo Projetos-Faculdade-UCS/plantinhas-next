@@ -27,12 +27,10 @@ export async function ListaPlantios() {
                 ))}
 
                 {plantios.data.itens.length === 0 ? (
-                    <div className="flex flex-col">
-                        <Button>
-                            <i className="ph ph-plus-circle flex text-lg"></i>
-                        </Button>
+                    <div className="flex h-70 w-full flex-col items-center justify-center gap-2">
+                        <i className="ph ph-shovel text-primary text-3xl"></i>
                         <p className="text-muted-foreground">
-                            Você ainda não tem nenhum plantio
+                            Você não tem nenhum plantio
                         </p>
                     </div>
                 ) : null}
