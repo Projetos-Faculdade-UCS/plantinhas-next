@@ -25,13 +25,13 @@ export function ResumoPlanta({ plantaId }: { plantaId: number }) {
     });
     if (isLoading) {
         return (
-            <>
+            <div className="flex flex-col gap-1">
                 <Skeleton className="mb-2 h-6 w-42" />
                 <div className="flex gap-2">
                     <Skeleton className="h-4 w-64" />
                     <Skeleton className="h-4 w-4" />
                 </div>
-            </>
+            </div>
         );
     }
     if (error) {
@@ -53,7 +53,7 @@ export function ResumoPlanta({ plantaId }: { plantaId: number }) {
         );
     }
     return (
-        <>
+        <div className="flex flex-col gap-1">
             <h1 className="text-2xl font-bold">{planta.nome}</h1>
             <div className="text-muted-foreground flex items-center gap-2">
                 <span className="italic">{planta.nomeCientifico}</span>
@@ -61,6 +61,6 @@ export function ResumoPlanta({ plantaId }: { plantaId: number }) {
                     <i className="ph ph-arrow-square-out flex" />
                 </Link>
             </div>
-        </>
+        </div>
     );
 }

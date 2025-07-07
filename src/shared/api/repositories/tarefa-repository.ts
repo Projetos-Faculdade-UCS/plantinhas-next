@@ -61,4 +61,6 @@ export class TarefaRepository {
         );
         return tarefa;
     }
+
+    // public async
 }

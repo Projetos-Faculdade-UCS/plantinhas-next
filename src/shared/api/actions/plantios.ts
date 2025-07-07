@@ -59,3 +59,16 @@ export async function createPlantio(
         };
     }
 }
+
+export async function deletePlantio(plantioId: number) {
+    try {
+        const response = await Repositories.plantios.deletePlantio(plantioId);
+        return response;
+    } catch (error) {
+        console.error('Erro ao deletar plantio:', error);
+        return {
+            status: 500,
+            error: 'Erro ao deletar plantio',
+        };
+    }
+}

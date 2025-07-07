@@ -106,4 +106,10 @@ export class PlantioRepository {
             },
         };
     }
+
+    public async deletePlantio(plantioId: number) {
+        console.log('Deletando plantio com ID:', plantioId);
+        const query = await this.client.delete(`/plantios/${plantioId}/`);
+        return query;
+    }
 }
