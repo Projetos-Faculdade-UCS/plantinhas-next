@@ -1,3 +1,4 @@
+'use client';
 import { getPlantaById } from '@/shared/api/actions/plantas';
 import { PlantaPreview } from '@/shared/types/planta';
 import Image from 'next/image';

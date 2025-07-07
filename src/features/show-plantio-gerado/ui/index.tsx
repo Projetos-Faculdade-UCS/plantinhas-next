@@ -4,6 +4,7 @@ import { CardTarefa } from '@/entities/card-tarefa';
 import { Button } from '@/shared/ui/button';
 import { usePlantioAi } from '../lib/context';
 import { getPlantioFake, getTarefasFake } from '../lib/utils';
+import styles from './style.module.scss';
 
 /**
  * Display a overlay with the generated planting information.
@@ -27,17 +28,19 @@ export function ShowPlantioGerado() {
                 </div>
 
                 {plantioGerado && plantaId && (
-                    <div className="flex justify-between gap-10">
+                    <div className="flex h-[320px] items-center justify-between gap-10">
                         <div className="flex flex-col gap-2">
                             <CardPlantio
                                 plantio={plantioFake}
                                 className="w-full sm:w-full"
                             />
-                            <span className="text-muted-foreground bg-card rounded-md px-4 py-1">
+                            <span className="text-muted-foreground bg-card line-clamp-3 rounded-md px-4 py-1">
                                 {plantioGerado.informacoes_adicionais}
                             </span>
                         </div>
-                        <div className="flex shrink-0 grow flex-col">
+                        <div
+                            className={`flex max-h-full shrink-0 grow flex-col gap-2 px-2 ${styles.list}`}
+                        >
                             {tarefasFake.map((tarefa, index) => (
                                 <CardTarefa
                                     key={tarefa.nome + index}

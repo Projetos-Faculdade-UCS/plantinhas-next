@@ -39,11 +39,11 @@ export function CardTarefa({
     return (
         <div
             key={tarefa.id}
-            className={`cursor-pointer rounded-lg border-2 transition-colors ${selected ? 'border-primary bg-primary-foreground' : 'border-[#D4D4D4] bg-[#FFFFFF]'} `}
+            className={`cursor-pointer rounded-lg border transition-colors ${selected ? 'border-primary bg-primary-foreground' : 'bg-card'} `}
             onClick={onClick}
         >
             <div className="flex w-full flex-row items-center justify-between">
-                <div className="flex items-center border-r-2 border-[#D4D4D4] px-6 py-4">
+                <div className="flex items-center border border-r px-6 py-4">
                     <Image
                         src={getTarefaImage(tarefa.tipo)}
                         alt={tarefa.nome}
