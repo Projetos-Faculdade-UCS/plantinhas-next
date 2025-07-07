@@ -1,15 +1,6 @@
 import { TarefaPlantioPreview } from '@/shared/types/tarefa';
 import Image from 'next/image';
-
-const getTarefaImage = (tipo: TarefaPlantioPreview['tipo']) => {
-    return `/assets/thumbnail-tarefas/${tipo}.png`;
-};
-
-const getBadgeStatus = (concluido: boolean, podeConcluirTarefa: boolean) => {
-    if (concluido) return 'concluido';
-    if (podeConcluirTarefa) return 'alerta';
-    return null;
-};
+import { getBadgeStatus, getBgColor, getTarefaImage } from './lib/utils';
 
 type CardTarefaProps = {
     tarefa: TarefaPlantioPreview;
@@ -24,23 +15,30 @@ export function CardTarefa({
 }: CardTarefaProps) {
     const badgeStatus = getBadgeStatus(
         tarefa.concluido,
-        tarefa.podeConcluirTarefa,
+        tarefa.podeRealizarTarefa,
     );
     return (
         <div
             key={tarefa.id}
-            className={`cursor-pointer rounded-lg border transition-colors ${selected ? 'border-primary bg-primary-foreground' : 'bg-card'} `}
+            className={`h-fit cursor-pointer rounded-lg border transition-colors ${selected ? 'border-primary bg-primary-foreground' : 'bg-card'} `}
             onClick={onClick}
         >
             <div className="flex w-full flex-row items-center justify-between">
-                <div className="flex w-24 items-center justify-center border border-r p-2">
-                    <Image
-                        src={getTarefaImage(tarefa.tipo)}
-                        alt={tarefa.nome}
-                        width={45}
-                        height={45}
-                        className="h-16 w-fit rounded-md object-contain"
-                    />
+                <div
+                    className="rounded-l-lg border-r p-2"
+                    style={{
+                        backgroundColor: getBgColor(tarefa.tipo),
+                    }}
+                >
+                    <div className="flex h-12 w-12 items-center justify-center">
+                        <Image
+                            src={getTarefaImage(tarefa.tipo)}
+                            alt={tarefa.nome}
+                            width={45}
+                            height={45}
+                            className="h-full w-fit rounded-md object-contain"
+                        />
+                    </div>
                 </div>
                 <div className="flex w-full flex-row items-center justify-between px-4">
                     <div className="flex flex-col gap-1">
@@ -48,8 +46,8 @@ export function CardTarefa({
                             {tarefa.nome}
                         </span>
                         <div className="text-muted-foreground flex items-center gap-2">
-                            <i className="ph ph-barbell flex text-lg" />
-                            <span className="text-base font-medium">
+                            <i className="ph ph-calendar-check flex text-lg" />
+                            <span className="text-sm font-medium">
                                 {tarefa.quantidadeCompletada}/
                                 {tarefa.quantidadeTotal}
                             </span>

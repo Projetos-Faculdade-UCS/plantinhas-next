@@ -3,7 +3,7 @@ export interface TarefaPlantio {
     nome: string;
     concluido: boolean;
     dataProximaOcorrencia: string;
-    podeConcluirTarefa: boolean;
+    podeRealizarTarefa: boolean;
     tipo:
         | 'cultivo'
         | 'irrigacao'
@@ -36,11 +36,36 @@ export interface TarefaPlantio {
 export type TarefaPlantioPreview = Pick<
     TarefaPlantio,
     | 'id'
-    | 'concluido'
-    | 'podeConcluirTarefa'
     | 'nome'
+    | 'concluido'
+    | 'tipo'
     | 'quantidadeTotal'
     | 'quantidadeCompletada'
     | 'ultimaAlteracao'
-    | 'tipo'
+    | 'podeRealizarTarefa'
 >;
+
+export type FormTarefas = {
+    plantio_id: number;
+    tarefas: {
+        nome: string;
+        tipo: TarefaPlantio['tipo'];
+        quantidade_total: number;
+        cron: string;
+        habilidade: {
+            id: number;
+            multiplicador_xp: number;
+        };
+        tutorial: {
+            materiais: {
+                nome: string;
+                quantidade: number;
+                unidade: string;
+            }[];
+            etapas: {
+                descricao: string;
+                ordem: number;
+            }[];
+        };
+    }[];
+};

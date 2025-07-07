@@ -5,6 +5,7 @@ import { HabilidadeRepository } from './repositories/habilidade-repository';
 import { PlantaRepository } from './repositories/planta-repository';
 import { PlantioRepository } from './repositories/plantio-repository';
 import { ProfileRepository } from './repositories/profile-repository';
+import { TarefaRepository } from './repositories/tarefa-repository';
 
 /**
  * Classe que provê acesso centralizado aos repositories que a aplicação
@@ -27,6 +28,7 @@ export class Repositories {
     private static _plantios: PlantioRepository;
     private static _ia: AiRepository;
     private static _habilidades: HabilidadeRepository;
+    private static _tarefas: TarefaRepository;
 
     // Getter para o cliente de autenticação
     public static get auth(): AuthRepository {
@@ -71,6 +73,14 @@ export class Repositories {
             this._ia = new AiRepository();
         }
         return this._ia;
+    }
+
+    // Getter para o cliente de tarefas
+    public static get tarefas(): TarefaRepository {
+        if (!this._tarefas) {
+            this._tarefas = new TarefaRepository();
+        }
+        return this._tarefas;
     }
 
     /**

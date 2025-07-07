@@ -1,11 +1,26 @@
-import { TarefaPlantio } from '@/shared/types/tarefa';
+import { getDetalheTarefa } from '@/shared/api/actions/tarefas';
+import { TarefaPlantio, TarefaPlantioPreview } from '@/shared/types/tarefa';
 import { Button } from '@/shared/ui/button';
+import { useEffect, useState } from 'react';
 
 interface DetalheTarefaProps {
-    tarefa: TarefaPlantio & { timeAgo?: string };
+    tarefa: TarefaPlantioPreview & { timeAgo?: string };
 }
 
 export function DetalheTarefa({ tarefa }: DetalheTarefaProps) {
+    const [tarefaDetail, setTarefaDetail] = useState<TarefaPlantio>();
+    const [error, setError] = useState<string | null>(null);
+
+    useEffect(() => {
+        getDetalheTarefa(tarefa.id).then((response) => {
+            if (response.data) {
+                setTarefaDetail(response.data);
+            } else {
+                setError(response.error);
+            }
+        });
+    }, [tarefa]);
+
     const formatarQuantidade = (quantidade: number | string): string => {
         const numero =
             typeof quantidade === 'number'
@@ -33,6 +48,20 @@ export function DetalheTarefa({ tarefa }: DetalheTarefaProps) {
         });
     };
 
+    if (!tarefaDetail) {
+        return (
+            <div className="flex h-full items-center justify-center">
+                <span className="text-muted-foreground">Carregando...</span>
+            </div>
+        );
+    }
+    if (error) {
+        return (
+            <div className="flex h-full items-center justify-center">
+                <span className="text-destructive">{error}</span>
+            </div>
+        );
+    }
     return (
         <div className="flex h-[530px] flex-col">
             {/* Header fixo com botão fechar e título */}
@@ -64,7 +93,7 @@ export function DetalheTarefa({ tarefa }: DetalheTarefaProps) {
                             Frequência:
                         </span>
                         <span className="ml-1 text-base font-medium">
-                            {tarefa.frequencia}
+                            {tarefaDetail.frequencia}
                         </span>
                     </div>
                     <div className="flex items-center gap-2">
@@ -100,7 +129,7 @@ export function DetalheTarefa({ tarefa }: DetalheTarefaProps) {
                         </span>
                     </div>
                     <div className="flex flex-col gap-1">
-                        {tarefa.tutorial.materiais.map((mat, idx) => (
+                        {tarefaDetail.tutorial.materiais.map((mat, idx) => (
                             <div key={idx} className="flex gap-2 text-base">
                                 <span className="text-base">{mat.nome}</span>
                                 <span className="text-muted-foreground text-base">
@@ -120,7 +149,7 @@ export function DetalheTarefa({ tarefa }: DetalheTarefaProps) {
                         </span>
                     </div>
                     <div className="flex flex-col gap-1">
-                        {tarefa.tutorial.etapas
+                        {tarefaDetail.tutorial.etapas
                             .sort((a, b) => a.ordem - b.ordem)
                             .map((etapa, idx) => (
                                 <div
