@@ -23,7 +23,7 @@ export default function PlantioPage({
 }) {
     const plantioId = Number(use(params).plantioId);
     const { data: plantio } = use(Repositories.plantios.getPlantio(plantioId));
-    const tarefas = use(Repositories.plantios.getTarefasPlantio(plantioId));
+    const tarefas = use(Repositories.tarefas.getTarefas(plantioId)).data;
 
     const tarefasMapeadas = tarefas.map((tarefa) => ({
         ...tarefa,
@@ -56,10 +56,18 @@ export default function PlantioPage({
                         saude={plantio.saude}
                         sede={plantio.sede}
                     />
+                    <span className="text-muted-foreground text-sm">
+                        {plantio.informacoesAdicionais}
+                    </span>
                 </div>
             </div>
             <div className="mt-8">
-                <h2 className="mb-2 text-lg font-semibold">Tarefas</h2>
+                <h2 className="mb-2 text-lg font-semibold">
+                    Tarefas
+                    {tarefasMapeadas.length > 0 &&
+                        ` (${tarefasMapeadas.length})`}
+                </h2>
+
                 <ListaTarefasPlantio tarefas={tarefasMapeadas} />
             </div>
         </div>

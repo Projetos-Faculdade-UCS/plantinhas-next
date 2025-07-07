@@ -24,26 +24,33 @@ export function FetchPlantaImage({
     ...props
 }: ImagemPlantaProps) {
     const [planta, setPlanta] = useState<PlantaPreview | null>(null);
+    const [error, setError] = useState(false);
 
     useEffect(() => {
         getPlantaById(plantaId).then((response) => {
             if (response.data) {
                 setPlanta(response.data);
             } else {
-                setPlanta(null);
+                setError(true);
             }
         });
     }, [plantaId]);
 
     return (
-        <div className="flex flex-col items-center justify-center">
+        <div className="flex shrink-0 flex-col items-center justify-center">
             <Image
-                src={planta?.foto || '/assets/erro-planta.png'}
+                src={
+                    planta?.foto
+                        ? planta.foto
+                        : error
+                          ? '/assets/erro-planta.png'
+                          : '/assets/loading.png'
+                }
                 alt={planta?.nome || 'Sem imagem'}
                 className={className}
                 {...props}
             />
-            {fallbackMessage && (
+            {error && fallbackMessage && (
                 <span className="text-muted-foreground text-xs">
                     {fallbackMessage}
                 </span>

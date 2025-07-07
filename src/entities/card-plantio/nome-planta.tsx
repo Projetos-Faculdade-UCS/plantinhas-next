@@ -19,10 +19,10 @@ export function NomePlanta({ plantaId }: { plantaId: number }) {
         });
     }, [plantaId]);
 
-    if (!planta) return <Skeleton className="mx-4 h-6 w-full" />;
+    if (!planta) return <Skeleton className="h-4 w-3/4 rounded-md" />;
 
     return (
-        <span className={`z-[1] w-full text-center text-xl ${itim.className}`}>
+        <span className={`z-[1] w-fit text-xl ${itim.className}`}>
             {planta.nome}
         </span>
     );

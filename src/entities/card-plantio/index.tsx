@@ -27,7 +27,7 @@ export function CardPlantio({ plantio, className }: CardPlantioProps) {
                 <div className="h-8"></div>
                 <Ondulacao />
                 <div className="bg-card h-8 border-x"></div>
-                <div className="bg-card flex flex-col gap-2 border-x pb-2">
+                <div className="bg-card flex justify-center gap-2 border-x pb-2">
                     <NomePlanta plantaId={plantio.plantaId} />
                 </div>
                 <CardPlantioIncators plantio={plantio} />

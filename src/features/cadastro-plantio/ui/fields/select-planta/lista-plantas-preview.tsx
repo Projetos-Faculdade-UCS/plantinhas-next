@@ -50,8 +50,10 @@ export function ListaPlantasPreview({
                 </div>
             )}
             {!isLoading && plantas.length === 0 && (
-                <div className="text-muted-foreground mx-4 text-center">
-                    Nenhuma planta encontrada.
+                <div className="flex h-full items-center justify-center">
+                    <div className="text-muted-foreground mx-4 text-center text-sm">
+                        Nenhuma planta encontrada.
+                    </div>
                 </div>
             )}
             <div

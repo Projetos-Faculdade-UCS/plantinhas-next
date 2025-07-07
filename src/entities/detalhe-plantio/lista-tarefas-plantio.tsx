@@ -1,11 +1,11 @@
 'use client';
 import { DetalheTarefa } from '@/entities/detalhe-plantio/detalhe-tarefa';
-import { TarefaPlantio } from '@/shared/types/tarefa';
+import { TarefaPlantioPreview } from '@/shared/types/tarefa';
 import { useState } from 'react';
 import { CardTarefa } from '../card-tarefa';
 
 interface ListaTarefasPlantioProps {
-    tarefas: (TarefaPlantio & { timeAgo?: string })[];
+    tarefas: (TarefaPlantioPreview & { timeAgo?: string })[];
 }
 
 export function ListaTarefasPlantio({ tarefas }: ListaTarefasPlantioProps) {

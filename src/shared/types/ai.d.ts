@@ -1,4 +1,5 @@
 import { Planta } from './planta';
+import { TarefaPlantio } from './tarefa';
 
 export interface IAEntradaPlantio {
     data_inicio_plantio: string;
@@ -26,7 +27,7 @@ export interface AISaidaPlantio {
 
 export interface IATarefa {
     nome: string;
-    tipo: string;
+    tipo: TarefaPlantio['tipo'];
     quantidade_total: number;
     cron: string;
     habilidade: IAHabilidade;
@@ -41,7 +42,7 @@ export interface IAHabilidade {
 export interface IATutorial {
     materiais: {
         nome: string;
-        quantidade: string;
+        quantidade: number;
         unidade: string;
     }[];
     etapas: {

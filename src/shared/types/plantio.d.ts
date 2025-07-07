@@ -46,3 +46,13 @@ export type RawPlantioPreview = Pick<
     RawPlantio,
     'id' | 'plantaId' | 'situacao' | 'saude' | 'sede' | 'quantidade'
 >;
+
+export type FormPlantio = {
+    planta_id: number;
+    data_plantio: string; // yyyy-mm-dd
+    data_colheita: string; // yyyy-mm-dd
+    saude: number; // 0 a 1
+    sede: number; // 0 a 1
+    situacao: SituacaoPlantio;
+    informacoes_adicionais: string;
+};

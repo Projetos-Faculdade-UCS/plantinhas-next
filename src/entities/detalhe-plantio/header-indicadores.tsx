@@ -18,6 +18,7 @@ export function HeaderIndicadores({
     const isZero = situacao.value == 0;
     const isOver = situacao.value > 1;
     const empty = isZero || isOver;
+
     return (
         <div className="flex gap-12">
             <div className={'flex items-center gap-2'}>
