@@ -1,11 +1,13 @@
 import { getProgresSituacao } from '@/entities/card-plantio/utils';
 import { Client } from '@/shared/types/client';
 import {
-    ListagemPlantios,
     Plantio,
     PlantioPreview,
+    RawPlantio,
+    RawPlantioPreview,
     TarefaPlantio,
 } from '@/shared/types/plantio';
+import { PagedResponse } from '@/shared/types/utils';
 import { JWTClient } from '../client/jwt-client';
 
 export class PlantioRepository {
@@ -27,8 +29,8 @@ export class PlantioRepository {
         if (page) {
             params.append('page', page.toString());
         }
-        const plantiosData = await this.client.get<ListagemPlantios>(
-            `/gerenciamento/plantios/?${params.toString()}`,
+        const query = await this.client.get<PagedResponse<RawPlantioPreview>>(
+            `/plantios/?${params.toString()}`,
             {
                 next: {
                     tags: ['plantios'],
@@ -37,20 +39,20 @@ export class PlantioRepository {
             },
         );
         // Adiciona a propriedade situacao com o valor correto
-        const plantioItens = plantiosData.data.itens.map((plantio) => {
-            const situacao =
-                plantio.situacao as unknown as PlantioPreview['situacao']['label'];
-            plantio.situacao = {
-                label: situacao,
-                value: getProgresSituacao(situacao),
+        const plantios: PlantioPreview[] = query.data.itens.map((plantio) => {
+            return {
+                ...plantio,
+                situacao: {
+                    label: plantio.situacao,
+                    value: getProgresSituacao(plantio.situacao),
+                },
             };
-            return plantio;
         });
         return {
-            ...plantiosData,
+            ...query,
             data: {
-                ...plantiosData.data,
-                itens: plantioItens,
+                ...query.data,
+                itens: plantios,
             },
         };
     }
@@ -62,23 +64,24 @@ export class PlantioRepository {
      * cache de 1 minuto
      */
     public async getPlantio(id: number) {
-        const plantioData = await this.client.get<Plantio>(
-            `/gerenciamento/plantios/${id}/`,
-            {
-                next: {
-                    tags: ['plantio', `${id}`],
-                    revalidate: 0,
-                },
+        const query = await this.client.get<RawPlantio>(`/plantios/${id}/`, {
+            next: {
+                tags: ['plantio', `${id}`],
+                revalidate: 0,
             },
-        );
+        });
 
-        const situacaoPlantio = plantioData.data
-            .situacao as unknown as PlantioPreview['situacao']['label'];
-        plantioData.data.situacao = {
-            label: situacaoPlantio,
-            value: getProgresSituacao(situacaoPlantio),
+        const situacao: Plantio['situacao'] = {
+            label: query.data.situacao,
+            value: getProgresSituacao(query.data.situacao),
         };
-        return plantioData;
+        return {
+            ...query,
+            data: {
+                ...query.data,
+                situacao: situacao,
+            },
+        };
     }
     /**
      * Retorna as tarefas de um plantio específico
@@ -87,7 +90,7 @@ export class PlantioRepository {
      */
     public async getTarefasPlantio(id: number) {
         const tarefas = await this.client.get<TarefaPlantio[]>(
-            `/gerenciamento/plantios/${id}/tarefas/`
+            `/plantios/${id}/tarefas/`,
         );
         return tarefas.data;
     }

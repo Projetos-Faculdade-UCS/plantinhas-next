@@ -22,3 +22,15 @@ export function objectToSearchParams(obj: Record<string, unknown>) {
 
     return searchParams;
 }
+
+/**
+ * Aciona o envio do formulário mais próximo do input HTML fornecido.
+ * @param element - O elemento HTML de entrada que aciona o envio do formulário.
+ * @returns void
+ */
+export const submitNearForm = (element: HTMLInputElement) => {
+    const form = element.closest('form');
+    if (form) {
+        form.requestSubmit();
+    }
+};

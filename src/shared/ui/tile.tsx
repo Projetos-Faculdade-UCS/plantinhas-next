@@ -5,7 +5,8 @@ type TileProps = {
     leading?: React.ReactNode;
     trailing?: React.ReactNode;
     value: React.ReactNode;
-    title: React.ReactNode;
+    title?: React.ReactNode;
+    gap?: string;
 };
 
 /**
@@ -22,12 +23,17 @@ export function Tile({ leading, trailing, value, title, ...props }: TileProps) {
         <div
             className={cn('flex items-center justify-between', props.className)}
         >
-            <div className="flex items-center gap-4">
+            <div
+                className="flex items-center"
+                style={{ gap: props.gap || '1rem' }}
+            >
                 {leading}
                 <div className="flex flex-col">
-                    <span className="text-muted-foreground text-sm">
-                        {title}
-                    </span>
+                    {title && (
+                        <span className="text-muted-foreground text-sm">
+                            {title}
+                        </span>
+                    )}
                     <span className="font-medium">{value}</span>
                 </div>
             </div>

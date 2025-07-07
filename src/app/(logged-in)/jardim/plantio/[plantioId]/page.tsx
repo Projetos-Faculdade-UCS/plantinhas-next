@@ -1,15 +1,19 @@
 import { HeaderIndicadores } from '@/entities/detalhe-plantio/header-indicadores';
 import { ListaTarefasPlantio } from '@/entities/detalhe-plantio/lista-tarefas-plantio';
+import { ResumoPlanta } from '@/entities/detalhe-plantio/resumo-planta';
+import { FetchPlantaImage } from '@/entities/imagem/fetch-planta-image';
 import { Repositories } from '@/shared/api/repositories';
 import { formatDistanceToNow } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
-import Image from 'next/image';
 import Link from 'next/link';
 import { use } from 'react';
 
 function getTimeAgo(dateString: string | undefined): string {
     if (!dateString) return 'Nunca';
-    return formatDistanceToNow(new Date(dateString), { addSuffix: true, locale: ptBR });
+    return formatDistanceToNow(new Date(dateString), {
+        addSuffix: true,
+        locale: ptBR,
+    });
 }
 
 export default function PlantioPage({
@@ -29,9 +33,9 @@ export default function PlantioPage({
     return (
         <div className="flex h-full w-full flex-col">
             <div className="flex gap-12">
-                <Image
-                    src={plantio.planta.foto || '/assets/plantas/girassol.png'}
-                    alt={plantio.planta.nome}
+                <FetchPlantaImage
+                    fallbackMessage="Erro ao carregar a imagem"
+                    plantaId={plantio.plantaId}
                     width={1000}
                     height={1000}
                     className={`h-[180px] w-fit object-contain`}
@@ -45,18 +49,7 @@ export default function PlantioPage({
                             <i className="ph ph-arrow-left flex" />
                             <p className="text-base">Voltar</p>
                         </Link>
-                        <h1 className="text-2xl font-bold">
-                            {plantio.planta.nome}
-                        </h1>
-                        <div className="text-muted-foreground flex items-center gap-2">
-                            <span className="italic">Cientificus</span>
-                            <Link
-                                href={`/catalogo/planta/${plantio.planta.id}`}
-                                className=""
-                            >
-                                <i className="ph ph-arrow-square-out flex" />
-                            </Link>
-                        </div>
+                        <ResumoPlanta plantaId={plantio.plantaId} />
                     </div>
                     <HeaderIndicadores
                         situacao={plantio.situacao}
@@ -66,7 +59,7 @@ export default function PlantioPage({
                 </div>
             </div>
             <div className="mt-8">
-                <h2 className="text-lg font-semibold mb-2">Tarefas</h2>
+                <h2 className="mb-2 text-lg font-semibold">Tarefas</h2>
                 <ListaTarefasPlantio tarefas={tarefasMapeadas} />
             </div>
         </div>

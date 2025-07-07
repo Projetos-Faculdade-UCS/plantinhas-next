@@ -3,15 +3,15 @@ export interface Planta {
     nome: string;
     nomeCientifico: string;
     foto?: string;
+    horasSol: string;
+    diasMaturidade: string;
     descricao: string;
-    estacaoIdeal: 'Outono' | 'Verão' | 'Inverno' | 'Primavera' | 'Todo o ano';
-    temperatura: {
-        minima: number;
-        maxima: number;
-        ideal: number;
-    };
-    categoria: CategoriaPreview;
-    subcategorias: CategoriaPreview[];
+    estacaoPlantio: 'Outono' | 'Verão' | 'Inverno' | 'Primavera' | 'Todo o ano';
+    temperaturaMinima: string;
+    temperaturaMaxima: string;
+    temperaturaIdeal: string;
+    categoria: Categoria;
+    subcategorias: SubcategoriaPreview[];
     dificuldade: {
         label: string;
         value: number;
@@ -20,7 +20,7 @@ export interface Planta {
 
 export type PlantaPreview = Pick<
     Planta,
-    'id' | 'nome' | 'foto' | 'dificuldade' | 'nomeCientifico' | 'temperatura'
+    'id' | 'nome' | 'foto' | 'dificuldade'
 >;
 
 export interface Categoria {
@@ -39,14 +39,9 @@ export interface SubcategoriaPreview {
 }
 
 export interface ListagemCategorias {
-    quantidade: number;
-    items: (Categoria & { plantas: PlantaPreview[] })[];
-}
-
-export interface ListagemPlantas {
     total: number;
     itensPorPagina: number;
     paginaAtual: number;
     ultimaPagina: number;
-    itens: PlantaPreview[];
+    itens: (Categoria & { plantas: PlantaPreview[] })[];
 }

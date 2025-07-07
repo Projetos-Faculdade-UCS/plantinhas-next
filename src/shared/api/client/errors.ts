@@ -13,7 +13,7 @@ export class NetWorkError extends Error {
 }
 
 export class BadRequestError extends NetWorkError {
-    data!: ValidationError;
+    declare data: ValidationError;
 
     constructor(message: string, data?: ValidationError) {
         super(message, 400, data);
@@ -39,6 +39,13 @@ export class NotFoundError extends NetWorkError {
     constructor(message: string, data?: unknown) {
         super(message, 404, data);
         this.name = 'NotFoundError';
+    }
+}
+
+export class NotAcceptableError extends NetWorkError {
+    constructor(message: string, data?: unknown) {
+        super(message, 406, data);
+        this.name = 'NotAcceptableError';
     }
 }
 

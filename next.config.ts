@@ -15,6 +15,12 @@ const nextConfig: NextConfig = {
                 port: '',
                 pathname: '/**',
             },
+            {
+                protocol: 'http',
+                hostname: 'localhost', //fotos do mockoon
+                port: '8002',
+                pathname: '/**',
+            },
         ],
     },
 };

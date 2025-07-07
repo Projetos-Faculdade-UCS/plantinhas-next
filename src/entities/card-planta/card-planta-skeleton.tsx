@@ -22,11 +22,11 @@ export function CardPlantaSkeleton() {
             </div>
             <div className="absolute top-0 left-0 z-[1] flex w-full justify-center">
                 <Image
-                    src="/assets/plantas/girassol.png"
+                    src="/assets/loading.png"
                     alt={'Sem imagem'}
                     width={1000}
                     height={1000}
-                    className={`h-[120px] w-full object-contain grayscale transition duration-300`}
+                    className={`h-[120px] w-fit grayscale transition duration-300`}
                 />
             </div>
             <div className="absolute top-0 left-0 z-[0] mt-12 flex w-full justify-center">

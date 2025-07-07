@@ -1,9 +1,11 @@
+import { Repositories } from '@/shared/api/repositories';
 import { itim } from '@/shared/lib/utils';
 import { PlantioPreview } from '@/shared/types/plantio';
-import Image from 'next/image';
 import Link from 'next/link';
+import { use } from 'react';
 import animationStyles from '../card-planta/animation.module.scss';
 import { Ondulacao } from '../card-planta/ondulacao';
+import { FetchPlantaImage } from '../imagem/fetch-planta-image';
 import { CardPlantioIncators } from './card-plantio-indicators';
 import { WarningBubble } from './warning-bubble';
 
@@ -22,18 +24,13 @@ export function CardPlantio({ plantio }: CardPlantioProps) {
                 <Ondulacao />
                 <div className="bg-card h-8 border-x"></div>
                 <div className="bg-card flex flex-col gap-2 border-x pb-2">
-                    <span
-                        className={`z-[1] w-full text-center text-xl ${itim.className}`}
-                    >
-                        {plantio.planta.nome}
-                    </span>
+                    <NomePlanta plantaId={plantio.plantaId} />
                 </div>
                 <CardPlantioIncators plantio={plantio} />
             </div>
             <div className="absolute top-0 left-0 z-[1] flex w-full justify-center">
-                <Image
-                    src={plantio.planta.foto || '/assets/plantas/girassol.png'}
-                    alt={plantio.planta.nome || 'Sem imagem'}
+                <FetchPlantaImage
+                    plantaId={plantio.plantaId}
                     width={1000}
                     height={1000}
                     className={`h-[120px] w-fit object-contain transition duration-300`}
@@ -49,4 +46,25 @@ export function CardPlantio({ plantio }: CardPlantioProps) {
             />
         </Link>
     );
+}
+
+function NomePlanta({ plantaId }: { plantaId: number }) {
+    try {
+        const { data: planta } = use(Repositories.plantas.getPlanta(plantaId));
+        return (
+            <span
+                className={`z-[1] w-full text-center text-xl ${itim.className}`}
+            >
+                {planta.nome}
+            </span>
+        );
+    } catch {
+        return (
+            <span
+                className={`text-muted-foreground z-[1] w-full text-center text-xl ${itim.className}`}
+            >
+                Erro ao carregar
+            </span>
+        );
+    }
 }
