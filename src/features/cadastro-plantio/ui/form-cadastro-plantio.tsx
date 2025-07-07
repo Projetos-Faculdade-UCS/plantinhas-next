@@ -47,11 +47,13 @@ export function FormCadastroPlantio() {
                 const iaInputPayload = await formatPlantioForm(data);
                 // console.log('Payload formatado para IA:', iaInputPayload);
                 const resultIA = await gerarPlantio(iaInputPayload);
+                // console.log('Resultado da IA:', resultIA);
 
                 if (resultIA.error) {
                     setAiError(resultIA.error);
                 }
                 if (resultIA.data) {
+                    setAiError(null);
                     openWith(resultIA.data, data.plantaId);
                 }
             });
