@@ -1,18 +1,8 @@
 import { TarefaPlantioPreview } from '@/shared/types/tarefa';
 import Image from 'next/image';
 
-const TAREFA_IMAGE_MAP: Record<string, string> = {
-    colheita: 'colher',
-    cultivo: 'plantar',
-    inspeção: 'inspecionar',
-    irrigação: 'regar',
-    nutrição: 'adubar',
-    poda: 'podar',
-};
-
-const getTarefaImage = (tipo: string) => {
-    const imageName = TAREFA_IMAGE_MAP[tipo.toLowerCase()] || 'plantar';
-    return `/assets/thumbnail-tarefas/${imageName}.png`;
+const getTarefaImage = (tipo: TarefaPlantioPreview['tipo']) => {
+    return `/assets/thumbnail-tarefas/${tipo}.png`;
 };
 
 const getBadgeStatus = (concluido: boolean, podeConcluirTarefa: boolean) => {
@@ -43,13 +33,13 @@ export function CardTarefa({
             onClick={onClick}
         >
             <div className="flex w-full flex-row items-center justify-between">
-                <div className="flex items-center border border-r px-6 py-4">
+                <div className="flex w-24 items-center justify-center border border-r p-2">
                     <Image
                         src={getTarefaImage(tarefa.tipo)}
                         alt={tarefa.nome}
                         width={45}
                         height={45}
-                        className="rounded-md"
+                        className="h-16 w-fit rounded-md object-contain"
                     />
                 </div>
                 <div className="flex w-full flex-row items-center justify-between px-4">
@@ -57,13 +47,10 @@ export function CardTarefa({
                         <span className="text-base leading-tight font-medium">
                             {tarefa.nome}
                         </span>
-                        <div className="flex items-center gap-2">
-                            <i className="ph ph-barbell text-muted-foreground text-lg" />
-                            <span className="text-muted-foreground font-semibold">
-                                Progresso:
-                            </span>
-                            <span className="ml-1 text-base font-medium">
-                                {tarefa.quantidadeCompletada} de{' '}
+                        <div className="text-muted-foreground flex items-center gap-2">
+                            <i className="ph ph-barbell flex text-lg" />
+                            <span className="text-base font-medium">
+                                {tarefa.quantidadeCompletada}/
                                 {tarefa.quantidadeTotal}
                             </span>
                         </div>
