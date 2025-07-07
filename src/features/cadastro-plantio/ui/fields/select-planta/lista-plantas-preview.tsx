@@ -6,7 +6,7 @@ import { PlantaPreview } from '@/shared/types/planta';
 import { Tile } from '@/shared/ui/tile';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { useMemo, useRef, useState } from 'react';
-import styles from '../fields/styles.module.scss'; // Importando o CSS específico
+import styles from '../styles.module.scss'; // Importando o CSS específico
 
 type ListaPlantasPreviewProps = {
     onSelectPlanta: (planta: PlantaPreview) => void;

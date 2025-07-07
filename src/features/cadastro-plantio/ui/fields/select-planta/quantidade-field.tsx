@@ -1,3 +1,4 @@
+import { NewPlantioForm } from '@/features/cadastro-plantio/lib/cadastro-plantio.schema';
 import { Button } from '@/shared/ui/button';
 import {
     FormControl,
@@ -6,8 +7,7 @@ import {
     FormMessage,
 } from '@/shared/ui/form';
 import { Control } from 'react-hook-form';
-import { NewPlantioForm } from '../../lib/cadastro-plantio.schema';
-import styles from '../fields/styles.module.scss'; // Importando o CSS específico
+import styles from '../styles.module.scss'; // Importando o CSS específico
 interface QuantidadeFieldProps {
     control: Control<NewPlantioForm>;
     disabled: boolean;

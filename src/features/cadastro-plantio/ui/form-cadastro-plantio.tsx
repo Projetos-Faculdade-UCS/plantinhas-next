@@ -20,7 +20,7 @@ import { usePlantioAi } from '@/features/show-plantio-gerado/lib/context';
 import { gerarPlantio } from '@/shared/api/actions/ai';
 import { formatPlantioForm } from '../lib/format-plantio-form';
 import { ComoPlantarField } from './fields/como-plantar-field';
-import { Pokedex } from './select-planta/pokedex';
+import { Pokedex } from './fields/select-planta/pokedex';
 
 export function FormCadastroPlantio() {
     const searchParams = useSearchParams();
