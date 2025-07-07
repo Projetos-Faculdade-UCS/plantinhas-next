@@ -1,7 +1,7 @@
+import { getHabilidades } from '@/shared/api/actions/habilidades';
 import { getPlantaById } from '@/shared/api/actions/plantas';
+import { IAEntradaPlantio } from '@/shared/types/ai';
 import { NewPlantioForm } from './cadastro-plantio.schema';
-import { IAEntradaPlantio } from './ia-api.schema';
-import { getHabilidadesAction } from './plantio.action';
 
 /**
  * Formata os dados do formulário de plantio para o formato esperado pela IA.
@@ -12,10 +12,15 @@ export async function formatPlantioForm(
     plantio: NewPlantioForm,
 ): Promise<IAEntradaPlantio> {
     const planta = (await getPlantaById(Number(plantio.plantaId))).data;
-    const habilidades = (await getHabilidadesAction()).data;
+    const habilidades = (await getHabilidades()).data;
     if (!planta || !habilidades) {
         throw new Error('Planta não encontrada ou inválida');
     }
+    const cleanHabilidades = habilidades.map((habilidade) => ({
+        id: habilidade.id,
+        nome: habilidade.nome,
+        descricao: habilidade.descricao,
+    }));
 
     const dataInicioPlantio = new Date().toISOString().split('T')[0];
     const builtPayload: IAEntradaPlantio = {
@@ -24,17 +29,16 @@ export async function formatPlantioForm(
             nome: planta.nome,
             nome_cientifico: planta.nomeCientifico || planta.nome,
             dificuldade: planta.dificuldade,
-            temperatura_ideal: {
-                minima: Number(planta.temperaturaMinima),
-                maxima: Number(planta.temperaturaMaxima),
-                ideal: Number(planta.temperaturaIdeal),
-            },
+            dias_maturidade: planta.diasMaturidade,
+            temperatura_minima: `${planta.temperaturaMinima} °C`,
+            temperatura_maxima: `${planta.temperaturaMaxima} °C`,
+            temperatura_ideal: `${planta.temperaturaIdeal} °C`,
         },
         quantidade: plantio.quantidade,
         ambiente: plantio.ambiente,
         sistemaCultivo: plantio.sistemaCultivo,
         informacoes_adicionais: plantio.informacoesAdicionais || '',
-        habilidades_existentes: habilidades?.length > 0 ? habilidades : [],
+        habilidades_existentes: cleanHabilidades,
     };
 
     return builtPayload;
