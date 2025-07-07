@@ -13,19 +13,16 @@ i18next.init({
 });
 z.setErrorMap(zodI18nMap);
 
-export const AmbientesSchema = z.object({
-    local: z.enum([
-        'quintal',
-        'sacada',
-        'estufa',
-        'rua',
-        'dentro de casa',
-        'quarto',
-        'banheiro',
-        'outro',
-    ]),
-    condicao: z.enum(['externo', 'interno', 'semi-protegido', 'comunitario']),
-});
+export const AmbienteEnum = z.enum([
+    'quintal',
+    'sacada',
+    'estufa',
+    'rua',
+    'dentro de casa',
+    'quarto',
+    'banheiro',
+    'outro',
+]);
 
 export const SistemaCultivoEnum = z.enum([
     'vaso de flor',
@@ -41,7 +38,7 @@ export const CadastroPlantioSchema = z.object({
         required_error: 'Selecione uma planta para continuar',
     }),
     quantidade: z.number().min(1, 'A quantidade deve ser pelo menos 1'),
-    ambiente: AmbientesSchema,
+    ambiente: AmbienteEnum,
     sistemaCultivo: SistemaCultivoEnum,
     informacoesAdicionais: z.string().optional(),
 });

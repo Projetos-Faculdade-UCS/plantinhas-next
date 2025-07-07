@@ -4,6 +4,7 @@ export interface Planta {
     nomeCientifico: string;
     foto?: string;
     horasSol: string;
+    diasMaturidade: string;
     descricao: string;
     estacaoPlantio: 'Outono' | 'Verão' | 'Inverno' | 'Primavera' | 'Todo o ano';
     temperaturaMinima: string;

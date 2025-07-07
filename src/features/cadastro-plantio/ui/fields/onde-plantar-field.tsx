@@ -46,7 +46,7 @@ export function OndePlantarField({ control, isBusy }: AmbienteLocalFieldProps) {
     return (
         <FormField
             control={control}
-            name="ambiente.local"
+            name="ambiente"
             render={({ field }) => (
                 <FormItem className="flex w-full flex-col">
                     <FormLabel className="px-2 text-base font-semibold">

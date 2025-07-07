@@ -30,7 +30,7 @@ export class PlantioRepository {
             params.append('page', page.toString());
         }
         const query = await this.client.get<PagedResponse<RawPlantioPreview>>(
-            `/gerenciamento/plantios/?${params.toString()}`,
+            `/plantios/?${params.toString()}`,
             {
                 next: {
                     tags: ['plantios'],
@@ -64,15 +64,12 @@ export class PlantioRepository {
      * cache de 1 minuto
      */
     public async getPlantio(id: number) {
-        const query = await this.client.get<RawPlantio>(
-            `/gerenciamento/plantios/${id}/`,
-            {
-                next: {
-                    tags: ['plantio', `${id}`],
-                    revalidate: 0,
-                },
+        const query = await this.client.get<RawPlantio>(`/plantios/${id}/`, {
+            next: {
+                tags: ['plantio', `${id}`],
+                revalidate: 0,
             },
-        );
+        });
 
         const situacao: Plantio['situacao'] = {
             label: query.data.situacao,
@@ -93,7 +90,7 @@ export class PlantioRepository {
      */
     public async getTarefasPlantio(id: number) {
         const tarefas = await this.client.get<TarefaPlantio[]>(
-            `/gerenciamento/plantios/${id}/tarefas/`,
+            `/plantios/${id}/tarefas/`,
         );
         return tarefas.data;
     }
