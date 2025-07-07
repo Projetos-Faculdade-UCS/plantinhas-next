@@ -1,6 +1,7 @@
-import { Repositories } from '@/shared/api/repositories';
+import { getPlantaById } from '@/shared/api/actions/plantas';
+import { PlantaPreview } from '@/shared/types/planta';
 import Image from 'next/image';
-import { use } from 'react';
+import { useEffect, useState } from 'react';
 
 type ImagemPlantaProps = Omit<
     React.ComponentProps<typeof Image>,
@@ -21,7 +22,18 @@ export function FetchPlantaImage({
     className,
     ...props
 }: ImagemPlantaProps) {
-    const planta = use(getPlanta(plantaId));
+    const [planta, setPlanta] = useState<PlantaPreview | null>(null);
+
+    useEffect(() => {
+        getPlantaById(plantaId).then((response) => {
+            if (response.data) {
+                setPlanta(response.data);
+            } else {
+                setPlanta(null);
+            }
+        });
+    }, [plantaId]);
+
     return (
         <div className="flex flex-col items-center justify-center">
             <Image
@@ -37,11 +49,4 @@ export function FetchPlantaImage({
             )}
         </div>
     );
-}
-async function getPlanta(plantaId: number) {
-    try {
-        return (await Repositories.plantas.getPlanta(plantaId)).data;
-    } catch {
-        return null;
-    }
 }

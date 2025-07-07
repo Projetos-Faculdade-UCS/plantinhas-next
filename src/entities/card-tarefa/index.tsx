@@ -82,7 +82,9 @@ export function CardTarefa({
                         )}
                     </div>
                 </div>
-                <i className="ph ph-caret-right text-muted-foreground px-4 text-lg" />
+                {onClick && (
+                    <i className="ph ph-caret-right text-muted-foreground px-4 text-lg" />
+                )}
             </div>
         </div>
     );

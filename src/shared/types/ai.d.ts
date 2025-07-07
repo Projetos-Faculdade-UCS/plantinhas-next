@@ -17,3 +17,35 @@ export interface IAEntradaPlantio {
     informacoes_adicionais: string;
     habilidades_existentes: Habilidade[];
 }
+
+export interface AISaidaPlantio {
+    data_fim_plantio: string;
+    informacoes_adicionais?: string;
+    tarefas: IATarefa[];
+}
+
+export interface IATarefa {
+    nome: string;
+    tipo: string;
+    quantidade_total: number;
+    cron: string;
+    habilidade: IAHabilidade;
+    tutorial: IATutorial;
+}
+
+export interface IAHabilidade {
+    id: string;
+    multiplicador_xp: number;
+}
+
+export interface IATutorial {
+    materiais: {
+        nome: string;
+        quantidade: string;
+        unidade: string;
+    }[];
+    etapas: {
+        descricao: string;
+        ordem: number;
+    }[];
+}

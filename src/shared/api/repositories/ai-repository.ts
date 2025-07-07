@@ -1,5 +1,5 @@
-import { IASaidaPlantio } from '@/features/cadastro-plantio/lib/ia-api.schema';
-import { IAEntradaPlantio } from '@/shared/types/ai';
+import { generatHash } from '@/shared/lib/utils';
+import { AISaidaPlantio, IAEntradaPlantio } from '@/shared/types/ai';
 import { Client } from '@/shared/types/client';
 import { HttpClient } from '../client/http-client';
 
@@ -14,12 +14,19 @@ export class AiRepository {
     /**
      * Envia os dados do plantio para a API de IA para processamento.
      * @param dadosPlantio Objeto contendo os dados do plantio, conforme IAEntradaPlantioSchema.
-     * @returns Retorna a resposta da API de IA, conforme IASaidaPlantioSchema.
+     * @returns Retorna a resposta da API de IA, conforme AISaidaPlantio.
      */
     public async gerarPlantio(dadosPlantio: IAEntradaPlantio) {
-        const response = await this.client.post<IASaidaPlantio>(
+        const hash = generatHash(dadosPlantio);
+        const response = await this.client.post<AISaidaPlantio>(
             '/',
             dadosPlantio,
+            {
+                next: {
+                    revalidate: 2000, // 33 minutos e 20 segundos
+                    tags: ['gerar-plantio', hash],
+                },
+            },
         );
         return response;
     }

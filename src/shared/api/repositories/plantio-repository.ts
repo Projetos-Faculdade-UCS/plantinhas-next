@@ -1,12 +1,12 @@
-import { getProgresSituacao } from '@/entities/card-plantio/utils';
+import { getProgresSituacao } from '@/entities/card-plantio/lib/utils';
 import { Client } from '@/shared/types/client';
 import {
     Plantio,
     PlantioPreview,
     RawPlantio,
     RawPlantioPreview,
-    TarefaPlantio,
 } from '@/shared/types/plantio';
+import { TarefaPlantio } from '@/shared/types/tarefa';
 import { PagedResponse } from '@/shared/types/utils';
 import { JWTClient } from '../client/jwt-client';
 
@@ -56,6 +56,22 @@ export class PlantioRepository {
             },
         };
     }
+
+    public async postPlantio(plantio: RawPlantio) {
+        const query = await this.client.post<RawPlantio>('/plantios/', plantio);
+        const situacao: Plantio['situacao'] = {
+            label: query.data.situacao,
+            value: getProgresSituacao(query.data.situacao),
+        };
+        return {
+            ...query,
+            data: {
+                ...query.data,
+                situacao: situacao,
+            },
+        };
+    }
+
     /**
      * Retorna um plantio específico
      * @param id ID do plantio
