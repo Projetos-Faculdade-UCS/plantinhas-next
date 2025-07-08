@@ -3,6 +3,7 @@ import {
     FormTarefas,
     TarefaPlantio,
     TarefaPlantioPreview,
+    TarefaRealizadaResponse,
 } from '@/shared/types/tarefa';
 import { JWTClient } from '../client/jwt-client';
 
@@ -62,5 +63,11 @@ export class TarefaRepository {
         return tarefa;
     }
 
-    // public async
+    public async realizarTarefa(tarefaId: number) {
+        const tarefa = await this.client.post<TarefaRealizadaResponse>(
+            `/tarefas/${tarefaId}/realizar/`,
+            {},
+        );
+        return tarefa;
+    }
 }

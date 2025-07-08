@@ -69,3 +69,11 @@ export type FormTarefas = {
         };
     }[];
 };
+
+export type TarefaRealizadaResponse = {
+    message: string;
+    habilidade: {
+        id: number;
+        multiplicadorXp: number;
+    };
+};

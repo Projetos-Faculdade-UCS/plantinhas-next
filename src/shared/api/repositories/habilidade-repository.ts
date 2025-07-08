@@ -1,5 +1,6 @@
 import { Client } from '@/shared/types/client';
-import { Habilidade } from '@/shared/types/habilidades';
+import { Habilidade, MultiplicarXpResponse } from '@/shared/types/habilidades';
+import { revalidateTag } from 'next/cache';
 import { JWTClient } from '../client/jwt-client';
 
 export class HabilidadeRepository {
@@ -22,5 +23,24 @@ export class HabilidadeRepository {
                 tags: ['habilidades'],
             },
         });
+    }
+
+    public async getHabilidade(habilidadeId: number) {
+        return this.client.get<Habilidade>(`/habilidades/${habilidadeId}/`, {
+            next: {
+                revalidate: 1000,
+                tags: [`habilidade-${habilidadeId}`],
+            },
+        });
+    }
+
+    public async multiplicarXp(habilidadeId: number, multiplicadorXp: number) {
+        const resp = await this.client.post<MultiplicarXpResponse>(
+            `/habilidades/${habilidadeId}/multiplicar-xp/`,
+            { multiplicador: multiplicadorXp },
+        );
+
+        revalidateTag(`habilidade-${habilidadeId}`);
+        return resp;
     }
 }

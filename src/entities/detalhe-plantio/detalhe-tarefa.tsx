@@ -1,4 +1,4 @@
-import { getDetalheTarefa } from '@/shared/api/actions/tarefas';
+import { getDetalheTarefa, realizarTarefa } from '@/shared/api/actions/tarefas';
 import { TarefaPlantio, TarefaPlantioPreview } from '@/shared/types/tarefa';
 import { Button } from '@/shared/ui/button';
 import { useEffect, useState } from 'react';
@@ -170,6 +170,17 @@ export function DetalheTarefa({ tarefa }: DetalheTarefaProps) {
             <div className="flex-shrink-0">
                 <Button
                     variant="default"
+                    onClick={() => {
+                        realizarTarefa(tarefa.id).then((response) => {
+                            if (response.data) {
+                                alert(
+                                    `Tarefa concluída! ${response.data.mensagem}`,
+                                );
+                            } else {
+                                setError(response.error);
+                            }
+                        });
+                    }}
                     className="bg-primary h-10 w-full text-base"
                 >
                     <span className="text-base">Concluir</span>
