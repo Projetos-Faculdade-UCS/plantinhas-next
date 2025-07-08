@@ -80,6 +80,30 @@ export class PlantioRepository {
     }
 
     /**
+     * Atualiza um plantio
+     * @param id ID do plantio
+     * @param plantio Formulário com os dados do plantio
+     * @returns Retorna o plantio atualizado
+     */
+    public async updatePlantio(id: number, plantio: Partial<FormPlantio>) {
+        const query = await this.client.patch<RawPlantio>(
+            `/plantios/${id}/`,
+            plantio,
+        );
+        const situacao: Plantio['situacao'] = {
+            label: query.data.situacao,
+            value: getProgresSituacao(query.data.situacao),
+        };
+        return {
+            ...query,
+            data: {
+                ...query.data,
+                situacao: situacao,
+            },
+        };
+    }
+
+    /**
      * Retorna um plantio específico
      * @param id ID do plantio
      * @returns Retorna um plantio específico
@@ -108,7 +132,6 @@ export class PlantioRepository {
     }
 
     public async deletePlantio(plantioId: number) {
-        console.log('Deletando plantio com ID:', plantioId);
         const query = await this.client.delete(`/plantios/${plantioId}/`);
         return query;
     }
