@@ -1,5 +1,6 @@
 'use server';
 
+import { TarefaPlantio } from '@/shared/types/tarefa';
 import { NetWorkError } from '../client/errors';
 import { Repositories } from '../repositories';
 
@@ -18,11 +19,16 @@ export async function getDetalheTarefa(tarefaId: number) {
     }
 }
 
-export async function realizarTarefa(tarefaId: number) {
+export async function realizarTarefa(tarefa: TarefaPlantio) {
     try {
         const { data: atualizarHabilidade } =
-            await Repositories.tarefas.realizarTarefa(tarefaId);
+            await Repositories.tarefas.realizarTarefa(tarefa.id);
 
+        if (tarefa.tipo === 'cultivo') {
+            await Repositories.plantios.updatePlantio(tarefa.plantioId, {
+                situacao: 'Germinando',
+            });
+        }
         const { data: habilidade } =
             await Repositories.habilidades.getHabilidade(
                 atualizarHabilidade.habilidade.id,
@@ -51,5 +57,16 @@ export async function realizarTarefa(tarefaId: number) {
                     ? error.message
                     : 'Erro ao realizar tarefa.',
         };
+    }
+}
+
+export async function checkTarefasPendentes(plantioId: number) {
+    try {
+        const { data: tarefasPendentes } =
+            await Repositories.tarefas.checkTarefasPendentes(plantioId);
+        return tarefasPendentes.count > 0;
+    } catch (error) {
+        console.error(error);
+        return false;
     }
 }

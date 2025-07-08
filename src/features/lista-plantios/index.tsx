@@ -10,7 +10,7 @@ export async function ListaPlantios() {
     return (
         <div className="flex flex-col gap-4">
             <div className="flex items-center gap-2 font-medium">
-                <h3 className="text-lg">Plantas</h3>
+                <h3 className="shrink-0 text-lg">Minhas plantas</h3>
                 <span className="text-muted-foreground w-full">
                     ({plantios.data.itens.length})
                 </span>

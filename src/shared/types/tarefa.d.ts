@@ -1,8 +1,9 @@
 export interface TarefaPlantio {
     id: number;
+    plantioId: number;
     nome: string;
     concluido: boolean;
-    dataProximaOcorrencia: string;
+    dataProximaOcorrencia: int;
     podeRealizarTarefa: boolean;
     tipo:
         | 'cultivo'
@@ -14,7 +15,7 @@ export interface TarefaPlantio {
     quantidadeTotal: number;
     quantidadeCompletada: number;
     ultimaAlteracao: string;
-    frequencia: string;
+    frequencia?: string;
     habilidadeRequerida: number;
     tutorial: {
         materiais: [
@@ -43,6 +44,7 @@ export type TarefaPlantioPreview = Pick<
     | 'quantidadeCompletada'
     | 'ultimaAlteracao'
     | 'podeRealizarTarefa'
+    | 'frequencia'
 >;
 
 export type FormTarefas = {

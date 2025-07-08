@@ -25,7 +25,7 @@ export async function UserDropDown({ session }: UserDropDownProps) {
                     className="rounded-full"
                 />
 
-                <span className="text-base font-medium">
+                <span className="text-start text-base font-medium">
                     {session.user?.first_name} {session.user?.last_name}
                 </span>
             </DropdownMenuTrigger>

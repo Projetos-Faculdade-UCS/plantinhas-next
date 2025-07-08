@@ -5,6 +5,7 @@ import {
     TarefaPlantioPreview,
     TarefaRealizadaResponse,
 } from '@/shared/types/tarefa';
+import { revalidateTag } from 'next/cache';
 import { JWTClient } from '../client/jwt-client';
 
 export class TarefaRepository {
@@ -33,7 +34,10 @@ export class TarefaRepository {
                 },
             },
         );
-        return tarefas;
+        return {
+            data: tarefas.data.reverse(),
+            status: tarefas.status,
+        };
     }
 
     /**
@@ -56,7 +60,7 @@ export class TarefaRepository {
             {
                 next: {
                     revalidate: 60, // Revalida a cada 60 segundos
-                    tags: ['tarefa-detail', `${tarefaId}`],
+                    tags: [`tarefa-detail-${tarefaId}`],
                 },
             },
         );
@@ -68,6 +72,22 @@ export class TarefaRepository {
             `/tarefas/${tarefaId}/realizar/`,
             {},
         );
+        revalidateTag(`tarefa-detail-${tarefaId}`);
+        revalidateTag('tarefas');
+        revalidateTag('check-pendencias');
         return tarefa;
+    }
+
+    public async checkTarefasPendentes(plantioId: number) {
+        const tarefasPendentes = await this.client.get<{
+            message: string;
+            count: number;
+        }>(`/tarefas/check_pendencias/?plantio_id=${plantioId}`, {
+            next: {
+                revalidate: 60, // Revalida a cada 60 segundos
+                tags: [`check-pendencias`, `check-pendencias-${plantioId}`],
+            },
+        });
+        return tarefasPendentes;
     }
 }

@@ -1,7 +1,11 @@
-import { getDetalheTarefa, realizarTarefa } from '@/shared/api/actions/tarefas';
+import { getDetalheTarefa } from '@/shared/api/actions/tarefas';
+import { capitalize } from '@/shared/lib/utils';
 import { TarefaPlantio, TarefaPlantioPreview } from '@/shared/types/tarefa';
-import { Button } from '@/shared/ui/button';
+import Image from 'next/image';
 import { useEffect, useState } from 'react';
+import { getTarefaImage } from '../card-tarefa/lib/utils';
+import { RealizarTarefaBtn } from './realizar-tarefa-btn';
+import styles from './style.module.scss';
 
 interface DetalheTarefaProps {
     tarefa: TarefaPlantioPreview & { timeAgo?: string };
@@ -32,22 +36,6 @@ export function DetalheTarefa({ tarefa }: DetalheTarefaProps) {
         });
     };
 
-    const formatarData = (data: string | Date): string => {
-        const dataObj = typeof data === 'string' ? new Date(data) : data;
-
-        if (isNaN(dataObj.getTime())) {
-            return data.toString();
-        }
-
-        return dataObj.toLocaleDateString('pt-BR', {
-            day: '2-digit',
-            month: '2-digit',
-            year: 'numeric',
-            hour: '2-digit',
-            minute: '2-digit',
-        });
-    };
-
     if (!tarefaDetail) {
         return (
             <div className="flex h-full items-center justify-center">
@@ -58,17 +46,33 @@ export function DetalheTarefa({ tarefa }: DetalheTarefaProps) {
     if (error) {
         return (
             <div className="flex h-full items-center justify-center">
-                <span className="text-destructive">{error}</span>
+                <span className="text-destructive">
+                    Ocorreu um erro ao carregar os detalhes da tarefa.
+                    <br />
+                    Tente novamente mais tarde.
+                </span>
             </div>
         );
     }
     return (
-        <div className="flex h-[530px] flex-col">
+        <div className="flex h-full flex-col">
             {/* Header fixo com botão fechar e título */}
-            <div className="flex-shrink-0 border-b">
-                <div className="mb-3 flex items-center justify-between">
-                    <div className="flex flex-col gap-1">
-                        <h3 className="text-xl font-bold">{tarefa.nome}</h3>
+            <div
+                className="bg-muted z-[10] flex items-center gap-2 border-b px-4 py-2 shadow-sm"
+                // style={{ backgroundColor: getBgColor(tarefaDetail.tipo) }}
+            >
+                <div className="flex h-12 w-12 items-center justify-center">
+                    <Image
+                        src={getTarefaImage(tarefa.tipo)}
+                        alt={tarefa.nome}
+                        width={45}
+                        height={45}
+                        className="h-full w-fit rounded-md object-contain"
+                    />
+                </div>
+                <div className="flex w-full items-center justify-between">
+                    <div className="flex flex-col">
+                        <h3 className="text-lg font-bold">{tarefa.nome}</h3>
                         <span className="text-muted-foreground text-xs">
                             {tarefa.timeAgo}
                         </span>
@@ -83,108 +87,87 @@ export function DetalheTarefa({ tarefa }: DetalheTarefaProps) {
                     </button>
                 </div>
             </div>
-
-            {/* Conteúdo scrollável */}
-            <div className="flex-1 overflow-y-auto p-4">
-                <div className="flex flex-col gap-4">
-                    <div className="flex items-center gap-2">
-                        <i className="ph ph-calendar-check text-muted-foreground text-lg" />
-                        <span className="text-muted-foreground font-semibold">
-                            Frequência:
-                        </span>
-                        <span className="ml-1 text-base font-medium">
-                            {tarefaDetail.frequencia}
-                        </span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                        <i className="ph ph-barbell text-muted-foreground text-lg" />
-                        <span className="text-muted-foreground font-semibold">
-                            Progresso:
-                        </span>
-                        <span className="ml-1 text-base font-medium">
-                            {tarefa.quantidadeCompletada} de{' '}
-                            {tarefa.quantidadeTotal}
-                        </span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                        <i className="ph ph-clock text-muted-foreground text-lg" />
-                        <span className="text-muted-foreground font-semibold">
-                            Última alteração:
-                        </span>
-                        <span className="ml-1 text-base font-medium">
-                            {formatarData(tarefa.ultimaAlteracao)}
-                        </span>
-                    </div>
-                </div>
-
-                <div className="mt-6 mb-4 text-lg font-semibold">
-                    Como fazer?
-                </div>
-
-                <div className="mb-6">
-                    <div className="mb-2 flex items-center gap-2">
-                        <i className="ph ph-toolbox text-muted-foreground text-lg" />
-                        <span className="text-muted-foreground font-semibold">
-                            Materiais necessários
-                        </span>
-                    </div>
-                    <div className="flex flex-col gap-1">
-                        {tarefaDetail.tutorial.materiais.map((mat, idx) => (
-                            <div key={idx} className="flex gap-2 text-base">
-                                <span className="text-base">{mat.nome}</span>
-                                <span className="text-muted-foreground text-base">
-                                    {formatarQuantidade(mat.quantidade)}{' '}
-                                    {mat.unidade}
+            <div className="flex h-full flex-col justify-between">
+                {/* Conteúdo scrollável */}
+                <div
+                    className={`flex flex-col gap-5 py-4 ${styles.list} h-full max-h-[280px] shrink-0 px-4`}
+                >
+                    <div className="flex flex-wrap gap-4 sm:flex-nowrap">
+                        <div className="bg-muted flex w-full items-center justify-center gap-2 rounded-md border py-1">
+                            <i className="ph ph-calendar-dots text-muted-foreground text-2xl" />
+                            <div className="flex flex-col">
+                                <span className="text-muted-foreground text-sm">
+                                    Frequência
+                                </span>
+                                <span className="text-base">
+                                    {tarefaDetail.frequencia || 'Às vezes'}
                                 </span>
                             </div>
-                        ))}
+                        </div>
+                        <div className="bg-muted flex w-full items-center justify-center gap-2 rounded-md border py-1">
+                            <i className="ph ph-calendar-check text-muted-foreground text-2xl" />
+                            <div className="flex flex-col">
+                                <span className="text-muted-foreground text-sm">
+                                    Progresso
+                                </span>
+                                <span className="text-base">
+                                    {tarefa.quantidadeCompletada} /{' '}
+                                    {tarefa.quantidadeTotal}
+                                </span>
+                            </div>
+                        </div>
                     </div>
-                </div>
 
-                <div>
-                    <div className="mb-2 flex items-center gap-2">
-                        <i className="ph ph-list-numbers text-muted-foreground text-lg" />
-                        <span className="text-muted-foreground font-semibold">
-                            Etapas
-                        </span>
-                    </div>
-                    <div className="flex flex-col gap-1">
-                        {tarefaDetail.tutorial.etapas
-                            .sort((a, b) => a.ordem - b.ordem)
-                            .map((etapa, idx) => (
+                    <div className="flex flex-col gap-0">
+                        <div className="mb-2 flex items-center gap-2">
+                            <span className="text-muted-foreground">
+                                Materiais necessários
+                            </span>
+                        </div>
+                        <div className="flex flex-col gap-1">
+                            {tarefaDetail.tutorial.materiais.map((mat, idx) => (
                                 <div
                                     key={idx}
                                     className="flex items-center gap-2 text-base"
                                 >
-                                    <span className="text-muted-foreground text-xs font-bold">
-                                        {idx + 1}.
+                                    <i className="ph ph-shovel text-muted-foreground flex text-base" />
+                                    <span className="shrink-0 text-base">
+                                        {capitalize(mat.nome)}
                                     </span>
-                                    <span>{etapa.descricao}</span>
+                                    <span className="text-muted-foreground w-full text-end">
+                                        {formatarQuantidade(mat.quantidade)}{' '}
+                                        {mat.unidade}
+                                    </span>
                                 </div>
                             ))}
+                        </div>
+                    </div>
+
+                    <div className="flex flex-col gap-0">
+                        <div className="mb-2 flex items-center gap-2">
+                            <span className="text-muted-foreground">
+                                Tutorial
+                            </span>
+                        </div>
+                        <div className="flex flex-col gap-1">
+                            {tarefaDetail.tutorial.etapas
+                                .sort((a, b) => a.ordem - b.ordem)
+                                .map((etapa, idx) => (
+                                    <div
+                                        key={idx}
+                                        className="flex items-start gap-2 text-base"
+                                    >
+                                        <span className="text-muted-foreground mt-1 text-sm">
+                                            {idx + 1}.
+                                        </span>
+                                        <span>{etapa.descricao}</span>
+                                    </div>
+                                ))}
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            {/* Botão sticky na parte inferior */}
-            <div className="flex-shrink-0">
-                <Button
-                    variant="default"
-                    onClick={() => {
-                        realizarTarefa(tarefa.id).then((response) => {
-                            if (response.data) {
-                                alert(
-                                    `Tarefa concluída! ${response.data.mensagem}`,
-                                );
-                            } else {
-                                setError(response.error);
-                            }
-                        });
-                    }}
-                    className="bg-primary h-10 w-full text-base"
-                >
-                    <span className="text-base">Concluir</span>
-                </Button>
+                <RealizarTarefaBtn tarefa={tarefaDetail} />
             </div>
         </div>
     );

@@ -56,3 +56,6 @@ export type FormPlantio = {
     situacao: SituacaoPlantio;
     informacoes_adicionais: string;
 };
+
+//same as formPlantio but any field can be optional
+export type PatchFormPlantio = Partial<FormPlantio>;
