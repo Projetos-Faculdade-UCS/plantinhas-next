@@ -107,7 +107,7 @@ export function FormCadastroPlantio() {
                     >
                         {isFormBusy ? (
                             <div className="flex items-center gap-2">
-                                <span className="">Gerando plantio...</span>
+                                <span className="">Gerando plantio</span>
                                 <span className="animate-spin">
                                     <i className="ph ph-spinner flex text-lg" />
                                 </span>

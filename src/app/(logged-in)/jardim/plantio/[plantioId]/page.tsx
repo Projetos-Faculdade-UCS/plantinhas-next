@@ -4,24 +4,15 @@ import { ListaTarefasPlantio } from '@/entities/detalhe-plantio/lista-tarefas-pl
 import { ResumoPlanta } from '@/entities/detalhe-plantio/resumo-planta';
 import { FetchPlantaImage } from '@/entities/imagem/fetch-planta-image';
 import { Repositories } from '@/shared/api/repositories';
+import { getTimeAgo } from '@/shared/lib/utils';
 import {
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuItem,
 } from '@/shared/ui/dropdown-menu';
 import { DropdownMenuTrigger } from '@radix-ui/react-dropdown-menu';
-import { formatDistanceToNow } from 'date-fns';
-import { ptBR } from 'date-fns/locale';
 import Link from 'next/link';
 import { use } from 'react';
-
-function getTimeAgo(dateString: string | undefined): string {
-    if (!dateString) return 'Nunca';
-    return formatDistanceToNow(new Date(dateString), {
-        addSuffix: true,
-        locale: ptBR,
-    });
-}
 
 export default function PlantioPage({
     params,
@@ -38,7 +29,7 @@ export default function PlantioPage({
     }));
 
     return (
-        <div className="flex h-full w-full flex-col">
+        <div className="flex w-full flex-col gap-2 sm:h-[89vh]">
             <div className="flex gap-12">
                 <FetchPlantaImage
                     fallbackMessage="Erro ao carregar a imagem"
@@ -84,8 +75,8 @@ export default function PlantioPage({
                     </span>
                 </div>
             </div>
-            <div className="mt-2">
-                <h2 className="mb-2 text-lg font-semibold">
+            <div className="flex h-full flex-col gap-2">
+                <h2 className="text-lg font-semibold">
                     Tarefas
                     {tarefasMapeadas.length > 0 &&
                         ` (${tarefasMapeadas.length})`}

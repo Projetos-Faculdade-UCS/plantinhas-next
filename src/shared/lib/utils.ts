@@ -1,4 +1,6 @@
 import { clsx, type ClassValue } from 'clsx';
+import { formatDistanceToNow } from 'date-fns';
+import { ptBR } from 'date-fns/locale';
 import { Itim } from 'next/font/google';
 import { twMerge } from 'tailwind-merge';
 
@@ -51,3 +53,16 @@ export const generatHash = (dados: object): string => {
     }
     return hash.toString();
 };
+
+export function capitalize(str: string): string {
+    if (!str) return '';
+    return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+export function getTimeAgo(dateString: string | undefined): string {
+    if (!dateString) return 'Nunca';
+    return formatDistanceToNow(new Date(dateString), {
+        addSuffix: true,
+        locale: ptBR,
+    });
+}
