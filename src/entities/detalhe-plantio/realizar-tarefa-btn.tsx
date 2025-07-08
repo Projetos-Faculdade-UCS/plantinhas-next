@@ -5,6 +5,7 @@ import { Button } from '@/shared/ui/button';
 import { formatDistanceToNow } from 'date-fns';
 import { ptBR } from 'date-fns/locale/pt-BR';
 import { useEffect, useState } from 'react';
+import { toast } from 'sonner';
 
 type RealizarTarefaBtnProps = {
     tarefa: TarefaPlantio;
@@ -37,9 +38,13 @@ export function RealizarTarefaBtn({ tarefa }: RealizarTarefaBtnProps) {
                     setError(null);
                     realizarTarefa(tarefa).then((response) => {
                         if (response.data) {
-                            alert(
-                                `Tarefa concluída! ${response.data.mensagem}`,
-                            );
+                            toast('Tarefa concluída com sucesso!', {
+                                // description: response.data.mensagem || '',
+                                // action: {
+                                //     label: 'Undo',
+                                //     onClick: () => console.log('Undo'),
+                                // },
+                            });
                         } else {
                             setError(response.error);
                         }
