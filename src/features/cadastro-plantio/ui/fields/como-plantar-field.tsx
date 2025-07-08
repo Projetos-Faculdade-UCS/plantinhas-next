@@ -45,7 +45,7 @@ export function ComoPlantarField({ control, isBusy }: ComoPlantarProps) {
                     <FormLabel className="px-2 text-base font-semibold">
                         Como Plantar?
                     </FormLabel>
-                    <Prateleira alwaysShowArrows={false} gap="1rem">
+                    <Prateleira alwaysShowArrows={true} gap="1rem">
                         {opcoes.map((opcao) => (
                             <OpcaoCultivoButton
                                 key={opcao.label}

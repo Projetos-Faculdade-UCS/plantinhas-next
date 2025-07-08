@@ -16,7 +16,7 @@ type PrateleiraPlantasProps = {
 export function Prateleira({
     children,
     className,
-    alwaysShowArrows = true,
+    alwaysShowArrows = false,
     ...props
 }: PrateleiraPlantasProps) {
     const scrollDivRef = useRef<HTMLDivElement | null>(null);
@@ -35,10 +35,8 @@ export function Prateleira({
                     }}
                 >
                     <div
-                        className="flex h-full w-full items-center justify-center hover:opacity-100"
-                        style={{
-                            opacity: alwaysShowArrows ? 0 : 1,
-                        }}
+                        data-show-arrows={alwaysShowArrows}
+                        className="flex h-full w-full items-center justify-center data-[show-arrows=false]:opacity-0 hover:data-[show-arrows=false]:opacity-100"
                     >
                         <button
                             type="button"
@@ -73,10 +71,8 @@ export function Prateleira({
                     }}
                 >
                     <div
-                        className="flex h-full w-full items-center justify-center hover:opacity-100"
-                        style={{
-                            opacity: alwaysShowArrows ? 0 : 1,
-                        }}
+                        data-show-arrows={alwaysShowArrows}
+                        className="flex h-full w-full items-center justify-center data-[show-arrows=false]:opacity-0 hover:data-[show-arrows=false]:opacity-100"
                     >
                         <button
                             type="button"

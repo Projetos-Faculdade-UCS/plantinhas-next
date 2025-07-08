@@ -1,9 +1,9 @@
+import { NewPlantioForm } from '@/features/cadastro-plantio/lib/cadastro-plantio.schema';
 import { getPlantaById } from '@/shared/api/actions/plantas';
 import { PlantaPreview } from '@/shared/types/planta';
 import { Card } from '@/shared/ui/card';
 import { useEffect, useState } from 'react';
 import { Control, useController } from 'react-hook-form';
-import { NewPlantioForm } from '../../lib/cadastro-plantio.schema';
 import { ListaPlantasPreview } from './lista-plantas-preview';
 import { PlantaPreviewPainel } from './planta-preview-panel';
 type PokedexProps = {

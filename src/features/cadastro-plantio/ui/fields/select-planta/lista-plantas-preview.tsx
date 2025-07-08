@@ -6,7 +6,7 @@ import { PlantaPreview } from '@/shared/types/planta';
 import { Tile } from '@/shared/ui/tile';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { useMemo, useRef, useState } from 'react';
-import styles from '../fields/styles.module.scss'; // Importando o CSS específico
+import styles from '../styles.module.scss'; // Importando o CSS específico
 
 type ListaPlantasPreviewProps = {
     onSelectPlanta: (planta: PlantaPreview) => void;
@@ -50,8 +50,10 @@ export function ListaPlantasPreview({
                 </div>
             )}
             {!isLoading && plantas.length === 0 && (
-                <div className="text-muted-foreground mx-4 text-center">
-                    Nenhuma planta encontrada.
+                <div className="flex h-full items-center justify-center">
+                    <div className="text-muted-foreground mx-4 text-center text-sm">
+                        Nenhuma planta encontrada.
+                    </div>
                 </div>
             )}
             <div

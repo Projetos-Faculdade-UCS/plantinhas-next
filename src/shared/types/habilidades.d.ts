@@ -2,7 +2,7 @@ export interface Habilidade {
     id: number;
     nome: string;
     descricao: string;
-    detalhes: DetalhesHabilidade;
+    detalhes?: DetalhesHabilidade;
 }
 
 export interface DetalhesHabilidade {
@@ -11,3 +11,9 @@ export interface DetalhesHabilidade {
     xpParaUpar: number;
     porcentagem: number;
 }
+
+export type MultiplicarXpResponse = {
+    novoNivel: number;
+    xpGanho: number;
+    status: string;
+};

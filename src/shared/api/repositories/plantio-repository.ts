@@ -1,11 +1,11 @@
-import { getProgresSituacao } from '@/entities/card-plantio/utils';
+import { getProgresSituacao } from '@/entities/card-plantio/lib/utils';
 import { Client } from '@/shared/types/client';
 import {
+    FormPlantio,
     Plantio,
     PlantioPreview,
     RawPlantio,
     RawPlantioPreview,
-    TarefaPlantio,
 } from '@/shared/types/plantio';
 import { PagedResponse } from '@/shared/types/utils';
 import { JWTClient } from '../client/jwt-client';
@@ -57,6 +57,29 @@ export class PlantioRepository {
         };
     }
     /**
+     * Cria um novo plantio
+     * @param plantio Formulário com os dados do plantio
+     * @returns Retorna o plantio criado
+     */
+    public async postPlantio(plantio: FormPlantio) {
+        const query = await this.client.post<RawPlantioPreview>(
+            '/plantios/',
+            plantio,
+        );
+        const situacao: Plantio['situacao'] = {
+            label: query.data.situacao,
+            value: getProgresSituacao(query.data.situacao),
+        };
+        return {
+            ...query,
+            data: {
+                ...query.data,
+                situacao: situacao,
+            },
+        };
+    }
+
+    /**
      * Retorna um plantio específico
      * @param id ID do plantio
      * @returns Retorna um plantio específico
@@ -83,15 +106,10 @@ export class PlantioRepository {
             },
         };
     }
-    /**
-     * Retorna as tarefas de um plantio específico
-     * @param id ID do plantio
-     * @returns Array de tarefas do plantio
-     */
-    public async getTarefasPlantio(id: number) {
-        const tarefas = await this.client.get<TarefaPlantio[]>(
-            `/plantios/${id}/tarefas/`,
-        );
-        return tarefas.data;
+
+    public async deletePlantio(plantioId: number) {
+        console.log('Deletando plantio com ID:', plantioId);
+        const query = await this.client.delete(`/plantios/${plantioId}/`);
+        return query;
     }
 }

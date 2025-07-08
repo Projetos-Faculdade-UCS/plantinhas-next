@@ -34,3 +34,20 @@ export const submitNearForm = (element: HTMLInputElement) => {
         form.requestSubmit();
     }
 };
+
+/**
+ * Gera um hash simples baseado nos dados para identificar unicamente a requisição.
+ * Este hash pode ser usado para cache ou identificação de requisições.
+ * @param dados Objeto contendo dados de algo
+ * @returns Retorna uma string representando o hash dos dados.
+ */
+export const generatHash = (dados: object): string => {
+    const dataString = JSON.stringify(dados);
+    let hash = 0;
+    for (let i = 0; i < dataString.length; i++) {
+        const char = dataString.charCodeAt(i);
+        hash = (hash << 5) - hash + char; // hash * 31 + char
+        hash |= 0; // Convert to 32-bit integer
+    }
+    return hash.toString();
+};

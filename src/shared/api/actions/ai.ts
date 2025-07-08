@@ -1,11 +1,10 @@
 'use server';
-import { IASaidaPlantio } from '@/features/cadastro-plantio/lib/ia-api.schema';
-import { IAEntradaPlantio } from '@/shared/types/ai';
+import { AISaidaPlantio, IAEntradaPlantio } from '@/shared/types/ai';
 import { Repositories } from '../repositories';
 
 export async function gerarPlantio(
     payload: IAEntradaPlantio,
-): Promise<{ data?: IASaidaPlantio; error?: string }> {
+): Promise<{ data?: AISaidaPlantio; error?: string }> {
     try {
         const response = await Repositories.ia.gerarPlantio(payload);
         return { data: response.data };

@@ -53,7 +53,7 @@ export function OndePlantarField({ control, isBusy }: AmbienteLocalFieldProps) {
                         Onde Plantar?
                     </FormLabel>
 
-                    <Prateleira alwaysShowArrows={false} gap="1rem">
+                    <Prateleira alwaysShowArrows={true} gap="1rem">
                         {opcoes.map((opcao) => (
                             <OpcaoCultivoButton
                                 key={opcao.label}

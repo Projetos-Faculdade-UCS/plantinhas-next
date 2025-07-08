@@ -84,7 +84,7 @@ export class PlantaRepository {
         return this.client.get<Planta>(`/plantas/${id}/`, {
             next: {
                 tags: ['planta', `${id}`],
-                revalidate: 20, // Cache de 20 segundos para evitar requisições excessivas
+                revalidate: 60, // Cache de 20 segundos para evitar requisições excessivas
             },
         });
     }
