@@ -37,6 +37,7 @@ export class ProfileRepository {
         });
         return {
             id: String(response.data.user.id),
+            email: response.data.user.email,
             username: response.data.user.username,
             first_name: response.data.user.first_name,
             last_name: response.data.user.last_name,
