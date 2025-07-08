@@ -1,5 +1,5 @@
 import CardPlanta from '@/entities/card-planta';
-import { PrateleiraPlantas } from '@/entities/prateleira-plantas';
+import { Prateleira } from '@/entities/prateleira';
 import { Repositories } from '@/shared/api/repositories';
 import Link from 'next/link';
 
@@ -7,7 +7,7 @@ export async function CatalogoPlantas() {
     const catalogo = await Repositories.plantas.getCatalogo();
     return (
         <div className="flex flex-col gap-4">
-            {catalogo.data.items.map((categoria) => (
+            {catalogo.data.itens.map((categoria) => (
                 <div key={categoria.id} className="flex w-full flex-col gap-2">
                     <Link
                         href={`/catalogo/categoria/${categoria.id}`}
@@ -18,14 +18,14 @@ export async function CatalogoPlantas() {
                         <i className="ph ph-caret-right text-xl" />
                     </Link>
 
-                    <PrateleiraPlantas>
+                    <Prateleira className="w-full">
                         {categoria.plantas.map((planta) => (
                             <CardPlanta
                                 key={`${categoria.id} ${planta.id}`}
                                 planta={planta}
                             />
                         ))}
-                    </PrateleiraPlantas>
+                    </Prateleira>
                 </div>
             ))}
         </div>

@@ -5,6 +5,7 @@ import { Button } from '@/shared/ui/button';
 import Image from 'next/image';
 import Link from 'next/link';
 import SidebarButton from './SidebarButton';
+import { UserDropDown } from './user-drop-down';
 
 interface SidebarProps {
     tabs: Tab[];
@@ -51,23 +52,8 @@ export default async function Sidebar({ tabs }: SidebarProps) {
                     </Button>
                 </div>
             </div>
-            {/* Rodapé */}
             {session ? (
-                <Link
-                    href="/perfil"
-                    className="flex w-full items-center gap-3 px-4 py-6 hover:bg-gray-100"
-                >
-                    <Image
-                        src={session.user?.picture || ''}
-                        alt="User Image"
-                        width={40}
-                        height={40}
-                        className="rounded-full"
-                    />
-                    <span className="text-base font-medium">
-                        {session.user?.first_name} {session.user?.last_name}
-                    </span>
-                </Link>
+                <UserDropDown session={session} />
             ) : (
                 <Link href="/signin">Entrar</Link>
             )}

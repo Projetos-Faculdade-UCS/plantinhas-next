@@ -1,12 +1,20 @@
+'use client';
+import { checkTarefasPendentes } from '@/shared/api/actions/tarefas';
+import { useEffect, useState } from 'react';
 import styles from './styles.module.scss';
 
 type WarningBubbleProps = {
-    situacao: number;
-    sede: number;
-    saude: number;
+    plantioId: number;
 };
-export function WarningBubble({ situacao, saude }: WarningBubbleProps) {
-    const canShowWarning = situacao > 0 && situacao < 1 && saude < 0.1;
+
+export function WarningBubble({ plantioId }: WarningBubbleProps) {
+    const [canShowWarning, setCanShowWarning] = useState(false);
+
+    useEffect(() => {
+        checkTarefasPendentes(plantioId).then((response) => {
+            setCanShowWarning(response);
+        });
+    }, [plantioId]);
 
     if (canShowWarning) {
         return (

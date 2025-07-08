@@ -1,7 +1,7 @@
 import { PlantaPreview } from '@/shared/types/planta';
 import { Itim } from 'next/font/google';
-import Image from 'next/image';
 import Link from 'next/link';
+import { FallbackImage } from '../imagem/fallback-image';
 import styles from './animation.module.scss';
 import { Ondulacao } from './ondulacao';
 const itim = Itim({
@@ -17,7 +17,7 @@ export default function CardPlanta({ planta, deactivated }: CardPlantaProps) {
     return (
         <Link
             href={`/catalogo/planta/${planta.id}`}
-            className={`relative w-[9.5rem] shrink-0 ${styles.jumpOnHover}`}
+            className={`relative w-[9.5rem] shrink-0 ${styles.jumpOnHover} ${!planta.foto && 'order-2'}`}
         >
             <div className={`flex h-full flex-col`}>
                 <div className="h-8"></div>
@@ -31,7 +31,7 @@ export default function CardPlanta({ planta, deactivated }: CardPlantaProps) {
                     </span>
                 </div>
                 <div
-                    className={`flex h-9 shrink-0 items-center justify-between rounded-b-md border-x border-b px-4 transition duration-300 ${styles.cardFooter} ${deactivated ? 'bg-muted-foreground border' : 'border-border-primary to-primary bg-linear-to-t from-[#37652B]'}`}
+                    className={`flex h-9 shrink-0 items-center justify-between rounded-b-md border-x border-b px-4 ${styles.cardFooter} ${deactivated ? 'bg-muted-foreground border' : 'border-border-primary to-primary bg-linear-to-t from-[#37652B]'}`}
                 >
                     <span className="text-primary-foreground">
                         {planta.dificuldade.label}
@@ -42,13 +42,14 @@ export default function CardPlanta({ planta, deactivated }: CardPlantaProps) {
                     </span>
                 </div>
             </div>
-            <div className="absolute top-0 left-0 z-[1] flex w-full justify-center">
-                <Image
-                    src={planta.foto || '/assets/plantas/girassol.png'}
+            <div className="absolute top-0 left-0 z-[1] flex w-full flex-col items-center justify-center">
+                <FallbackImage
+                    key={planta.id}
+                    src={planta.foto!}
                     alt={planta.nome || 'Sem imagem'}
-                    width={1000}
-                    height={1000}
-                    className={`h-[120px] w-full object-contain transition duration-300 ${deactivated ? 'grayscale' : ''}`}
+                    width={288}
+                    height={288}
+                    className={`h-[120px] w-fit transition duration-300 ${deactivated ? 'grayscale' : ''}`}
                 />
             </div>
             <div className="absolute top-0 left-0 z-[0] mt-12 flex w-full justify-center">

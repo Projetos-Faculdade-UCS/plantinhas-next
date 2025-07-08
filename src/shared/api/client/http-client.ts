@@ -112,7 +112,39 @@ export class HttpClient implements Client {
         }>;
     }
 
-    private async responseHandler<T>(response: Response) {
+    /**
+     * Performs a GET request to retrieve a Blob from the API
+     * @param url API URL
+     * @param init Request configuration
+     * @returns Promise with the Blob data and status code
+     * @throws {NetWorkError} For other network-related errors
+     */
+    public async getBlob(
+        absoluteUrl: string,
+        init?: CustomFetchProps,
+    ): Promise<{
+        status: number;
+        data: Blob;
+    }> {
+        const { headers, ...config } = init || {};
+
+        const resp = await fetch(absoluteUrl, {
+            method: 'GET',
+            headers: await this.getHeaders(headers),
+            ...config,
+        });
+
+        if (!resp.ok) {
+            throw new NetWorkError(
+                `Requisição retornou ${resp.status} - ${resp.statusText}`,
+                resp.status,
+            );
+        }
+        const data = await resp.blob();
+        return { status: resp.status, data };
+    }
+
+    protected async responseHandler<T>(response: Response) {
         const res = response as CustomResponse<T>;
 
         if (res.status === 200 || res.status === 201 || res.status === 204) {
@@ -148,6 +180,13 @@ export class HttpClient implements Client {
             );
         }
 
+        if (res.status === 406) {
+            throw new NotFoundError(
+                `Recurso não encontrado: ${res.statusText}`,
+                await this.parseJson(res),
+            );
+        }
+
         if (res.status >= 500) {
             throw new ServerError(
                 `Erro do servidor: ${res.statusText}`,
@@ -162,13 +201,20 @@ export class HttpClient implements Client {
         );
     }
 
-    private async parseJson<T>(response: CustomResponse<T>) {
+    protected async parseJson<T>(response: CustomResponse<T>) {
         try {
             return await response.json();
         } catch (e) {
             console.error('Error parsing JSON response:', e);
             return {
-                message: response.statusText || 'Erro ao processar a resposta',
+                type: 'ParseError',
+                errors: [
+                    {
+                        code: 'JSON_PARSE_ERROR',
+                        detail: 'Failed to parse JSON response',
+                        attr: null,
+                    },
+                ],
             } as ResponseError;
         }
     }

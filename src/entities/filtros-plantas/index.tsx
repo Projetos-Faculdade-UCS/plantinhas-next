@@ -3,7 +3,7 @@ import { Button } from '@/shared/ui/button';
 import { Form } from '@/shared/ui/form';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useForm } from 'react-hook-form';
-import { SearchInput } from './search-input';
+import { SearchInputField } from './search-input-field';
 import { TFiltrosPlanta } from './types';
 
 export function FiltrosPlanta() {
@@ -32,8 +32,11 @@ export function FiltrosPlanta() {
                 onSubmit={formData.handleSubmit(handleSubmit)}
                 className="flex items-center gap-2"
             >
-                <SearchInput
+                <SearchInputField
                     control={formData.control}
+                    onChange={() => {
+                        formData.handleSubmit(handleSubmit)();
+                    }}
                     onClear={() => formData.handleSubmit(handleSubmit)()}
                 />
                 <Button type="button" variant="default" className="px-2">

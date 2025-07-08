@@ -1,10 +1,13 @@
-import { getProgresSituacao } from '@/entities/card-plantio/utils';
+import { getProgresSituacao } from '@/entities/card-plantio/lib/utils';
 import { Client } from '@/shared/types/client';
 import {
-    ListagemPlantios,
+    FormPlantio,
     Plantio,
     PlantioPreview,
+    RawPlantio,
+    RawPlantioPreview,
 } from '@/shared/types/plantio';
+import { PagedResponse } from '@/shared/types/utils';
 import { JWTClient } from '../client/jwt-client';
 
 export class PlantioRepository {
@@ -26,8 +29,8 @@ export class PlantioRepository {
         if (page) {
             params.append('page', page.toString());
         }
-        const plantiosData = await this.client.get<ListagemPlantios>(
-            `/gerenciamento/plantios/?${params.toString()}`,
+        const query = await this.client.get<PagedResponse<RawPlantioPreview>>(
+            `/plantios/?${params.toString()}`,
             {
                 next: {
                     tags: ['plantios'],
@@ -36,23 +39,70 @@ export class PlantioRepository {
             },
         );
         // Adiciona a propriedade situacao com o valor correto
-        const plantioItens = plantiosData.data.itens.map((plantio) => {
-            const situacao =
-                plantio.situacao as unknown as PlantioPreview['situacao']['label'];
-            plantio.situacao = {
-                label: situacao,
-                value: getProgresSituacao(situacao),
+        const plantios: PlantioPreview[] = query.data.itens.map((plantio) => {
+            return {
+                ...plantio,
+                situacao: {
+                    label: plantio.situacao,
+                    value: getProgresSituacao(plantio.situacao),
+                },
             };
-            return plantio;
         });
         return {
-            ...plantiosData,
+            ...query,
             data: {
-                ...plantiosData.data,
-                itens: plantioItens,
+                ...query.data,
+                itens: plantios,
             },
         };
     }
+    /**
+     * Cria um novo plantio
+     * @param plantio Formulário com os dados do plantio
+     * @returns Retorna o plantio criado
+     */
+    public async postPlantio(plantio: FormPlantio) {
+        const query = await this.client.post<RawPlantioPreview>(
+            '/plantios/',
+            plantio,
+        );
+        const situacao: Plantio['situacao'] = {
+            label: query.data.situacao,
+            value: getProgresSituacao(query.data.situacao),
+        };
+        return {
+            ...query,
+            data: {
+                ...query.data,
+                situacao: situacao,
+            },
+        };
+    }
+
+    /**
+     * Atualiza um plantio
+     * @param id ID do plantio
+     * @param plantio Formulário com os dados do plantio
+     * @returns Retorna o plantio atualizado
+     */
+    public async updatePlantio(id: number, plantio: Partial<FormPlantio>) {
+        const query = await this.client.patch<RawPlantio>(
+            `/plantios/${id}/`,
+            plantio,
+        );
+        const situacao: Plantio['situacao'] = {
+            label: query.data.situacao,
+            value: getProgresSituacao(query.data.situacao),
+        };
+        return {
+            ...query,
+            data: {
+                ...query.data,
+                situacao: situacao,
+            },
+        };
+    }
+
     /**
      * Retorna um plantio específico
      * @param id ID do plantio
@@ -61,22 +111,28 @@ export class PlantioRepository {
      * cache de 1 minuto
      */
     public async getPlantio(id: number) {
-        const plantioData = await this.client.get<Plantio>(
-            `/gerenciamento/plantios/${id}/`,
-            {
-                next: {
-                    tags: ['plantio', `${id}`],
-                    revalidate: 0,
-                },
+        const query = await this.client.get<RawPlantio>(`/plantios/${id}/`, {
+            next: {
+                tags: ['plantio', `${id}`],
+                revalidate: 0,
             },
-        );
+        });
 
-        const situacaoPlantio = plantioData.data
-            .situacao as unknown as PlantioPreview['situacao']['label'];
-        plantioData.data.situacao = {
-            label: situacaoPlantio,
-            value: getProgresSituacao(situacaoPlantio),
+        const situacao: Plantio['situacao'] = {
+            label: query.data.situacao,
+            value: getProgresSituacao(query.data.situacao),
         };
-        return plantioData;
+        return {
+            ...query,
+            data: {
+                ...query.data,
+                situacao: situacao,
+            },
+        };
+    }
+
+    public async deletePlantio(plantioId: number) {
+        const query = await this.client.delete(`/plantios/${plantioId}/`);
+        return query;
     }
 }

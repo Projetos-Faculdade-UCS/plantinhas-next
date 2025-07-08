@@ -2,10 +2,9 @@
 
 import { Tab } from '@/entities/menus/types';
 import { cn } from '@/shared/lib/utils';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, motion, Transition } from 'framer-motion';
 import { usePathname, useRouter } from 'next/navigation';
 import { ReactNode } from 'react';
-
 
 interface Separator {
     type: 'separator';
@@ -42,7 +41,12 @@ const spanVariants = {
     exit: { width: 0, opacity: 0 },
 };
 
-const transition = { delay: 0, type: 'spring', bounce: 0, duration: 0.4 };
+const transition: Transition = {
+    delay: 0,
+    type: 'spring',
+    bounce: 0,
+    duration: 0.4,
+};
 
 export function FloatingDock({
     tabs,
@@ -57,7 +61,7 @@ export function FloatingDock({
     );
 
     return (
-        <div className='fixed bottom-10 z-10 flex md:hidden w-full justify-center'>
+        <div className="fixed bottom-10 z-10 flex w-full justify-center md:hidden">
             <div
                 className={cn(
                     'bg-card flex flex-wrap items-center gap-2 rounded-2xl border p-1 shadow-sm',
@@ -85,9 +89,9 @@ export function FloatingDock({
                                 'relative flex items-center rounded-xl px-4 py-2 text-sm font-medium transition-colors duration-300',
                                 isActive
                                     ? cn(
-                                        'bg-primary-foreground font-semibold',
-                                        activeColor,
-                                    )
+                                          'bg-primary-foreground font-semibold',
+                                          activeColor,
+                                      )
                                     : 'text-muted-foreground hover:bg-muted hover:text-foreground',
                             )}
                         >

@@ -2,6 +2,7 @@ import { FloatingDock } from '@/entities/menus/floating-dock';
 import Sidebar from '@/entities/menus/sidebar';
 import { Tab } from '@/entities/menus/types';
 import { QueryProvider } from '@/shared/ui/query-provider';
+import { Toaster } from '@/shared/ui/sonner';
 import type { Metadata } from 'next';
 import '../globals.css';
 
@@ -50,6 +51,7 @@ export default function LoggedInLayout({
                 activeColor="text-primary"
                 className="border-border"
             />
+            <Toaster position="top-center" />
         </main>
     );
 }
