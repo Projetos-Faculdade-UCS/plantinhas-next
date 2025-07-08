@@ -5,6 +5,7 @@ import {
     TarefaPlantioPreview,
     TarefaRealizadaResponse,
 } from '@/shared/types/tarefa';
+import { revalidateTag } from 'next/cache';
 import { JWTClient } from '../client/jwt-client';
 
 export class TarefaRepository {
@@ -68,6 +69,8 @@ export class TarefaRepository {
             `/tarefas/${tarefaId}/realizar/`,
             {},
         );
+        revalidateTag(`tarefa-detail-${tarefaId}`);
+        revalidateTag('tarefas');
         return tarefa;
     }
 }

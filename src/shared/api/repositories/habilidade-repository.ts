@@ -1,3 +1,4 @@
+import { auth } from '@/shared/lib/auth';
 import { Client } from '@/shared/types/client';
 import { Habilidade, MultiplicarXpResponse } from '@/shared/types/habilidades';
 import { revalidateTag } from 'next/cache';
@@ -17,10 +18,12 @@ export class HabilidadeRepository {
     }
 
     public async getHabilidades() {
+        const session = await auth();
+        const userId = session?.user?.id;
         return this.client.get<Habilidade[]>('/habilidades/', {
             next: {
                 revalidate: 1000,
-                tags: ['habilidades'],
+                tags: [`habilidades-${userId}`],
             },
         });
     }
@@ -35,12 +38,15 @@ export class HabilidadeRepository {
     }
 
     public async multiplicarXp(habilidadeId: number, multiplicadorXp: number) {
+        const session = await auth();
+        const userId = session?.user?.id;
         const resp = await this.client.post<MultiplicarXpResponse>(
             `/habilidades/${habilidadeId}/multiplicar-xp/`,
             { multiplicador: multiplicadorXp },
         );
 
         revalidateTag(`habilidade-${habilidadeId}`);
+        revalidateTag(`habilidades-${userId}`);
         return resp;
     }
 }
