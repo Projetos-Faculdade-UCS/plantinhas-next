@@ -46,9 +46,13 @@ export function CardTarefa({
                             {tarefa.nome}
                         </span>
                         <div className="text-muted-foreground flex items-center gap-2">
+                            <i className="ph ph-calendar-dots flex text-lg" />
+                            <span className="mr-4 text-sm">
+                                {tarefa.frequencia || 'Às vezes'}
+                            </span>
                             <i className="ph ph-calendar-check flex text-lg" />
-                            <span className="text-sm font-medium">
-                                {tarefa.quantidadeCompletada}/
+                            <span className="text-sm">
+                                {tarefa.quantidadeCompletada} /{' '}
                                 {tarefa.quantidadeTotal}
                             </span>
                         </div>

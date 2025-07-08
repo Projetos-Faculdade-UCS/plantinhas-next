@@ -43,11 +43,7 @@ export function CardPlantio({ plantio, className }: CardPlantioProps) {
             <div className="absolute top-0 left-0 z-[0] mt-12 flex w-full justify-center">
                 <div className="bg-foreground h-20 w-20 rounded-full opacity-40 blur-lg"></div>
             </div>
-            <WarningBubble
-                situacao={plantio.situacao.value}
-                sede={plantio.sede.value}
-                saude={plantio.saude.value}
-            />
+            <WarningBubble plantioId={plantio.id} />
         </Link>
     );
 }

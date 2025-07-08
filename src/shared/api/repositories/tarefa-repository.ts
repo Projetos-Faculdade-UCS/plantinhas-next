@@ -34,7 +34,10 @@ export class TarefaRepository {
                 },
             },
         );
-        return tarefas;
+        return {
+            data: tarefas.data.reverse(),
+            status: tarefas.status,
+        };
     }
 
     /**
@@ -71,6 +74,20 @@ export class TarefaRepository {
         );
         revalidateTag(`tarefa-detail-${tarefaId}`);
         revalidateTag('tarefas');
+        revalidateTag('check-pendencias');
         return tarefa;
+    }
+
+    public async checkTarefasPendentes(plantioId: number) {
+        const tarefasPendentes = await this.client.get<{
+            message: string;
+            count: number;
+        }>(`/tarefas/check_pendencias/?plantio_id=${plantioId}`, {
+            next: {
+                revalidate: 60, // Revalida a cada 60 segundos
+                tags: [`check-pendencias`, `check-pendencias-${plantioId}`],
+            },
+        });
+        return tarefasPendentes;
     }
 }
