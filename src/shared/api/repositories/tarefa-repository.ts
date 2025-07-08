@@ -60,7 +60,7 @@ export class TarefaRepository {
             {
                 next: {
                     revalidate: 60, // Revalida a cada 60 segundos
-                    tags: ['tarefa-detail', `${tarefaId}`],
+                    tags: [`tarefa-detail-${tarefaId}`],
                 },
             },
         );
