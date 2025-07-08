@@ -106,9 +106,12 @@ export function FormCadastroPlantio() {
                         className="w-full cursor-pointer text-base"
                     >
                         {isFormBusy ? (
-                            <span className="animate-spin">
-                                <i className="ph ph-spinner text-lg" />
-                            </span>
+                            <div className="flex items-center gap-2">
+                                <span className="">Gerando plantio...</span>
+                                <span className="animate-spin">
+                                    <i className="ph ph-spinner flex text-lg" />
+                                </span>
+                            </div>
                         ) : (
                             <>
                                 <span>Plantar com IA</span>
