@@ -3,7 +3,7 @@ import { TarefaPlantioPreview } from '@/shared/types/tarefa';
 import { useState } from 'react';
 import { CardTarefa } from '../card-tarefa';
 import { DetalheTarefa } from './detalhe-tarefa';
-
+import styles from './style.module.scss';
 interface ListaTarefasPlantioProps {
     tarefas: (TarefaPlantioPreview & { timeAgo?: string })[];
 }
@@ -14,7 +14,9 @@ export function ListaTarefasPlantio({ tarefas }: ListaTarefasPlantioProps) {
     return (
         <div className="flex h-full w-full flex-col gap-4 md:flex-row">
             {/* Coluna da esquerda: Tarefas */}
-            <div className="flex h-full w-full flex-col gap-4 overflow-y-auto md:w-[calc(100%-420px)]">
+            <div
+                className={`flex h-full max-h-[420px] w-full flex-col gap-4 ${styles.list} pr-2 md:w-[calc(100%-420px)]`}
+            >
                 {tarefas.length === 0 && (
                     <div className="rounded-md border border-[#D4D4D4] bg-[#FFFFFF] px-4 py-2">
                         <div className="flex w-full cursor-default items-center px-4 py-3">
