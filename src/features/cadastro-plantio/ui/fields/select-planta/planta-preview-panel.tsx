@@ -1,9 +1,9 @@
 import { FallbackImage } from '@/entities/imagem/fallback-image';
+import { NewPlantioForm } from '@/features/cadastro-plantio/lib/cadastro-plantio.schema';
 import { PlantaPreview } from '@/shared/types/planta';
 import { FormField } from '@/shared/ui/form';
 import { Itim } from 'next/font/google';
 import { Control } from 'react-hook-form';
-import { NewPlantioForm } from '../../lib/cadastro-plantio.schema';
 import { QuantidadeField } from './quantidade-field';
 
 const itim = Itim({
