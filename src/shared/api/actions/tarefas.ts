@@ -29,7 +29,8 @@ export async function realizarTarefa(tarefa: TarefaPlantio) {
                 situacao: 'Germinando',
             });
         }
-        const { data: habilidade } =
+
+        const { data: habilidadeAntes } =
             await Repositories.habilidades.getHabilidade(
                 atualizarHabilidade.habilidade.id,
             );
@@ -38,11 +39,11 @@ export async function realizarTarefa(tarefa: TarefaPlantio) {
             atualizarHabilidade.habilidade.id,
             atualizarHabilidade.habilidade.multiplicadorXp,
         );
+
         return {
             data: {
-                habilidade,
                 uppouNivel:
-                    (habilidade.detalhes?.nivel || 0) < novoXP.novoNivel,
+                    (habilidadeAntes.detalhes?.nivel || 0) < novoXP.novoNivel,
                 novoNivel: novoXP.novoNivel,
                 xpGanho: novoXP.xpGanho,
                 mensagem: novoXP.status,

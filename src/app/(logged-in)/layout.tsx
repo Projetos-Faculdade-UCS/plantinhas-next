@@ -51,7 +51,7 @@ export default function LoggedInLayout({
                 activeColor="text-primary"
                 className="border-border"
             />
-            <Toaster position="top-center" />
+            <Toaster position="top-center" richColors />
         </main>
     );
 }

@@ -4,6 +4,7 @@ import { TarefaPlantio } from '@/shared/types/tarefa';
 import { Button } from '@/shared/ui/button';
 import { formatDistanceToNow } from 'date-fns';
 import { ptBR } from 'date-fns/locale/pt-BR';
+import { redirect } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 
@@ -38,15 +39,27 @@ export function RealizarTarefaBtn({ tarefa }: RealizarTarefaBtnProps) {
                     setError(null);
                     realizarTarefa(tarefa).then((response) => {
                         if (response.data) {
-                            toast('Tarefa concluída com sucesso!', {
-                                // description: response.data.mensagem || '',
-                                // action: {
-                                //     label: 'Undo',
-                                //     onClick: () => console.log('Undo'),
-                                // },
+                            toast.success('Tarefa concluída com sucesso!', {
+                                description: response.data.mensagem || '',
                             });
+                            if (response.data.uppouNivel) {
+                                toast.success(
+                                    `Parabéns! Você subiu para o nível ${response.data.novoNivel}!`,
+                                    {
+                                        action: {
+                                            label: 'Ver habilidade',
+                                            onClick: () => {
+                                                redirect('/perfil');
+                                            },
+                                        },
+                                    },
+                                );
+                            }
                         } else {
-                            setError(response.error);
+                            toast.error('Erro ao concluir a tarefa!', {
+                                description: response.error || '',
+                            });
+                            setError(response.error || 'Erro desconhecido');
                         }
                     });
                 }}
